@@ -44,6 +44,7 @@ jobs:
         with:
           context: .
           file: ./Dockerfile
+          path: backend
           push: true
           tags: |
             ghcr.io/${{ github.repository_owner }}/my-container-test:latest
