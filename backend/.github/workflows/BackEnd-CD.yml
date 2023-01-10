@@ -2,6 +2,10 @@ name: BackEnd-CD
 
 on: [push]
 
+defaults:
+  run:
+    working-directory: backend
+
 jobs:
   BackEnd-CD:
     runs-on: ubuntu-latest
