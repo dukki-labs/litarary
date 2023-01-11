@@ -51,5 +51,8 @@ jobs:
       - name: Install flyctl
         uses: superfly/flyctl-actions/setup-flyctl@master
 
+      - name: now path
+        run: pwd
+
       - name: Deploy our Spring Boot app to fly.io
         run: flyctl deploy -c fly.toml
