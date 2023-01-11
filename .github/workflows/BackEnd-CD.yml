@@ -2,15 +2,14 @@ name: BackEnd-CD
 
 on: [push]
 
-defaults:
-  run:
-    working-directory: backend
-
 jobs:
   BackEnd-CD:
     runs-on: ubuntu-latest
     env:
       FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+    defaults:
+      run:
+        working-directory: backend
 
 
     steps:
