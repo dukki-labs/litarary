@@ -1,6 +1,11 @@
 name: BackEnd-CD
 
-on: [push]
+on: 
+  push:
+  pull_request:
+    branches:
+      - develop
+      - 'release/**'
 
 jobs:
   BackEnd-CD:
