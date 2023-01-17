@@ -38,10 +38,10 @@ jobs:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.CONTAINER_TOKEN }}
-          build-args: |
-            DB_USER=${{ secrets.DATABASE_USER }}
-            DB_PW=${{ secrets.DATABASE_USER_PASSWORD }}
-            DB_URL=${{ secrets.DATABASE_URL }}
+          # build-args: |
+          #   DB_USER=${{ secrets.DATABASE_USER }}
+          #   DB_PW=${{ secrets.DATABASE_USER_PASSWORD }}
+          #   DB_URL=${{ secrets.DATABASE_URL }}
 
 
       - name: Set up Docker Buildx
