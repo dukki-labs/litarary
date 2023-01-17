@@ -2,8 +2,8 @@ spring:
   datasource:
     hikari:
       driver-class-name: org.postgresql.Driver
-      username: ${DB_USER_NAME}
-      password: ${DB_USER_PASSWORD}
+      username: ${DATABASE_USER}
+      password: ${DATABASE_USER_PASSWORD}
     url: ${DB_URL}
   jpa:
     show-sql: true
