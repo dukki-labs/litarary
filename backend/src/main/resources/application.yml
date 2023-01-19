@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    hikari:
+      driver-class-name: org.postgresql.Driver
+      username: ${DATABASE_USER}
+      password: ${DATABASE_USER_PASSWORD}
+    url: ${DATABASE_URL}
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect

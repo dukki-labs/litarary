@@ -2,10 +2,9 @@ name: BackEnd-CD
 
 on: 
   push:
-  pull_request:
-    branches:
-      - develop
-      - 'release/**'
+    paths:
+      - 'backend/**'
+    branches: [ main ]
 
 jobs:
   BackEnd-CD:
@@ -31,7 +30,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Build with Gradle
-        run: ./gradlew clean build
+        run: ./gradlew clean build -x test
 
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v2
@@ -39,6 +38,11 @@ jobs:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.CONTAINER_TOKEN }}
+          # build-args: |
+          #   DB_USER=${{ secrets.DATABASE_USER }}
+          #   DB_PW=${{ secrets.DATABASE_USER_PASSWORD }}
+          #   DB_URL=${{ secrets.DATABASE_URL }}
+
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
