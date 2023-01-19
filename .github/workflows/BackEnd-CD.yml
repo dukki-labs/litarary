@@ -2,9 +2,9 @@ name: BackEnd-CD
 
 on: 
   push:
-    branches: [ main, feature/** ]
-  pull_request:
-    branches: [ develop ]
+정    paths:
+      - 'backend/**'
+    branches: [ main ]
 
 jobs:
   BackEnd-CD:
