@@ -2,7 +2,7 @@ name: BackEnd-CD
 
 on: 
   push:
-정    paths:
+    paths:
       - 'backend/**'
     branches: [ main ]
 
