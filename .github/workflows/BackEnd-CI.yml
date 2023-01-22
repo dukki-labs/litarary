@@ -1,7 +1,5 @@
 name: BackEnd-CI
 on:
-  push:
-    branches: [ feature/** ]
   pull_request:
     types: [opened, synchronize, reopened]
 jobs:
