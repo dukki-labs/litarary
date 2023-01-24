@@ -2,9 +2,9 @@ name: BackEnd-CD
 
 on: 
   push:
-    # paths:
-      # - 'backend/**'
-    branches: [ develop , feature/**]
+    paths:
+      - 'backend/**'
+    branches: [ develop ]
 
 jobs:
   BackEnd-CD:
