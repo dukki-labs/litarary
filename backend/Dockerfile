@@ -14,4 +14,4 @@ ARG SPRING_ACTIVE_PROFILE=dev
 ARG JAR_FILE=build/libs/*.jar
 COPY ${JAR_FILE} app.jar
 
-ENTRYPOINT ["java","-jar","/app.jar","--spring.profiles.active=","${SPRING_ACTIVE_PROFILE}"]
+ENTRYPOINT ["java","-XX:+UseSerialGC","-Xss1M","-Xms220m","-Xmx220m","-jar","/app.jar","--spring.profiles.active=","${SPRING_ACTIVE_PROFILE}"]
