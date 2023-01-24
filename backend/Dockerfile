@@ -9,6 +9,9 @@ FROM openjdk:17-jdk-slim
 #ARG DB_USER
 #ENV DATABASE_USER=${DB_USER}
 
+ARG SPRING_ACTIVE_PROFILE=dev
+
 ARG JAR_FILE=build/libs/*.jar
 COPY ${JAR_FILE} app.jar
-ENTRYPOINT ["java","-jar","/app.jar"]
+
+ENTRYPOINT ["java","-jar","/app.jar","--spring.profiles.active=","${SPRING_ACTIVE_PROFILE}"]
