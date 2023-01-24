@@ -1,4 +1,31 @@
 spring:
+  profiles:
+    default: prod
+
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+  datasource:
+    hikari:
+      jdbc-url: jdbc:h2:mem:devdb
+      username: sa
+      driver-class-name: org.h2.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    database-platform: org.hibernate.dialect.H2Dialect
+
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
   datasource:
     hikari:
       driver-class-name: org.postgresql.Driver
