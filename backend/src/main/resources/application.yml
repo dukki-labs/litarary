@@ -2,6 +2,12 @@ spring:
   profiles:
     default: prod
 
+# Default Tomcat Thread Max 200 count -> 4
+server:
+  tomcat:
+    threads:
+      max: 4
+
 ---
 spring:
   config:
