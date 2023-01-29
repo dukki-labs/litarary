@@ -1,4 +1,4 @@
-package com.litarary.dto;
+package com.litarary.health.dto;
 
 import lombok.Getter;
 

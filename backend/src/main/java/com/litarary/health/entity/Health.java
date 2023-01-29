@@ -1,4 +1,4 @@
-package com.litarary.entity;
+package com.litarary.health.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

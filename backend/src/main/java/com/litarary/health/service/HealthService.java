@@ -1,8 +1,8 @@
-package com.litarary.service;
+package com.litarary.health.service;
 
-import com.litarary.dto.HealthDto;
-import com.litarary.entity.Health;
-import com.litarary.repository.HealthCheckRepository;
+import com.litarary.health.dto.HealthDto;
+import com.litarary.health.entity.Health;
+import com.litarary.health.repository.HealthCheckRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

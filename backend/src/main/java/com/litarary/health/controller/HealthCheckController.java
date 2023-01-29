@@ -1,8 +1,8 @@
-package com.litarary.controller;
+package com.litarary.health.controller;
 
-import com.litarary.dto.HealthDto;
-import com.litarary.entity.Health;
-import com.litarary.service.HealthService;
+import com.litarary.health.dto.HealthDto;
+import com.litarary.health.entity.Health;
+import com.litarary.health.service.HealthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
