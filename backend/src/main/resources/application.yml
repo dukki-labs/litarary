@@ -8,8 +8,15 @@ server:
     threads:
       max: 4
 
+jwt:
+  secretKey: VlwEyVBsYt9V7zq57TejMnVUyzblYcfPQye08f7MGVA9XkHN
+
 ---
 spring:
+  h2:
+    console:
+      enabled: true
+
   config:
     activate:
       on-profile: dev
@@ -25,6 +32,9 @@ spring:
       ddl-auto: update
     show-sql: true
     database-platform: org.hibernate.dialect.H2Dialect
+    properties:
+      hibernate:
+        format_sql: true
 
 
 ---
