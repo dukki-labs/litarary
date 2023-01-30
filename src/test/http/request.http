@@ -11,9 +11,9 @@ Content-Type: application/json
   "privacyTerms": true,
   "serviceAlarm": true,
   "interestItems": [
-    "Horror",
-    "Gag",
-    "Romance",
+    "HORROR",
+    "GAG",
+    "ROMANCE",
     "IT"
   ],
   "accessRoles": [
@@ -34,3 +34,36 @@ Content-Type: application/json
 GET http://localhost:8080/health-check
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0IiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTY3NTAzNDc4NX0.Kf2AgRMB3Z-3HgIgQovxuLg3qsbg54x8TOkNYOmLKaU
+
+###
+POST https://slow-benny-phantom08266.koyeb.app/sign-up
+Content-Type: application/json
+
+{
+  "nickName": "test",
+  "email": "test@naver.com",
+  "password": "124145",
+  "accountTerms": true,
+  "serviceTerms": true,
+  "privacyTerms": true,
+  "serviceAlarm": true,
+  "interestItems": [
+    "HORROR",
+    "GAG",
+    "ROMANCE",
+    "IT"
+  ],
+  "accessRoles": [
+    "USER"
+  ]
+}
+
+
+###
+POST https://slow-benny-phantom08266.koyeb.app/login
+Content-Type: application/json
+
+{
+  "email": "test@naver.com",
+  "password": "124145"
+}

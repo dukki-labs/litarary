@@ -18,7 +18,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -47,7 +46,7 @@ public class AccountService {
                                 .memberId(signUpMember)
                                 .build()
                 )
-                .collect(Collectors.toList());
+                .toList();
         interestRepository.saveAll(interests);
 
         List<MemberRole> memberRoles = memberInfo.getAccessRoles()
@@ -57,14 +56,13 @@ public class AccountService {
                                 .roleType(role)
                                 .member(signUpMember)
                                 .build())
-                .collect(Collectors.toList());
+                .toList();
         memberRoleRepository.saveAll(memberRoles);
     }
 
     public TokenInfo login(String email, String password) {
 
         // 인증 객체 생성
-//        String tb = passwordEncoder.encode(password);
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(email, password);
         //CustomUserDetailsService 가 실행됨
         Authentication authenticate = authenticationManagerBuilder.getObject()

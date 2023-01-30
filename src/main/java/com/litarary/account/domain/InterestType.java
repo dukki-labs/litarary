@@ -1,9 +1,9 @@
 package com.litarary.account.domain;
 
 public enum InterestType {
-    Horror,
-    Gag,
-    Romance,
+    HORROR,
+    GAG,
+    ROMANCE,
     IT,
     CRIME
 }

@@ -15,9 +15,9 @@ import java.io.IOException;
 public class JwtAuthenticationFilter extends GenericFilterBean {
 
     private final JwtTokenProvider jwtTokenProvider;
-    private final String AUTHORIZATION_HEADER_NAME = "Authorization";
-    private final String TOKEN_START_WITH = "Bearer";
-    private final int TOKEN_START_INDEX = 7;
+    private static final String AUTHORIZATION_HEADER_NAME = "Authorization";
+    private static final String TOKEN_START_WITH = "Bearer";
+    private static final int TOKEN_START_INDEX = 7;
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
