@@ -38,6 +38,8 @@ spring:
 
 
 ---
+server:
+  port: 443
 spring:
   config:
     activate:
