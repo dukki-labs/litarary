@@ -1,4 +1,4 @@
-package com.litarary.utils;
+package com.litarary.utils.jwt;
 
 import lombok.Builder;
 import lombok.Getter;

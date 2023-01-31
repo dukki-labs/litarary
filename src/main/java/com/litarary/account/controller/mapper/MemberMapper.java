@@ -4,7 +4,7 @@ import com.litarary.account.controller.dto.MemberDto;
 import com.litarary.account.controller.dto.MemberLoginDto;
 import com.litarary.account.domain.entity.Member;
 import com.litarary.account.service.dto.SignUpMemberInfo;
-import com.litarary.utils.TokenInfo;
+import com.litarary.utils.jwt.TokenInfo;
 import org.springframework.stereotype.Component;
 
 @Component

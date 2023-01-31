@@ -1,5 +1,7 @@
-package com.litarary.utils;
+package com.litarary.utils.jwt;
 
+import com.litarary.common.ErrorCode;
+import com.litarary.exception.filter.JwtErrorException;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -42,16 +44,13 @@ public class JwtTokenProvider {
                     .build()
                     .parseClaimsJws(token);
             return true;
-        } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
-            log.error("Invalid JWT Token", e);
+        } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException | IllegalArgumentException e) {
+            throw new JwtErrorException(ErrorCode.INVALIDATED_TOKEN, e.getMessage());
         } catch (ExpiredJwtException e) {
-            log.error("Expired JWT Token", e);
+            throw new JwtErrorException(ErrorCode.EXPIRED_TOKEN, e.getMessage());
         } catch (UnsupportedJwtException e) {
-            log.error("Unsupported JWT Token", e);
-        } catch (IllegalArgumentException e) {
-            log.error("JWT claims string is empty.", e);
+            throw new JwtErrorException(ErrorCode.UNSUPPORTED_TOKEN, e.getMessage());
         }
-        return false;
     }
 
     public Authentication getAuthentication(String accessToken) {
@@ -59,7 +58,7 @@ public class JwtTokenProvider {
         Claims claims = parseClaims(accessToken);
 
         if (claims.get("auth") == null) {
-            throw new RuntimeException("잘못된 토큰입니다.");
+            throw new JwtErrorException(ErrorCode.AUTH_INVALIDATED_TOKEN);
         }
         List<SimpleGrantedAuthority> authorityList = Arrays.stream(claims.get("auth").toString().split(","))
                 .map(SimpleGrantedAuthority::new)

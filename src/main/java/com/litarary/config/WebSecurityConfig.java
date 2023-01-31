@@ -1,7 +1,8 @@
 package com.litarary.config;
 
+import com.litarary.config.filter.FilterExceptionHandler;
 import com.litarary.config.filter.JwtAuthenticationFilter;
-import com.litarary.utils.JwtTokenProvider;
+import com.litarary.utils.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,6 +22,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @RequiredArgsConstructor
 public class WebSecurityConfig {
 
+    private final FilterExceptionHandler filterExceptionHandler;
     private final JwtTokenProvider jwtTokenProvider;
 
     @Bean
@@ -41,6 +43,7 @@ public class WebSecurityConfig {
                             .anyRequest().authenticated() // 이외 모든 요청은 권한이 있어야 한다.
                             .and()
                             .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
+                            .addFilterBefore(filterExceptionHandler, JwtAuthenticationFilter.class)
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) //JWT토큰을 사용할 것임으로 세션적용하지 않도록 설정
                 .build();

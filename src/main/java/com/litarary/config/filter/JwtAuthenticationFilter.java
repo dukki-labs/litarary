@@ -1,6 +1,6 @@
 package com.litarary.config.filter;
 
-import com.litarary.utils.JwtTokenProvider;
+import com.litarary.utils.jwt.JwtTokenProvider;
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;

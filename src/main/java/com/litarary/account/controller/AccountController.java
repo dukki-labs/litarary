@@ -5,7 +5,7 @@ import com.litarary.account.controller.dto.MemberLoginDto;
 import com.litarary.account.controller.mapper.MemberMapper;
 import com.litarary.account.service.AccountService;
 import com.litarary.account.service.dto.SignUpMemberInfo;
-import com.litarary.utils.TokenInfo;
+import com.litarary.utils.jwt.TokenInfo;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
