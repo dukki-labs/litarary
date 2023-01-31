@@ -28,6 +28,9 @@ public class MemberLoginDto {
     @NoArgsConstructor
     @Getter
     public static class Response {
+        private long memberId;
+        private String memberEmail;
+        private String memberNickName;
         private String accessToken;
         private String refreshToken;
         private String grantType;

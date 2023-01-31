@@ -6,7 +6,10 @@ import com.litarary.account.domain.entity.MemberRole;
 import com.litarary.account.repository.AccountRepository;
 import com.litarary.account.repository.InterestRepository;
 import com.litarary.account.repository.MemberRoleRepository;
+import com.litarary.account.service.dto.LoginInfo;
 import com.litarary.account.service.dto.SignUpMemberInfo;
+import com.litarary.common.ErrorCode;
+import com.litarary.common.exception.account.AccountErrorException;
 import com.litarary.utils.jwt.JwtTokenProvider;
 import com.litarary.utils.jwt.TokenInfo;
 import lombok.RequiredArgsConstructor;
@@ -26,9 +29,7 @@ public class AccountService {
 
     private final AccountRepository accountRepository;
     private final InterestRepository interestRepository;
-
     private final MemberRoleRepository memberRoleRepository;
-
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final JwtTokenProvider jwtTokenProvider;
     private final PasswordEncoder passwordEncoder;
@@ -60,8 +61,7 @@ public class AccountService {
         memberRoleRepository.saveAll(memberRoles);
     }
 
-    public TokenInfo login(String email, String password) {
-
+    public LoginInfo login(String email, String password) {
         // 인증 객체 생성
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(email, password);
         //CustomUserDetailsService 가 실행됨
@@ -69,7 +69,14 @@ public class AccountService {
                 .authenticate(authenticationToken);
 
         // 토큰 생성
-        return jwtTokenProvider.generateToken(authenticate);
+        TokenInfo tokenInfo = jwtTokenProvider.generateToken(authenticate);
+        Member member = accountRepository.findByEmail(email)
+                .orElseThrow(() -> new AccountErrorException(ErrorCode.ACCOUNT_NOT_FOUND_EMAIL));
+
+        return LoginInfo.builder()
+                .tokenInfo(tokenInfo)
+                .member(member)
+                .build();
     }
 
 

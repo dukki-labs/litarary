@@ -2,7 +2,7 @@ package com.litarary.config.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.litarary.common.ErrorCode;
-import com.litarary.exception.filter.JwtErrorException;
+import com.litarary.common.exception.filter.JwtErrorException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

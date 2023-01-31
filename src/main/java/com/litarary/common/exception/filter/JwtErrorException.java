@@ -1,4 +1,4 @@
-package com.litarary.exception.filter;
+package com.litarary.common.exception.filter;
 
 import com.litarary.common.ErrorCode;
 import lombok.Getter;

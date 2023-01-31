@@ -1,7 +1,7 @@
 package com.litarary.utils.jwt;
 
 import com.litarary.common.ErrorCode;
-import com.litarary.exception.filter.JwtErrorException;
+import com.litarary.common.exception.filter.JwtErrorException;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;

@@ -4,8 +4,8 @@ import com.litarary.account.controller.dto.MemberDto;
 import com.litarary.account.controller.dto.MemberLoginDto;
 import com.litarary.account.controller.mapper.MemberMapper;
 import com.litarary.account.service.AccountService;
+import com.litarary.account.service.dto.LoginInfo;
 import com.litarary.account.service.dto.SignUpMemberInfo;
-import com.litarary.utils.jwt.TokenInfo;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -31,7 +31,7 @@ public class AccountController {
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/login")
     public MemberLoginDto.Response login(@Valid @RequestBody MemberLoginDto.Request request) {
-        TokenInfo login = accountService.login(request.getEmail(), request.getPassword());
-        return  memberMapper.loginResponse(login);
+        LoginInfo loginInfo = accountService.login(request.getEmail(), request.getPassword());
+        return  memberMapper.loginResponse(loginInfo);
     }
 }
