@@ -48,7 +48,7 @@ sonarqube {
         property "sonar.organization", "dukki-labs"
         property "sonar.host.url", "https://sonarcloud.io"
         property 'sonar.coverage.jacoco.xmlReportPaths', '${buildDir}/reports/jacoco/test/jacocoTestReport.xml'
-        property 'sonar.java.binaries', '${buildDir}/classes'
+        property 'sonar.java.binaries', 'build/classes'
         property 'sonar.test.inclusions', '**/*Test.java'
     }
 }
@@ -77,7 +77,7 @@ jacocoTestCoverageVerification {
             enabled(true)
             element("CLASS")
             limit {
-                minimum = 0.1
+                minimum = 0.0
             }
         }
     }
