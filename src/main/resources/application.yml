@@ -9,7 +9,7 @@ server:
       max: 4
 
 jwt:
-  secretKey: VlwEyVBsYt9V7zq57TejMnVUyzblYcfPQye08f7MGVA9XkHN
+  secretKey: testSecretKeytestSecretKeytestSecretKeytestSecretKey
 
 ---
 spring:
@@ -42,12 +42,14 @@ spring:
   config:
     activate:
       on-profile: prod
+
   datasource:
     hikari:
       driver-class-name: org.postgresql.Driver
       username: ${DATABASE_USER}
       password: ${DATABASE_USER_PASSWORD}
     url: ${DATABASE_URL}
+
   jpa:
     show-sql: true
     hibernate:
@@ -55,3 +57,6 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
+
+jwt:
+  secretKey: ${JWT_SECRET}
