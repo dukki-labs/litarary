@@ -16,6 +16,7 @@ public class Interest {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     @Enumerated(value = EnumType.STRING)
     private InterestType interestType;
 

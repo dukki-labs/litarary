@@ -31,7 +31,7 @@ public class CustomUserDetailService implements UserDetailsService {
                 .orElseThrow(() -> new AccountErrorException(ErrorCode.ACCOUNT_ACCESS_ROLE_MISS_MATCH));
 
         return User.builder()
-                .username(member.getNickName())
+                .username(member.getEmail())
                 .password(member.getPassword())
                 .roles(memberRole.getRoleType().name())
                 .build();

@@ -38,7 +38,7 @@ public class WebSecurityConfig {
                 .headers(headers -> headers.frameOptions().disable())
                 .httpBasic().disable()
                 .authorizeHttpRequests(auth ->
-                    auth.requestMatchers("/sign-up", "/login", "/").permitAll() // 해당 요청은 권한이 없어도 요청가능하다.
+                    auth.requestMatchers("/api/v1/account/**", "/").permitAll() // 해당 요청은 권한이 없어도 요청가능하다.
                             .requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")).permitAll()
                             .anyRequest().authenticated() // 이외 모든 요청은 권한이 있어야 한다.
                             .and()

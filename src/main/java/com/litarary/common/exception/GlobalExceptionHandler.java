@@ -17,7 +17,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(value = AccountErrorException.class)
     public ErrorResponse accountExceptionHandle(AccountErrorException ex) {
-        log.warn(">>>>> AccountErrorException error = {}", ex.getMessage());
+        log.warn(">>>>> AccountErrorException error = {}", ex.getErrorCode().getMessage());
         return ErrorResponse.builder()
                 .status(HttpStatus.BAD_REQUEST.value())
                 .errorCode(ex.getErrorCode().name())
@@ -54,6 +54,18 @@ public class GlobalExceptionHandler {
         return ErrorResponse.builder()
                 .status(HttpStatus.BAD_REQUEST.value())
                 .errorCode(ErrorCode.REQUEST_INVALID_JSON.name())
+                .errorMessage(ex.getMessage())
+                .build();
+    }
+
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(value = Exception.class)
+    public ErrorResponse exceptionHandler(Exception ex) {
+        log.warn(">>>>> Exception error = {}", ex.getMessage());
+
+        return ErrorResponse.builder()
+                .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                .errorCode(HttpStatus.INTERNAL_SERVER_ERROR.name())
                 .errorMessage(ex.getMessage())
                 .build();
     }

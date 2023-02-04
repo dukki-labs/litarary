@@ -2,8 +2,10 @@ package com.litarary.account.controller.mapper;
 
 import com.litarary.account.controller.dto.MemberDto;
 import com.litarary.account.controller.dto.MemberLoginDto;
+import com.litarary.account.controller.dto.MemberTokenDto;
 import com.litarary.account.domain.entity.Member;
 import com.litarary.account.service.dto.LoginInfo;
+import com.litarary.account.service.dto.RefreshTokenInfo;
 import com.litarary.account.service.dto.SignUpMemberInfo;
 import com.litarary.utils.jwt.TokenInfo;
 import org.springframework.stereotype.Component;
@@ -42,6 +44,15 @@ public class MemberMapper {
                 .refreshToken(tokenInfo.getRefreshToken())
                 .grantType(tokenInfo.getGrantType())
                 .expiredAccessTokenAt(tokenInfo.getExpiredAccessTokenAt())
+                .build();
+    }
+
+    public MemberTokenDto.Response refreshTokenResponse(RefreshTokenInfo refreshTokenInfo) {
+        return MemberTokenDto.Response
+                .builder()
+                .memberId(refreshTokenInfo.getMemberId())
+                .email(refreshTokenInfo.getEmail())
+                .accessToken(refreshTokenInfo.getAccessToken())
                 .build();
     }
 }

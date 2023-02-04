@@ -7,6 +7,7 @@ import com.litarary.account.repository.AccountRepository;
 import com.litarary.account.repository.InterestRepository;
 import com.litarary.account.repository.MemberRoleRepository;
 import com.litarary.account.service.dto.LoginInfo;
+import com.litarary.account.service.dto.RefreshTokenInfo;
 import com.litarary.account.service.dto.SignUpMemberInfo;
 import com.litarary.common.ErrorCode;
 import com.litarary.common.exception.account.AccountErrorException;
@@ -35,6 +36,8 @@ public class AccountService {
     private final PasswordEncoder passwordEncoder;
 
     public void signUpMember(SignUpMemberInfo memberInfo) {
+        validDuplicatedEmail(memberInfo);
+
         Member member = memberInfo.getMember();
         member.updatePasswordEncode(passwordEncoder.encode(member.getPassword()));
         Member signUpMember = accountRepository.save(member);
@@ -61,7 +64,20 @@ public class AccountService {
         memberRoleRepository.saveAll(memberRoles);
     }
 
+    private void validDuplicatedEmail(SignUpMemberInfo memberInfo) {
+        boolean isDuplicatedEmail = accountRepository.existsByEmail(memberInfo.getMember().getEmail());
+        if (isDuplicatedEmail) {
+            throw new AccountErrorException(ErrorCode.DUPLICATED_EMAIL);
+        }
+    }
+
     public LoginInfo login(String email, String password) {
+        Member member = accountRepository.findByEmail(email)
+                .orElseThrow(() -> new AccountErrorException(ErrorCode.ACCOUNT_NOT_FOUND_EMAIL));
+        if (!passwordEncoder.matches(password, member.getPassword())) {
+            throw new AccountErrorException(ErrorCode.MISS_MATCH_PASSWORD);
+        }
+
         // 인증 객체 생성
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(email, password);
         //CustomUserDetailsService 가 실행됨
@@ -70,8 +86,7 @@ public class AccountService {
 
         // 토큰 생성
         TokenInfo tokenInfo = jwtTokenProvider.generateToken(authenticate);
-        Member member = accountRepository.findByEmail(email)
-                .orElseThrow(() -> new AccountErrorException(ErrorCode.ACCOUNT_NOT_FOUND_EMAIL));
+        member.updateRefreshToken(tokenInfo.getRefreshToken());
 
         return LoginInfo.builder()
                 .tokenInfo(tokenInfo)
@@ -80,4 +95,17 @@ public class AccountService {
     }
 
 
+    public RefreshTokenInfo refreshToken(String email, String refreshToken) {
+        Member member = accountRepository.findByEmail(email)
+                .orElseThrow(() -> new AccountErrorException(ErrorCode.ACCOUNT_NOT_FOUND_EMAIL));
+
+        TokenInfo tokenInfo = jwtTokenProvider.refreshAccessToken(refreshToken);
+        member.updateRefreshToken(tokenInfo.getRefreshToken());
+
+        return RefreshTokenInfo.builder()
+                .memberId(member.getId())
+                .email(member.getEmail())
+                .accessToken(tokenInfo.getAccessToken())
+                .build();
+    }
 }
