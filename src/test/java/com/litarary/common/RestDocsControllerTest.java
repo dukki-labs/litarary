@@ -1,5 +1,6 @@
 package com.litarary.common;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.litarary.common.config.RestDocsConfig;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,8 +28,12 @@ import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.docu
 public abstract class RestDocsControllerTest {
 
     protected MockMvc mockMvc;
+
     @Autowired
     protected RestDocumentationResultHandler restDocs;
+
+    @Autowired
+    protected ObjectMapper objectMapper;
 
     @BeforeEach
     void setUp(WebApplicationContext webApplicationContext, RestDocumentationContextProvider restDocumentation) {

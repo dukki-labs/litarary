@@ -41,5 +41,4 @@ public class AccountController {
         RefreshTokenInfo refreshTokenInfo = accountService.refreshToken(request.getEmail(), request.getRefreshToken());
         return memberMapper.refreshTokenResponse(refreshTokenInfo);
     }
-
 }

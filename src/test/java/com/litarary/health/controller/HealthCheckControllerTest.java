@@ -14,7 +14,7 @@ class HealthCheckControllerTest extends RestDocsControllerTest {
 
 
     @Test
-    void test1() throws Exception {
+    void healthTest() throws Exception {
         this.mockMvc.perform(get("/").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andDo(restDocs.document(
