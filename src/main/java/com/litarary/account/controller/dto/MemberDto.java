@@ -4,6 +4,7 @@ import com.litarary.account.domain.AccessRole;
 import com.litarary.account.domain.InterestType;
 import jakarta.validation.constraints.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -13,6 +14,7 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class MemberDto {
 
+    @Builder
     @Getter
     public static class Request {
         @NotBlank(message = "닉네임은 필수 입력값 입니다.")

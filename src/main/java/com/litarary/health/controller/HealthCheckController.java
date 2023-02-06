@@ -1,13 +1,12 @@
 package com.litarary.health.controller;
 
+import com.litarary.health.controller.dto.HealthResponse;
 import com.litarary.health.dto.HealthDto;
 import com.litarary.health.entity.Health;
 import com.litarary.health.service.HealthService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -17,9 +16,13 @@ public class HealthCheckController {
 
     private final HealthService healthService;
 
+    @ResponseStatus(HttpStatus.OK)
     @GetMapping("/")
-    public String index() {
-        return "Let's Start Litarary project~!!";
+    public HealthResponse index() {
+        return HealthResponse.builder()
+                .projectName("Litarary")
+                .statusMessage("Let's start project")
+                .build();
     }
 
     @GetMapping("/health-check")
