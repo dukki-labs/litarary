@@ -1,0 +1,66 @@
+@font-face {
+  font-family: "Bold";
+  src: url("./font/Pretendard-Bold.woff2") format("woff2");
+}
+@font-face {
+  font-family: "SemiBold";
+  src: url("./font/Pretendard-SemiBold.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Medium";
+  src: url("./font/Pretendard-Medium.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Regular";
+  src: url("./font/Pretendard-Regular.woff2") format("woff2");
+}
+
+:root {
+  height: 100%;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  max-width: 100vw;
+  height: 100%;
+  overflow-x: hidden;
+}
+
+body {
+}
+#__next {
+  height: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+@font-face {
+  font-family: "GmarketSansLight";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansLight.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "GmarketSansMedium";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "GmarketSansBold";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansBold.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
+}

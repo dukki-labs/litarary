@@ -1,0 +1,92 @@
+.signin {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  height: 100%;
+  .signinWrapper {
+    width: 706px;
+    height: 728px;
+    padding: 80px 64px;
+    margin-right: 10%;
+    border: 1px solid black;
+    .title {
+      margin-bottom: 80px;
+      span {
+        font-family: GmarketSansLight;
+        font-weight: 400;
+        font-size: 44px;
+        line-height: 60px;
+        letter-spacing: -0.004em;
+        color: #202020;
+      }
+      .bold {
+        font-family: GmarketSansMedium;
+      }
+    }
+    .singinBox {
+      .inputBox {
+        padding: 16px 0;
+        width: 100%;
+        height: 80px;
+        border-bottom: 1.5px solid #202020;
+        input {
+          width: 100%;
+          border: none;
+          font-family: GmarketSansLight;
+          font-size: 32px;
+          line-height: 48px;
+          color: #202020;
+          &::placeholder {
+            opacity: 0.2;
+          }
+        }
+      }
+      .button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 64px 0 24px;
+        height: 72px;
+        background: #202020;
+        opacity: 0.2;
+      }
+      .button.on {
+        background: #1a1a1a;
+        opacity: 1;
+      }
+      .etc {
+        display: flex;
+        justify-content: space-between;
+        span {
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}
+
+.signup {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  .title {
+    margin-bottom: 80px;
+    span {
+      font-family: GmarketSansLight;
+      font-weight: 400;
+      font-size: 44px;
+      line-height: 60px;
+      letter-spacing: -0.004em;
+      color: #202020;
+    }
+    .bold {
+      font-family: GmarketSansMedium;
+    }
+  }
+  .signupWrapper {
+    width: 705px;
+    height: 1064px;
+    border: 1px solid black;
+  }
+}
