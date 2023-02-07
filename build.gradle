@@ -66,12 +66,14 @@ dependencies {
 //    toolVersion = '0.8.8'
 //}
 
-test {
-//    finalizedBy jacocoTestReport // test 빌드 후 항상 Jacoco보고서를 만들도록 설정
-}
-
 ext {
     snippetsDir = file('build/generated-snippets')
+}
+
+test {
+//    finalizedBy jacocoTestReport // test 빌드 후 항상 Jacoco보고서를 만들도록 설정
+    useJUnitPlatform()
+    outputs.dir snippetsDir
 }
 
 asciidoctor {
@@ -111,9 +113,12 @@ asciidoctor.doFirst {
 //    }
 //}
 
-tasks.named('test') {
-    useJUnitPlatform()
-    outputs.dir snippetsDir
+bootJar {
+    dependsOn asciidoctor
+    copy {
+        from "${asciidoctor.outputDir}"
+        into 'BOOT-INF/classes/static/docs'
+    }
 }
 
 task copyDocument(type: Copy) {
