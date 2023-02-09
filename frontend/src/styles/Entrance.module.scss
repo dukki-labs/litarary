@@ -1,16 +1,13 @@
 .signin {
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   align-items: center;
+  width: 100%;
   height: 100%;
   .signinWrapper {
-    width: 706px;
-    height: 728px;
-    padding: 80px 64px;
-    margin-right: 10%;
-    border: 1px solid black;
+    width: 612px;
     .title {
-      margin-bottom: 80px;
+      margin-bottom: 48px;
       span {
         font-family: GmarketSansLight;
         font-weight: 400;
@@ -25,13 +22,19 @@
     }
     .singinBox {
       .inputBox {
-        padding: 16px 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         width: 100%;
-        height: 80px;
-        border-bottom: 1.5px solid #202020;
+        height: 64px;
+        border-bottom: 2px solid #e6e6e6;
+        & + .inputBox {
+          margin-top: 12px;
+        }
         input {
           width: 100%;
           border: none;
+          outline: none;
           font-family: GmarketSansLight;
           font-size: 32px;
           line-height: 48px;
@@ -41,24 +44,46 @@
           }
         }
       }
+      .inputBox.on {
+        border-bottom: 2px solid #00ffb2;
+      }
       .button {
         display: flex;
         justify-content: center;
         align-items: center;
         margin: 64px 0 24px;
-        height: 72px;
-        background: #202020;
-        opacity: 0.2;
+        height: 64px;
+        background: #cccccc;
+        border-radius: 8px;
+        span {
+          cursor: pointer;
+          font-family: GmarketSansLight;
+          font-size: 24px;
+          line-height: 32px;
+        }
       }
       .button.on {
         background: #1a1a1a;
         opacity: 1;
       }
-      .etc {
+      .lost {
         display: flex;
-        justify-content: space-between;
+        justify-content: center;
+        margin-bottom: 64px;
+        text-decoration: underline;
+      }
+      .signupButton {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 64px;
+        background: #00ffb2;
+        border-radius: 8px;
         span {
           cursor: pointer;
+          font-family: GmarketSansLight;
+          font-size: 24px;
+          line-height: 32px;
         }
       }
     }
@@ -68,20 +93,23 @@
 .signup {
   display: flex;
   justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding-bottom: 212px;
   section {
-    margin: 284px 0;
-    width: 705px;
+    margin: 212px 0 0;
+    width: 612px;
     display: flex;
     flex-direction: column;
     .bar {
       position: relative;
-      margin-bottom: 48px;
+      margin-bottom: 32px;
     }
     .progress {
       position: absolute;
       left: 0;
       top: 0;
-      width: 96px;
+      width: 72px;
       height: 4px;
       background: #202020;
       opacity: 0.2;
@@ -93,17 +121,23 @@
       top: 0;
       width: 24px;
       height: 4px;
-      background: #1a1a1a;
+      background: #00ffb2;
       opacity: 1;
       z-index: 2;
     }
+    .step.two {
+      width: 48px;
+    }
+    .step.three {
+      width: 72px;
+    }
     .title {
-      margin-bottom: 80px;
+      margin-bottom: 96px;
       span {
         font-family: GmarketSansLight;
         font-weight: 400;
-        font-size: 48px;
-        line-height: 64px;
+        font-size: 40px;
+        line-height: 56px;
         letter-spacing: -0.004em;
         color: #202020;
       }
@@ -112,25 +146,14 @@
       }
     }
     .signupWrapper {
-      padding: 64px 48px;
-      width: 100%;
-      border: 1px solid #1a1a1a;
       .allAgree {
         display: flex;
         align-items: center;
-        margin-bottom: 40px;
-        padding-bottom: 40px;
-        border-bottom: 1px solid #1a1a1a;
-        .check {
-          width: 24px;
-          height: 24px;
+        margin-bottom: 32px;
+        padding-bottom: 32px;
+        border-bottom: 1.5px solid #e6e6e6;
+        img {
           margin-right: 8px;
-          border: 2px solid #1a1a1a;
-          border-radius: 12px;
-          cursor: pointer;
-        }
-        .check.on {
-          background: #1a1a1a;
         }
       }
       .termsBox {
@@ -138,38 +161,70 @@
         .terms {
           display: flex;
           align-items: center;
-          margin-bottom: 24px;
-          .check {
-            width: 24px;
-            height: 24px;
+          margin-bottom: 20px;
+          img {
             margin-right: 8px;
-            border: 2px solid #1a1a1a;
-            border-radius: 12px;
-            cursor: pointer;
-          }
-          .check.on {
-            background: #1a1a1a;
           }
         }
         .termsDesc {
           padding: 16px 20px;
-          min-height: 132px;
-          background: rgba(32, 32, 32, 0.05);
-          border: 1px solid rgba(32, 32, 32, 0.15);
+          height: 144px;
+          overflow: auto;
+          background: rgba(230, 230, 230, 0.3);
+          border: 1.5px solid #e6e6e6;
+          border-radius: 8px;
         }
       }
       .button {
-        margin-top: 56px;
-        padding: 20px;
-        text-align: center;
-        background: #202020;
-        opacity: 0.2;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 64px;
+        height: 64px;
+        background: #cccccc;
+        border-radius: 8px;
         cursor: pointer;
       }
       .button.on {
         background: #1a1a1a;
         opacity: 1;
       }
+    }
+  }
+
+  .interest {
+    display: flex;
+    justify-items: center;
+    flex-direction: column;
+    align-items: center;
+    .box {
+      display: flex;
+      .card {
+        padding: 12px 24px;
+        border: 2px solid #e6e6e6;
+        border-radius: 8px;
+        & + .card {
+          margin-left: 16px;
+        }
+      }
+      & + .box {
+        margin-top: 24px;
+      }
+    }
+    .button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 96px;
+      width: 612px;
+      height: 64px;
+      background: #cccccc;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .button.on {
+      background: #1a1a1a;
+      opacity: 1;
     }
   }
 }
