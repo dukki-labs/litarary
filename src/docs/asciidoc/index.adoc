@@ -7,23 +7,45 @@
 :sectlinks:
 
 
-== Health API
+== HTTP Status Code
 
-=== Sever 상태 조회
-operation::health-check-controller-test/health-test[snippets='http-request,http-response,response-fields']
+|===
+| 상태 코드 | 설명
+
+| `200 OK`
+| 성공
+
+| `201 OK`
+| 생성 성공
+
+| `400 Bad Request`
+| 잘못된 요청
+
+| `401 Unauthorized`
+| 비인증 상태
+
+| `403 Forbidden`
+| 권한 거부
+
+| `404 Not Found`
+| 존재하지 않는 요청 리소스
+
+| `500 Internal Server Error`
+| 서버 에러
+|===
+
+== 공통 에러
+=== 예외 발생 시 응답 메시지 형식
+operation::error-message-test/request-parameter-valid-test[snippets='response-fields,response-body']
 
 
+== APIs
 
-== Account API
-로그인, 회원가입 등 계정관련 API를 제공한다.
+=== Health Check API
 
-=== 회원 가입 요청
-operation::account-controller-test/sign-up-test[snippets='http-request,request-fields,http-response,']
+- link:health.html[서버 상태 체크 API]
 
-=== 로그인 요청
-operation::account-controller-test/login-test[snippets='http-request,request-fields,http-response,response-fields']
+=== Account API
 
-=== 액세스 토큰 갱신 요청
-액세스 토큰만료로 인한 갱신 요청
-
-operation::account-controller-test/refresh-token-test[snippets='http-request,request-fields,http-response,response-fields']
+- link:account.html[회원가입, 로그인 API]
+- link:token.html[토큰 갱신 API]

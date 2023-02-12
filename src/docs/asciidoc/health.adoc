@@ -1,0 +1,10 @@
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 2
+:sectlinks:
+
+== Health API
+=== Sever 상태 조회
+operation::health-check-controller-test/health-test[snippets='http-request,http-response,response-fields']
