@@ -38,7 +38,7 @@ dependencies {
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation'
 
     // Spring Rest Docs 추가
-    asciidoctorExt group: 'org.springframework.restdocs', name: 'spring-restdocs-asciidoctor', version: '3.0.0'
+    asciidoctorExt group: 'org.springframework.restdocs', name: 'spring-restdocs-asciidoctor', version: '2.0.7.RELEASE'
     testImplementation group: 'org.springframework.restdocs', name: 'spring-restdocs-mockmvc', version: '2.0.7.RELEASE'
 
     compileOnly 'org.projectlombok:lombok'
