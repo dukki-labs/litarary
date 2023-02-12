@@ -1,0 +1,17 @@
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 2
+:sectlinks:
+
+== Account API
+로그인, 회원가입 등 계정관련 API를 제공한다.
+
+=== 회원 가입 요청
+operation::account-controller-test/sign-up-test[snippets='http-request,request-fields,http-response,']
+
+=== 로그인 요청
+operation::account-controller-test/login-test[snippets='http-request,request-fields,http-response,response-fields']
+
+include::token.adoc[]

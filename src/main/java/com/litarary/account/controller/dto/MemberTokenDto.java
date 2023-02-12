@@ -1,5 +1,6 @@
 package com.litarary.account.controller.dto;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 @Getter
@@ -11,7 +12,9 @@ public class MemberTokenDto {
     @Builder
     @Getter
     public static class Request {
+        @NotBlank
         private String email;
+        @NotBlank
         private String refreshToken;
     }
     @AllArgsConstructor

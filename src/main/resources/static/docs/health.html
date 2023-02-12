@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.18">
-<title>Litarary API문서</title>
+<title>Health API</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -440,22 +440,12 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </head>
 <body class="book toc2 toc-left">
 <div id="header">
-<h1>Litarary API문서</h1>
-<div class="details">
-<span id="revnumber">version 0.0.1-SNAPSHOT</span>
-</div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#_공통_에러">공통 에러</a>
+<li><a href="#_health_api">Health API</a>
 <ul class="sectlevel2">
-<li><a href="#_예외_발생_시_응답_메시지_형식">예외 발생 시 응답 메시지 형식</a></li>
-</ul>
-</li>
-<li><a href="#_apis">APIs</a>
-<ul class="sectlevel2">
-<li><a href="#_health_check_api">Health Check API</a></li>
-<li><a href="#_account_api">Account API</a></li>
+<li><a href="#_sever_상태_조회">Sever 상태 조회</a></li>
 </ul>
 </li>
 </ul>
@@ -463,12 +453,37 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="_공통_에러"><a class="link" href="#_공통_에러">공통 에러</a></h2>
+<h2 id="_health_api"><a class="link" href="#_health_api">Health API</a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_예외_발생_시_응답_메시지_형식"><a class="link" href="#_예외_발생_시_응답_메시지_형식">예외 발생 시 응답 메시지 형식</a></h3>
+<h3 id="_sever_상태_조회"><a class="link" href="#_sever_상태_조회">Sever 상태 조회</a></h3>
 <div class="sect3">
-<h4 id="_예외_발생_시_응답_메시지_형식_response_fields"><a class="link" href="#_예외_발생_시_응답_메시지_형식_response_fields">Response fields</a></h4>
+<h4 id="_sever_상태_조회_http_request"><a class="link" href="#_sever_상태_조회_http_request">HTTP request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET / HTTP/1.1
+Accept: application/json
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_sever_상태_조회_http_response"><a class="link" href="#_sever_상태_조회_http_response">HTTP response</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
+Content-Length: 75
+
+{
+  "projectName" : "Litarary",
+  "statusMessage" : "Let's start project"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_sever_상태_조회_response_fields"><a class="link" href="#_sever_상태_조회_response_fields">Response fields</a></h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 33.3333%;">
@@ -484,79 +499,17 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>status</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">상태</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>projectName</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">프로젝트 이름</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>errorCode</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>statusMessage</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">에러 코드</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>errorMessage</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">에러 메시지</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>errorFields.[].fieldName</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">필드 명</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>errorFields.[].message</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">필드 에러 메시지</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">프로젝트 상태 메시지</p></td>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="sect3">
-<h4 id="_예외_발생_시_응답_메시지_형식_response_body"><a class="link" href="#_예외_발생_시_응답_메시지_형식_response_body">Response body</a></h4>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-json hljs" data-lang="json">{
-  "status" : 400,
-  "errorCode" : "UN_VALID_BINDING",
-  "errorMessage" : "요청 파라미터 혹은 Body 부분이 잘못되었습니다.",
-  "errorFields" : [ {
-    "fieldName" : "email",
-    "message" : "must not be blank"
-  }, {
-    "fieldName" : "password",
-    "message" : "must not be blank"
-  } ]
-}</code></pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_apis"><a class="link" href="#_apis">APIs</a></h2>
-<div class="sectionbody">
-<div class="sect2">
-<h3 id="_health_check_api"><a class="link" href="#_health_check_api">Health Check API</a></h3>
-<div class="ulist">
-<ul>
-<li>
-<p><a href="health.html">서버 상태 체크 API</a></p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_account_api"><a class="link" href="#_account_api">Account API</a></h3>
-<div class="ulist">
-<ul>
-<li>
-<p><a href="account.html">회원가입, 로그인 API</a></p>
-</li>
-<li>
-<p><a href="token.html">토큰 갱신 API</a></p>
-</li>
-</ul>
 </div>
 </div>
 </div>
@@ -565,7 +518,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2023-02-12 21:38:51 +0900
+Last updated 2023-02-12 21:35:59 +0900
 </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/highlight.min.js"></script>
