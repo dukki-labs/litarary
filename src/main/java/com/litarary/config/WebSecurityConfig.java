@@ -17,7 +17,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
 
 @Configuration
 @EnableWebSecurity
@@ -37,22 +37,23 @@ public class WebSecurityConfig {
     public WebSecurityCustomizer webSecurityCustomizer() {
         return web -> web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations());
     }
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
 
         return httpSecurity
-                .csrf(csrf -> csrf.ignoringRequestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")).disable())
+                .csrf().disable()//(csrf -> csrf.ignoringRequestMatchers(antMatchers("/h2-console/**")).disable())
                 .headers(headers -> headers.frameOptions().disable())
                 .httpBasic().disable()
                 .authorizeHttpRequests(auth ->
-                    auth.requestMatchers("/api/v1/account/**", "/").permitAll() // 해당 요청은 권한이 없어도 요청가능하다.
-                            .requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")).permitAll()
-                            .requestMatchers(AntPathRequestMatcher.antMatcher("/docs/**")).permitAll()
-                            .requestMatchers(AntPathRequestMatcher.antMatcher("static/docs/**")).permitAll()
-                            .anyRequest().authenticated() // 이외 모든 요청은 권한이 있어야 한다.
-                            .and()
-                            .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
-                            .addFilterBefore(filterExceptionHandler, JwtAuthenticationFilter.class)
+                        auth.antMatchers("/api/v1/account/**", "/").permitAll() // 해당 요청은 권한이 없어도 요청가능하다.
+                                .antMatchers("/h2-console/**").permitAll()
+                                .antMatchers("/docs/**").permitAll()
+                                .antMatchers("static/docs/**").permitAll()
+                                .anyRequest().authenticated() // 이외 모든 요청은 권한이 있어야 한다.
+                                .and()
+                                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
+                                .addFilterBefore(filterExceptionHandler, JwtAuthenticationFilter.class)
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) //JWT토큰을 사용할 것임으로 세션적용하지 않도록 설정
                 .build();
