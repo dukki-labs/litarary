@@ -42,7 +42,6 @@ public class WebSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
 
         return httpSecurity
-                .csrf().ignoringAntMatchers("/h2-console/**").disable()
                 .headers(headers -> headers.frameOptions().disable())
                 .httpBasic().disable()
                 .authorizeHttpRequests(auth ->
