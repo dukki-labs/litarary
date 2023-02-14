@@ -2,12 +2,12 @@ package com.litarary.account.controller.dto;
 
 import com.litarary.account.domain.AccessRole;
 import com.litarary.account.domain.InterestType;
-import jakarta.validation.constraints.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.*;
 import java.util.List;
 
 @Getter

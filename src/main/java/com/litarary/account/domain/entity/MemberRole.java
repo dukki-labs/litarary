@@ -1,11 +1,12 @@
 package com.litarary.account.domain.entity;
 
 import com.litarary.account.domain.AccessRole;
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
 
 @Builder
 @AllArgsConstructor
