@@ -29,7 +29,7 @@ public class Member {
     @Column(unique = true, nullable = false)
     private String email;
 
-    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<MemberRole> memberRole = new ArrayList<>();
     @Column(nullable = false)
     private String password;

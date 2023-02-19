@@ -11,9 +11,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -32,23 +31,16 @@ public class WebSecurityConfig {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
-    // 정적파일에 대해서는 Spring Security 설정을 하지 않도록 설정.(Api문서 때문)
-    @Bean
-    public WebSecurityCustomizer webSecurityCustomizer() {
-        return web -> web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations());
-    }
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
 
         return httpSecurity
-                .headers(headers -> headers.frameOptions().disable())
-                .httpBasic().disable()
+                .csrf().disable()
                 .authorizeHttpRequests(auth ->
-                        auth.antMatchers("/api/v1/account/**", "/").permitAll() // 해당 요청은 권한이 없어도 요청가능하다.
+                        auth.requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
+                                .antMatchers("/api/v1/account/**", "/").permitAll() // 해당 요청은 권한이 없어도 요청가능하다.
                                 .antMatchers("/h2-console/**").permitAll()
                                 .antMatchers("/docs/**").permitAll()
-                                .antMatchers("static/docs/**").permitAll()
                                 .anyRequest().authenticated() // 이외 모든 요청은 권한이 있어야 한다.
                                 .and()
                                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
@@ -60,6 +52,6 @@ public class WebSecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 }
