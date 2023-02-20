@@ -1,20 +1,20 @@
 ###
-POST http://localhost:8080/sign-up
+POST http://localhost:8080/api/v1/account/sign-up
 Content-Type: application/json
 
 {
   "nickName": "test",
   "email": "test@naver.com",
-  "password": "124145",
+  "password": "test123!",
   "accountTerms": true,
   "serviceTerms": true,
   "privacyTerms": true,
   "serviceAlarm": true,
   "interestItems": [
-    "HORROR",
-    "GAG",
-    "ROMANCE",
-    "IT"
+    "HISTORY_CULTURE",
+    "ECONOMY_OPERATE",
+    "ART_LITERATURE",
+    "HUMANITIES_SOCIAL"
   ],
   "accessRoles": [
     "USER"
@@ -22,12 +22,12 @@ Content-Type: application/json
 }
 
 ###
-POST http://localhost:8080/login
+POST http://localhost:8080/api/v1/account/login
 Content-Type: application/json
 
 {
   "email": "test@naver.com",
-  "password": "124145"
+  "password": "test123!"
 }
 
 ###
@@ -42,21 +42,22 @@ Content-Type: application/json
 {
   "nickName": "test",
   "email": "test@naver.com",
-  "password": "124145",
+  "password": "test123!",
   "accountTerms": true,
   "serviceTerms": true,
   "privacyTerms": true,
   "serviceAlarm": true,
   "interestItems": [
-    "HORROR",
-    "GAG",
-    "ROMANCE",
-    "IT"
+    "HISTORY_CULTURE",
+    "ECONOMY_OPERATE",
+    "ART_LITERATURE",
+    "HUMANITIES_SOCIAL"
   ],
   "accessRoles": [
     "USER"
   ]
 }
+
 
 
 ###
@@ -67,3 +68,8 @@ Content-Type: application/json
   "email": "test@naver.com",
   "password": "124145"
 }
+
+###
+GET http://localhost:8080/health-check
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0QG5hdmVyLmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJpYXQiOjE2NzY3OTg0NjQsImV4cCI6MTY3NjgwMDI2NH0.kGcuSryKLA2LXlzyDGOjdBko1INiiDjidvVAmxx2M00
