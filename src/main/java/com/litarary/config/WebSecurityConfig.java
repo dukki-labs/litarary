@@ -36,6 +36,8 @@ public class WebSecurityConfig {
 
         return httpSecurity
                 .csrf().disable()
+                .headers().frameOptions().disable()
+                .and()
                 .authorizeHttpRequests(auth ->
                         auth.requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                                 .antMatchers("/api/v1/account/**", "/").permitAll() // 해당 요청은 권한이 없어도 요청가능하다.

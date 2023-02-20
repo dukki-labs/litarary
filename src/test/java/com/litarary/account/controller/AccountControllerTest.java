@@ -43,7 +43,7 @@ class AccountControllerTest extends RestDocsControllerTest {
                 .email("test@naver.com")
                 .password("qwer123!@")
                 .accessRoles(List.of(AccessRole.TESTER))
-                .interestItems(List.of(InterestType.IT, InterestType.CRIME))
+                .interestItems(List.of(InterestType.ART_LITERATURE, InterestType.ECONOMY_OPERATE))
                 .accountTerms(true)
                 .serviceTerms(true)
                 .privacyTerms(true)
@@ -69,7 +69,26 @@ class AccountControllerTest extends RestDocsControllerTest {
                                         fieldWithPath("serviceTerms").type(JsonFieldType.BOOLEAN).description("서비스 약관 동의"),
                                         fieldWithPath("privacyTerms").type(JsonFieldType.BOOLEAN).description("개인정보 약관 동의"),
                                         fieldWithPath("serviceAlarm").type(JsonFieldType.BOOLEAN).description("서비스 알림 동의"),
-                                        fieldWithPath("interestItems[]").type(JsonFieldType.ARRAY).description("취미 종류 [HORROR, GAG, ROMANCE, IT]"),
+                                        fieldWithPath("interestItems[]").type(JsonFieldType.ARRAY).description("취미 종류 " +
+                                                "`[HISTORY_CULTURE:역사/문화]`\n" +
+                                                "`[POLITICAL_SOCIAL:정치/사회]`\n" +
+                                                "`[ECONOMY_OPERATE:경제/경영]`\n" +
+                                                "`[SELF_DEVELOPMENT:자기계발]`\n" +
+                                                "`[HEALTH_MEDICINE:건강/의학]`\n" +
+                                                "`[ART_LITERATURE:예술/문학]`\n" +
+                                                "`[SCIENCE_TECHNOLOGY:과학/기술]`\n" +
+                                                "`[HOBBIES_TRAVEL:취미/여행]`\n" +
+                                                "`[HUMANITIES_SOCIAL:인문/사회]`\n" +
+                                                "`[IT_PROGRAMS:IT/프로그램]`\n" +
+                                                "`[KOREAN_FOREIGN_LANGUAGE:국어/외국어]`\n" +
+                                                "`[SUCCESS_LIFESTYLE:성공/처세]`\n" +
+                                                "`[FAMILY_LIFE:가정생활]`\n" +
+                                                "`[STOCKS_FINANCE:주식/금융]`\n" +
+                                                "`[BUSINESS_SALES:영업/판매]`\n" +
+                                                "`[HUMAN_RELATIONS:인간관계]`\n" +
+                                                "`[INFANTS_CHILDREN:유아/아동]`\n" +
+                                                "`[ADULTS:성인]`\n" +
+                                                "`[OTHERS:기타]`"),
                                         fieldWithPath("accessRoles.[]").type(JsonFieldType.ARRAY).description("가입 권한 정보 [USER, TESTER]")
                                 )
                         )
