@@ -2,10 +2,6 @@ package com.litarary.account.domain;
 
 import lombok.RequiredArgsConstructor;
 
-/**
- *
- * IT/programs, Korean/foreign language, success/lifestyle, family life, stocks/finance, sales/sales, human relations, infants/children, adults, others
- */
 @RequiredArgsConstructor
 public enum InterestType {
     HISTORY_CULTURE("역사/문화"),

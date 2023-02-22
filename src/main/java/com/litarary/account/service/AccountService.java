@@ -72,8 +72,7 @@ public class AccountService {
     }
 
     public LoginInfo login(String email, String password) {
-        Member member = accountRepository.findByEmail(email)
-                .orElseThrow(() -> new AccountErrorException(ErrorCode.ACCOUNT_NOT_FOUND_EMAIL));
+        Member member = getMember(email);
         if (!passwordEncoder.matches(password, member.getPassword())) {
             throw new AccountErrorException(ErrorCode.MISS_MATCH_PASSWORD);
         }
@@ -96,9 +95,8 @@ public class AccountService {
 
 
     public RefreshTokenInfo refreshToken(String email, String refreshToken) {
-        Member member = accountRepository.findByEmail(email)
-                .orElseThrow(() -> new AccountErrorException(ErrorCode.ACCOUNT_NOT_FOUND_EMAIL));
-
+        Member member = getMember(email);
+        //Todo: refreshToken이 일치하는지 체크할 것.
         TokenInfo tokenInfo = jwtTokenProvider.refreshAccessToken(refreshToken);
         member.updateRefreshToken(tokenInfo.getRefreshToken());
 
@@ -107,5 +105,15 @@ public class AccountService {
                 .email(member.getEmail())
                 .accessToken(tokenInfo.getAccessToken())
                 .build();
+    }
+
+    public Member findMember(String email) {
+        return getMember(email);
+    }
+
+    private Member getMember(String email) {
+        Member member = accountRepository.findByEmail(email)
+                .orElseThrow(() -> new AccountErrorException(ErrorCode.ACCOUNT_NOT_FOUND_EMAIL));
+        return member;
     }
 }

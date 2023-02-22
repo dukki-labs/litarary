@@ -1,6 +1,7 @@
 package com.litarary.account.controller.mapper;
 
 import com.litarary.account.controller.dto.MemberDto;
+import com.litarary.account.controller.dto.MemberEmailDto;
 import com.litarary.account.controller.dto.MemberLoginDto;
 import com.litarary.account.controller.dto.MemberTokenDto;
 import com.litarary.account.domain.entity.Member;
@@ -53,6 +54,15 @@ public class MemberMapper {
                 .memberId(refreshTokenInfo.getMemberId())
                 .email(refreshTokenInfo.getEmail())
                 .accessToken(refreshTokenInfo.getAccessToken())
+                .build();
+    }
+
+    public MemberEmailDto.Response memberResponse(Member member) {
+        return MemberEmailDto.Response
+                .builder()
+                .memberId(member.getId())
+                .email(member.getEmail())
+                .memberNickName(member.getNickName())
                 .build();
     }
 }
