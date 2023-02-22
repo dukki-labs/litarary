@@ -1,6 +1,7 @@
 package com.litarary.account.controller;
 
 import com.litarary.account.controller.dto.MemberDto;
+import com.litarary.account.controller.dto.MemberEmailDto;
 import com.litarary.account.controller.dto.MemberLoginDto;
 import com.litarary.account.controller.dto.MemberTokenDto;
 import com.litarary.account.domain.AccessRole;
@@ -21,9 +22,13 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doNothing;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
+import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.requestParameters;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -175,6 +180,34 @@ class AccountControllerTest extends RestDocsControllerTest {
                                         fieldWithPath("memberId").type(JsonFieldType.NUMBER).description("회원 고유번호"),
                                         fieldWithPath("email").type(JsonFieldType.STRING).description("회원 이메일"),
                                         fieldWithPath("accessToken").type(JsonFieldType.STRING).description("액세스 토큰")
+                                )
+                        )
+                );
+    }
+
+    @Test
+    void findMemberByEmailTest() throws Exception {
+        String email = "test@test.com";
+        Member member = Member.builder()
+                .id(1L)
+                .nickName("test")
+                .email(email)
+                .build();
+        given(accountService.findMember(anyString())).willReturn(member);
+
+        mockMvc.perform(get("/api/v1/account")
+                        .param("email", email)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isOk())
+                .andDo(
+                        restDocs.document(
+                                requestParameters(
+                                        parameterWithName("email").description("이메일")
+                                ),
+                                responseFields(
+                                        fieldWithPath("memberId").type(JsonFieldType.NUMBER).description("회원 고유번호"),
+                                        fieldWithPath("email").type(JsonFieldType.STRING).description("이메일"),
+                                        fieldWithPath("memberNickName").type(JsonFieldType.STRING).description("회원 닉네임")
                                 )
                         )
                 );

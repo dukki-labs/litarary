@@ -14,3 +14,5 @@ operation::account-controller-test/sign-up-test[snippets='http-request,request-f
 === 로그인 요청
 operation::account-controller-test/login-test[snippets='http-request,request-fields,http-response,response-fields']
 
+=== 이메일 찾기
+operation::account-controller-test/find-member-by-email-test[snippets='http-request,request-parameters,response-body,response-fields']

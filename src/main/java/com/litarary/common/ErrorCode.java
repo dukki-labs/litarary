@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 public enum ErrorCode {
 
     //Account Error
-    ACCOUNT_NOT_FOUND_EMAIL("등록된 이메일을 찾을 수 없습니다."),
+    ACCOUNT_NOT_FOUND_EMAIL("현재 등록되지 않은 이메일이에요!"),
     DUPLICATED_EMAIL("이미 가입된 이메일 입니다."),
     ACCOUNT_ACCESS_ROLE_MISS_MATCH("해당 사용자는 권한을 가지고 있지 않습니다."),
     MISS_MATCH_PASSWORD("비밀번호가 일치하지 않습니다."),
