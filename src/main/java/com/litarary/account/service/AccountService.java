@@ -111,6 +111,14 @@ public class AccountService {
         return getMember(email);
     }
 
+    public void updatePassword(long memberId, String accessCode, String password) {
+        Member member = accountRepository.findById(memberId)
+                .orElseThrow(() -> new AccountErrorException(ErrorCode.MEMBER_NOT_FOUND));
+
+        member.validAccessCode(accessCode);
+        member.updatePasswordEncode(passwordEncoder.encode(password));
+    }
+
     private Member getMember(String email) {
         Member member = accountRepository.findByEmail(email)
                 .orElseThrow(() -> new AccountErrorException(ErrorCode.ACCOUNT_NOT_FOUND_EMAIL));

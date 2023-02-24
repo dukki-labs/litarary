@@ -1,9 +1,6 @@
 package com.litarary.account.controller;
 
-import com.litarary.account.controller.dto.MemberDto;
-import com.litarary.account.controller.dto.MemberEmailDto;
-import com.litarary.account.controller.dto.MemberLoginDto;
-import com.litarary.account.controller.dto.MemberTokenDto;
+import com.litarary.account.controller.dto.*;
 import com.litarary.account.controller.mapper.MemberMapper;
 import com.litarary.account.domain.entity.Member;
 import com.litarary.account.service.AccountService;
@@ -35,7 +32,7 @@ public class AccountController {
     @PostMapping("/login")
     public MemberLoginDto.Response login(@Valid @RequestBody MemberLoginDto.Request request) {
         LoginInfo loginInfo = accountService.login(request.getEmail(), request.getPassword());
-        return  memberMapper.loginResponse(loginInfo);
+        return memberMapper.loginResponse(loginInfo);
     }
 
     @ResponseStatus(HttpStatus.OK)
@@ -43,6 +40,12 @@ public class AccountController {
     public MemberEmailDto.Response findMemberByEmail(@Valid @ModelAttribute MemberEmailDto.Request request) {
         Member member = accountService.findMember(request.getEmail());
         return memberMapper.memberResponse(member);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @PatchMapping("/password")
+    public void updatePassword(@Valid @RequestBody MemberPasswordDto.Request request) {
+        accountService.updatePassword(request.getMemberId(), request.getAccessCode(), request.getPassword());
     }
 
     @ResponseStatus(HttpStatus.OK)
