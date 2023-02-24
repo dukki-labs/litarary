@@ -1,5 +1,7 @@
 package com.litarary.account.domain.entity;
 
+import com.litarary.common.ErrorCode;
+import com.litarary.common.exception.account.AccountErrorException;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -34,6 +36,9 @@ public class Member {
     @Column(nullable = false)
     private String password;
 
+    @Column
+    private String accessCode;
+
     @Column(nullable = false)
     private boolean isAccountTerms;
 
@@ -62,5 +67,11 @@ public class Member {
 
     public void updateRefreshToken(String token) {
         this.refreshToken = token;
+    }
+
+    public void validAccessCode(String accessCode) {
+        if (!accessCode.equals(this.accessCode)) {
+            throw new AccountErrorException(ErrorCode.ACCOUNT_ACCESS_ROLE_MISS_MATCH);
+        }
     }
 }

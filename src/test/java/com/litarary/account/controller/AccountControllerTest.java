@@ -1,8 +1,8 @@
 package com.litarary.account.controller;
 
 import com.litarary.account.controller.dto.MemberDto;
-import com.litarary.account.controller.dto.MemberEmailDto;
 import com.litarary.account.controller.dto.MemberLoginDto;
+import com.litarary.account.controller.dto.MemberPasswordDto;
 import com.litarary.account.controller.dto.MemberTokenDto;
 import com.litarary.account.domain.AccessRole;
 import com.litarary.account.domain.InterestType;
@@ -16,20 +16,23 @@ import com.litarary.utils.jwt.TokenInfo;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.restdocs.payload.JsonFieldType;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doNothing;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.requestParameters;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 class AccountControllerTest extends RestDocsControllerTest {
@@ -211,5 +214,81 @@ class AccountControllerTest extends RestDocsControllerTest {
                                 )
                         )
                 );
+    }
+
+    @Test
+    void updatePasswordTest() throws Exception {
+        MemberPasswordDto.Request request = MemberPasswordDto.Request.builder()
+                .memberId(1L)
+                .password("test123!")
+                .accessCode("3425235")
+                .build();
+        String content = objectMapper.writeValueAsString(request);
+        doNothing().when(accountService).updatePassword(anyLong(), anyString(), anyString());
+
+        mockMvc.perform(RestDocumentationRequestBuilders.patch("/api/v1/account/password")
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .content(content))
+                .andExpect(status().isOk())
+                .andDo(
+                        restDocs.document(
+                                requestFields(
+                                        fieldWithPath("memberId").type(JsonFieldType.NUMBER).description("회원 고유번호"),
+                                        fieldWithPath("password").type(JsonFieldType.STRING).description("변경할 비밀번호"),
+                                        fieldWithPath("accessCode").type(JsonFieldType.STRING).description("인증번호")
+                                )
+                        )
+                );
+    }
+
+    @Test
+    void 비밀번호_변경요청시_회원번호는_0이하입력시_에러발생_테스트() throws Exception {
+        MemberPasswordDto.Request request = MemberPasswordDto.Request.builder()
+                .memberId(0L)
+                .password("test123")
+                .accessCode("3425235")
+                .build();
+        String content = objectMapper.writeValueAsString(request);
+        mockMvc.perform(patch("/api/v1/account/password")
+                        .content(content)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.status").value(400))
+                .andExpect(jsonPath("$.errorCode").value("UN_VALID_BINDING"))
+                .andDo(print());
+
+    }
+
+    @Test
+    void 비밀번호_변경요청시_포멧_불일치할경우_에러발생_테스트() throws Exception {
+        MemberPasswordDto.Request request = MemberPasswordDto.Request.builder()
+                .memberId(1L)
+                .password("test123")
+                .accessCode("3425235")
+                .build();
+        String content = objectMapper.writeValueAsString(request);
+        mockMvc.perform(patch("/api/v1/account/password")
+                        .content(content)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.status").value(400))
+                .andExpect(jsonPath("$.errorCode").value("UN_VALID_BINDING"))
+                .andDo(print());
+    }
+
+    @Test
+    void 비밀번호_변경요청시_엑세스코드_없이_요청하면_에러발생_테스트() throws Exception {
+        MemberPasswordDto.Request request = MemberPasswordDto.Request.builder()
+                .memberId(1L)
+                .password("test123")
+                .build();
+        String content = objectMapper.writeValueAsString(request);
+        mockMvc.perform(patch("/api/v1/account/password")
+                        .content(content)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.status").value(400))
+                .andExpect(jsonPath("$.errorCode").value("UN_VALID_BINDING"))
+                .andDo(print());
     }
 }
