@@ -107,6 +107,7 @@ public class AccountService {
                 .build();
     }
 
+    @Transactional(readOnly = true)
     public Member findMember(String email) {
         return getMember(email);
     }
