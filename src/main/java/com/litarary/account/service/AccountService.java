@@ -107,6 +107,13 @@ public class AccountService {
                 .build();
     }
 
+    public void updateAccessCode(long memberId, String accessCode) {
+        Member member = accountRepository.findById(memberId)
+                .orElseThrow(() -> new AccountErrorException(ErrorCode.MEMBER_NOT_FOUND));
+
+        member.updateAccessCode(accessCode);
+    }
+
     @Transactional(readOnly = true)
     public Member findMember(String email) {
         return getMember(email);

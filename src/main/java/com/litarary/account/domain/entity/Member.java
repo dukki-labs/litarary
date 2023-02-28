@@ -74,4 +74,8 @@ public class Member {
             throw new AccountErrorException(ErrorCode.ACCOUNT_ACCESS_ROLE_MISS_MATCH);
         }
     }
+
+    public void updateAccessCode(String accessCode) {
+        this.accessCode = accessCode;
+    }
 }

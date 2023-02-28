@@ -43,6 +43,12 @@ public class AccountController {
     }
 
     @ResponseStatus(HttpStatus.OK)
+    @PatchMapping("access-code")
+    public void updateAccessCode(@Valid @RequestBody MemberAccessCode.Request request) {
+        accountService.updateAccessCode(request.getMemberId(), request.getAccessCode());
+    }
+
+    @ResponseStatus(HttpStatus.OK)
     @PatchMapping("/password")
     public void updatePassword(@Valid @RequestBody MemberPasswordDto.Request request) {
         accountService.updatePassword(request.getMemberId(), request.getAccessCode(), request.getPassword());

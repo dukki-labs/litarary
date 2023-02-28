@@ -1,9 +1,6 @@
 package com.litarary.account.controller;
 
-import com.litarary.account.controller.dto.MemberDto;
-import com.litarary.account.controller.dto.MemberLoginDto;
-import com.litarary.account.controller.dto.MemberPasswordDto;
-import com.litarary.account.controller.dto.MemberTokenDto;
+import com.litarary.account.controller.dto.*;
 import com.litarary.account.domain.AccessRole;
 import com.litarary.account.domain.InterestType;
 import com.litarary.account.domain.entity.Member;
@@ -198,7 +195,7 @@ class AccountControllerTest extends RestDocsControllerTest {
                 .build();
         given(accountService.findMember(anyString())).willReturn(member);
 
-        mockMvc.perform(get("/api/v1/account")
+        mockMvc.perform(get(REQUEST_PREFIX)
                         .param("email", email)
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk())
@@ -217,6 +214,32 @@ class AccountControllerTest extends RestDocsControllerTest {
     }
 
     @Test
+    void updateAccessCodeTest() throws Exception {
+        long memberId = 1L;
+        String accessCode = "1515134";
+        MemberAccessCode.Request request = MemberAccessCode.Request.builder()
+                .memberId(memberId)
+                .accessCode(accessCode)
+                .build();
+        String content = objectMapper.writeValueAsString(request);
+        doNothing().when(accountService).updateAccessCode(memberId, accessCode);
+
+        String uri = REQUEST_PREFIX + "/access-code";
+        mockMvc.perform(patch(uri)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .content(content))
+                .andExpect(status().isOk())
+                .andDo(
+                        restDocs.document(
+                                requestFields(
+                                        fieldWithPath("memberId").type(JsonFieldType.NUMBER).description("회원 고유번호"),
+                                        fieldWithPath("accessCode").type(JsonFieldType.STRING).description("인증번호")
+                                )
+                        )
+                );
+    }
+
+    @Test
     void updatePasswordTest() throws Exception {
         MemberPasswordDto.Request request = MemberPasswordDto.Request.builder()
                 .memberId(1L)
@@ -226,7 +249,8 @@ class AccountControllerTest extends RestDocsControllerTest {
         String content = objectMapper.writeValueAsString(request);
         doNothing().when(accountService).updatePassword(anyLong(), anyString(), anyString());
 
-        mockMvc.perform(RestDocumentationRequestBuilders.patch("/api/v1/account/password")
+        String uri = REQUEST_PREFIX + "/password";
+        mockMvc.perform(RestDocumentationRequestBuilders.patch(uri)
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .content(content))
                 .andExpect(status().isOk())
@@ -286,6 +310,21 @@ class AccountControllerTest extends RestDocsControllerTest {
         mockMvc.perform(patch("/api/v1/account/password")
                         .content(content)
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.status").value(400))
+                .andExpect(jsonPath("$.errorCode").value("UN_VALID_BINDING"))
+                .andDo(print());
+    }
+
+    @Test
+    void 인증번호등록_요청시_회원번호가_없이_요청한경우_에러가발생한다() throws Exception {
+        MemberAccessCode.Request request = MemberAccessCode.Request.builder()
+                .accessCode("21415")
+                .build();
+        String content = objectMapper.writeValueAsString(request);
+        mockMvc.perform(patch("/api/v1/account/access-code")
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .content(content))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.status").value(400))
                 .andExpect(jsonPath("$.errorCode").value("UN_VALID_BINDING"))
