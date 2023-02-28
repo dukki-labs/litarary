@@ -44,6 +44,15 @@ Content-Type: application/json
   "refreshToken": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0QG5hdmVyLmNvbSIsImlhdCI6MTY3NzA3MzQ1MywiZXhwIjoxNjc3Njc4MjUzfQ.eSd9rgD8n6Bqz--TRVqLdA1_zSImn0HJjiiMlbjVYbA"
 }
 
+### 인증번호 등록
+PATCH http://localhost:8080/api/v1/account/access-code
+Content-Type: application/json
+
+{
+  "memberId": 1,
+  "accessCode": "145124"
+}
+
 ### 이메일 찾기
 GET http://localhost:8080/api/v1/account?email=test@test.com
 Content-Type: application/json
