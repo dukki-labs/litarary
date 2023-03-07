@@ -1,0 +1,14 @@
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 2
+:sectlinks:
+
+== 메인화면 도서조회(관심도서, 신규도서) API
+=== 신규 도서 조회 API
+
+operation::book-controller-test/recent-book-list-test[snippets='http-request,request-parameters,response-body,response-fields']
+
+=== 관심 도서 조회 API
+operation::book-controller-test/concern-book-list-test[snippets='http-request,request-parameters,response-body,response-fields']

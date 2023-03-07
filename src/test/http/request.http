@@ -56,3 +56,14 @@ Content-Type: application/json
 ### 이메일 찾기
 GET http://localhost:8080/api/v1/account?email=test@test.com
 Content-Type: application/json
+
+### 신규도서 조회
+GET http://localhost:8080/api/v1/books/recent?inquiryDate=2022-01-23
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0QG5hdmVyLmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJpYXQiOjE2Nzc3NDk3MTAsImV4cCI6MTY3Nzc1MTUxMH0.g5MHa0ZDPqnRKLBQkxFNxW02iwmfqP9GcVapDTXcZvU
+
+
+### 관심도서 조회
+GET http://localhost:8080/api/v1/books/concern?inquiryDate=2022-01-23
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0QG5hdmVyLmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJpYXQiOjE2NzgxOTUzMjgsImV4cCI6MTY3ODE5NzEyOH0.04Z4vxefO8uyGeFjXU1UTyswJWy22wgH7I3YbYdYdwg
