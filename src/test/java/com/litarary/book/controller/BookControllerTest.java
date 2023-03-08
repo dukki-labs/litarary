@@ -16,7 +16,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class BookControllerTest extends RestDocsControllerTest {
 
     @Test
-    @WithMockUser(value = "user")
+    @WithMockUser
     void recentBookListTest() throws Exception {
         mockMvc.perform(get("/api/v1/books/recent")
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -40,7 +40,7 @@ class BookControllerTest extends RestDocsControllerTest {
     }
 
     @Test
-    @WithMockUser(value = "user")
+    @WithMockUser
     void concernBookListTest() throws Exception {
 
         mockMvc.perform(get("/api/v1/books/concern")
