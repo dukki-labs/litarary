@@ -1,6 +1,6 @@
 package com.litarary.book.controller.dto;
 
-import com.litarary.account.domain.InterestType;
+import com.litarary.account.domain.BookCategory;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -16,7 +16,7 @@ public class BookInfoDto {
     private String imageUrl;
     private String title;
 
-    private InterestType interestType;
+    private BookCategory bookCategory;
     private String content;
     private int likeCount;
     private int viewCount;

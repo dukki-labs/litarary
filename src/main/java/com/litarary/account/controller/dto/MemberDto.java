@@ -1,7 +1,7 @@
 package com.litarary.account.controller.dto;
 
 import com.litarary.account.domain.AccessRole;
-import com.litarary.account.domain.InterestType;
+import com.litarary.account.domain.BookCategory;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -45,6 +45,6 @@ public class MemberDto {
         @NotNull(message = "서비스 안내 동의는 선택입니다.")
         private boolean serviceAlarm;
 
-        private List<InterestType> interestItems;
+        private List<BookCategory> interestItems;
     }
 }

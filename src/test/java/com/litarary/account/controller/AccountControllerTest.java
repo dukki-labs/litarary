@@ -2,7 +2,7 @@ package com.litarary.account.controller;
 
 import com.litarary.account.controller.dto.*;
 import com.litarary.account.domain.AccessRole;
-import com.litarary.account.domain.InterestType;
+import com.litarary.account.domain.BookCategory;
 import com.litarary.account.domain.entity.Member;
 import com.litarary.account.service.AccountService;
 import com.litarary.account.service.dto.LoginInfo;
@@ -48,7 +48,7 @@ class AccountControllerTest extends RestDocsControllerTest {
                 .email("test@naver.com")
                 .password("qwer123!@")
                 .accessRoles(List.of(AccessRole.TESTER))
-                .interestItems(List.of(InterestType.ART_LITERATURE, InterestType.ECONOMY_OPERATE))
+                .interestItems(List.of(BookCategory.Computer_Mobile, BookCategory.ECONOMY_OPERATE))
                 .accountTerms(true)
                 .serviceTerms(true)
                 .privacyTerms(true)
@@ -75,25 +75,41 @@ class AccountControllerTest extends RestDocsControllerTest {
                                         fieldWithPath("privacyTerms").type(JsonFieldType.BOOLEAN).description("개인정보 약관 동의"),
                                         fieldWithPath("serviceAlarm").type(JsonFieldType.BOOLEAN).description("서비스 알림 동의"),
                                         fieldWithPath("interestItems[]").type(JsonFieldType.ARRAY).description("취미 종류 " +
-                                                "`[HISTORY_CULTURE:역사/문화]`\n" +
-                                                "`[POLITICAL_SOCIAL:정치/사회]`\n" +
-                                                "`[ECONOMY_OPERATE:경제/경영]`\n" +
+                                                "`[HISTORY_CULTURE:가정/요리/뷰티]`\n" +
+                                                "`[HOBBY:취미]`\n" +
+                                                "`[ECONOMY_OPERATE:경제경영]`\n" +
+                                                "`[HIGH_SCHOOL:고등학교참고서]`\n" +
+                                                "`[CLASSIC:고전]`\n" +
+                                                "`[SCIENCE_TECHNOLOGY:과학]`\n" +
+                                                "`[KUMGANG_TRAVEL:금강산여행]`\n" +
+                                                "`[CALENDAR:달력]`\n" +
+                                                "`[UNIVERSITY_BOOK:대학교제]`\n" +
+                                                "`[COMIC_BOOK:만화]`\n" +
+                                                "`[SOCIAL_SCIENCE:사회과학]`\n" +
+                                                "`[NOVEL_POETRY_DRAMA:소설/시/희곡]`\n" +
+                                                "`[CALIFIER_CERTIFICATE:수험서/자격증]`\n" +
+                                                "`[CHILDREN:어린이]`\n" +
+                                                "`[ESSAY:에세이]`\n" +
+                                                "`[TRAVEL:여행]`\n" +
+                                                "`[HISTORY:역사]`\n" +
+                                                "`[ART_POPULAR_CULTURE:예술/대중문화]`\n" +
+                                                "`[FOREIGN_LANGUAGE:외국어]`\n" +
+                                                "`[CHILD:유아]`\n" +
+                                                "`[HUMANITIES:인문학]`\n" +
+                                                "`[JAPANESE_BOOK:일본 도서]`\n" +
                                                 "`[SELF_DEVELOPMENT:자기계발]`\n" +
-                                                "`[HEALTH_MEDICINE:건강/의학]`\n" +
-                                                "`[ART_LITERATURE:예술/문학]`\n" +
-                                                "`[SCIENCE_TECHNOLOGY:과학/기술]`\n" +
-                                                "`[HOBBIES_TRAVEL:취미/여행]`\n" +
-                                                "`[HUMANITIES_SOCIAL:인문/사회]`\n" +
-                                                "`[IT_PROGRAMS:IT/프로그램]`\n" +
-                                                "`[KOREAN_FOREIGN_LANGUAGE:국어/외국어]`\n" +
-                                                "`[SUCCESS_LIFESTYLE:성공/처세]`\n" +
-                                                "`[FAMILY_LIFE:가정생활]`\n" +
-                                                "`[STOCKS_FINANCE:주식/금융]`\n" +
-                                                "`[BUSINESS_SALES:영업/판매]`\n" +
-                                                "`[HUMAN_RELATIONS:인간관계]`\n" +
-                                                "`[INFANTS_CHILDREN:유아/아동]`\n" +
-                                                "`[ADULTS:성인]`\n" +
-                                                "`[OTHERS:기타]`"),
+                                                "`[MAGAZINE:잡지]`\n" +
+                                                "`[GENRE:장르소설]`\n" +
+                                                "`[COMPLETE_USED_COLLECTION:전집/중고전집]`\n" +
+                                                "`[RELIGION_MECHANICS:종교/역학]`\n" +
+                                                "`[GOOD_PARENT:좋은부모]`\n" +
+                                                "`[MIDDLE_SCHOOL:중학교참고서]`\n" +
+                                                "`[TEENAGER:청소년]`\n" +
+                                                "`[YOUTH_RECOMMENDATION:청소년_추천도서]`\n" +
+                                                "`[Elementary_School:초등학교참고서]`\n" +
+                                                "`[Computer_Mobile:컴퓨터/모바일]`\n" +
+                                                "`[Gift:Gift]`\n" +
+                                                "`[Other:기타]`\n"),
                                         fieldWithPath("accessRoles.[]").type(JsonFieldType.ARRAY).description("가입 권한 정보 [USER, TESTER]")
                                 )
                         )

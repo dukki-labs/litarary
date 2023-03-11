@@ -1,28 +1,37 @@
 package com.litarary.book.controller;
 
-import com.litarary.account.domain.InterestType;
-import com.litarary.book.controller.dto.BookInfoDto;
-import com.litarary.book.controller.dto.ConcernBookDto;
-import com.litarary.book.controller.dto.ConcernBookTypeDto;
-import com.litarary.book.controller.dto.RecentBookDto;
+import com.litarary.account.domain.BookCategory;
+import com.litarary.book.controller.dto.*;
+import com.litarary.book.controller.mapper.BookMapper;
+import com.litarary.book.service.BookService;
+import com.litarary.book.service.dto.ContainerBookInfo;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/books")
 public class BookController {
 
+    private final BookService bookService;
+    private final BookMapper bookMapper;
+
+
     @GetMapping("/recent")
     public RecentBookDto.Response recentBookList(RecentBookDto.Request request) {
         List<BookInfoDto> bookInfoDtos = Arrays.asList(
-                getBookInfo(12, 2, 3, InterestType.ART_LITERATURE),
-                getBookInfo(3, 1, 2, InterestType.ART_LITERATURE),
-                getBookInfo(2, 18, 5, InterestType.ART_LITERATURE)
+                getBookInfo(12, 2, 3, BookCategory.HISTORY),
+                getBookInfo(3, 1, 2, BookCategory.HISTORY),
+                getBookInfo(2, 18, 5, BookCategory.HISTORY)
         );
         return RecentBookDto.Response
                 .builder()
@@ -34,12 +43,12 @@ public class BookController {
     public ConcernBookDto.Response concernBookList(ConcernBookDto request) {
         List<ConcernBookTypeDto> concernBookTypeDtos = Arrays.asList(
                 ConcernBookTypeDto.builder()
-                        .interestType(InterestType.HUMAN_RELATIONS)
-                        .bookInfoDtoList(getBookList(InterestType.HUMAN_RELATIONS))
+                        .bookCategory(BookCategory.HISTORY)
+                        .bookInfoDtoList(getBookList(BookCategory.COMIC_BOOK))
                         .build(),
                 ConcernBookTypeDto.builder()
-                        .interestType(InterestType.ART_LITERATURE)
-                        .bookInfoDtoList(List.of(getBookInfo(2, 18, 6, InterestType.ART_LITERATURE)))
+                        .bookCategory(BookCategory.Computer_Mobile)
+                        .bookInfoDtoList(List.of(getBookInfo(2, 18, 6, BookCategory.Computer_Mobile)))
                         .build()
         );
 
@@ -49,19 +58,26 @@ public class BookController {
                 .build();
     }
 
-    private List<BookInfoDto> getBookList(InterestType interestType) {
+    @GetMapping("/container/search")
+    public ContainerBookInfoDto.Response searchContainerBookList(@RequestParam("searchKeyword") String searchKeyword,
+                                                                 @PageableDefault Pageable pageable) {
+        ContainerBookInfo containerBookInfo = bookService.searchBookListByContainer(searchKeyword, pageable);
+        return bookMapper.toContainerBookInfoDto(containerBookInfo);
+    }
+
+    private List<BookInfoDto> getBookList(BookCategory bookCategory) {
         return Arrays.asList(
-                getBookInfo(12, 2, 3, interestType),
-                getBookInfo(3, 1, 2, interestType),
-                getBookInfo(2, 18, 5, interestType)
+                getBookInfo(12, 2, 3, bookCategory),
+                getBookInfo(3, 1, 2, bookCategory),
+                getBookInfo(2, 18, 5, bookCategory)
         );
     }
 
-    private BookInfoDto getBookInfo(int likeCount, int viewCount, int minusNumber, InterestType interestType) {
+    private BookInfoDto getBookInfo(int likeCount, int viewCount, int minusNumber, BookCategory bookCategory) {
         return BookInfoDto.builder()
                 .imageUrl("https://www.taragrp.co.kr/wp-content/uploads/2022/07/%EB%8F%84%EC%84%9C-%EC%A0%9C%EB%B3%B8_01-2.png")
                 .title("몸의 교감")
-                .interestType(interestType)
+                .bookCategory(bookCategory)
                 .content("테스형이 말씀하셨다. 우리가 먹는것이 곧 우리의 자신이 된다.")
                 .likeCount(likeCount)
                 .viewCount(viewCount)
