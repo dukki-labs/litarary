@@ -2,12 +2,6 @@ spring:
   profiles:
     default: prod
 
-# Default Tomcat Thread Max 200 count -> 4
-server:
-  tomcat:
-    threads:
-      max: 4
-
 jwt:
   secretKey: testSecretKeytestSecretKeytestSecretKeytestSecretKey
 
@@ -56,6 +50,11 @@ spring:
       password: ${DATABASE_USER_PASSWORD}
     url: ${DATABASE_URL}
 
+  # 카테고리 정보가 있어야 함으로 일단 초기데이터를 넣어주기위해 data.sql파일 읽도록 추가
+  # 추후 ddl-auto설정을 none으로 변경할때 같이 제거해야 한다.
+  sql:
+    init:
+      mode: always
   jpa:
     show-sql: true
     hibernate:
@@ -63,6 +62,10 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
+    defer-datasource-initialization: true
 
 jwt:
   secretKey: ${JWT_SECRET}
+
+book.container:
+  aladdin: ${ALADDIN_SECRET_KEY}

@@ -546,6 +546,11 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <td class="tableblock halign-left valign-top"><p class="tableblock">에러 메시지</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>detailErrorMessage</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">에러 상세 메시지</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>errorFields.[].fieldName</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">필드 명</p></td>
@@ -566,11 +571,12 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
   "status" : 400,
   "errorCode" : "UN_VALID_BINDING",
   "errorMessage" : "요청 파라미터 혹은 Body 부분이 잘못되었습니다.",
+  "detailErrorMessage" : null,
   "errorFields" : [ {
-    "fieldName" : "email",
+    "fieldName" : "password",
     "message" : "must not be blank"
   }, {
-    "fieldName" : "password",
+    "fieldName" : "email",
     "message" : "must not be blank"
   } ]
 }</code></pre>
@@ -615,7 +621,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2023-03-07 22:31:18 +0900
+Last updated 2023-03-07 22:50:48 +0900
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">

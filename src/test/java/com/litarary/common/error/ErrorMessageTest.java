@@ -29,6 +29,7 @@ public class ErrorMessageTest extends RestDocsControllerTest {
                            fieldWithPath("status").type(JsonFieldType.NUMBER).description("상태"),
                            fieldWithPath("errorCode").type(JsonFieldType.STRING).description("에러 코드"),
                            fieldWithPath("errorMessage").type(JsonFieldType.STRING).description("에러 메시지"),
+                           fieldWithPath("detailErrorMessage").type(JsonFieldType.STRING).description("에러 상세 메시지").optional(),
                            fieldWithPath("errorFields.[].fieldName").type(JsonFieldType.STRING).description("필드 명"),
                            fieldWithPath("errorFields.[].message").type(JsonFieldType.STRING).description("필드 에러 메시지")
                    )

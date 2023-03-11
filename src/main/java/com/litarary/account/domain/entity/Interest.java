@@ -1,6 +1,6 @@
 package com.litarary.account.domain.entity;
 
-import com.litarary.account.domain.InterestType;
+import com.litarary.account.domain.BookCategory;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,7 +19,7 @@ public class Interest {
 
     @Column(nullable = false)
     @Enumerated(value = EnumType.STRING)
-    private InterestType interestType;
+    private BookCategory bookCategory;
 
     @ManyToOne
     @JoinColumn(name = "member_id")
@@ -29,8 +29,8 @@ public class Interest {
         this.memberId = member;
     }
 
-    public void updateTypeAndMember(InterestType interestType, Member member) {
-        this.interestType = interestType;
+    public void updateTypeAndMember(BookCategory bookCategory, Member member) {
+        this.bookCategory = bookCategory;
         this.memberId = member;
     }
 }

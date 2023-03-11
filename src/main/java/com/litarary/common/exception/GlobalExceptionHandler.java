@@ -1,7 +1,6 @@
 package com.litarary.common.exception;
 
 import com.litarary.common.ErrorCode;
-import com.litarary.common.exception.account.AccountErrorException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -15,13 +14,14 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class GlobalExceptionHandler {
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(value = AccountErrorException.class)
-    public ErrorResponse accountExceptionHandle(AccountErrorException ex) {
-        log.warn(">>>>> AccountErrorException error = {}", ex.getErrorCode().getMessage());
+    @ExceptionHandler(value = LitararyErrorException.class)
+    public ErrorResponse litararyExceptionHandle(LitararyErrorException ex) {
+        log.warn(">>>>> LitararyErrorException service error = {}", ex.getErrorCode().getMessage());
         return ErrorResponse.builder()
                 .status(HttpStatus.BAD_REQUEST.value())
                 .errorCode(ex.getErrorCode().name())
                 .errorMessage(ex.getErrorCode().getMessage())
+                .detailErrorMessage(ex.getDetailMessage())
                 .build();
     }
 

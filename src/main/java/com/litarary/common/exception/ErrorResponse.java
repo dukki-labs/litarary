@@ -11,5 +11,6 @@ public class ErrorResponse {
     private int status;
     private String errorCode;
     private String errorMessage;
+    private String detailErrorMessage;
     private List<ErrorField> errorFields;
 }

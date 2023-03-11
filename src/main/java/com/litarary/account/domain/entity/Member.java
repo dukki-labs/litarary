@@ -1,7 +1,7 @@
 package com.litarary.account.domain.entity;
 
 import com.litarary.common.ErrorCode;
-import com.litarary.common.exception.account.AccountErrorException;
+import com.litarary.common.exception.LitararyErrorException;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -71,7 +71,7 @@ public class Member {
 
     public void validAccessCode(String accessCode) {
         if (!accessCode.equals(this.accessCode)) {
-            throw new AccountErrorException(ErrorCode.ACCOUNT_ACCESS_ROLE_MISS_MATCH);
+            throw new LitararyErrorException(ErrorCode.ACCOUNT_ACCESS_ROLE_MISS_MATCH);
         }
     }
 

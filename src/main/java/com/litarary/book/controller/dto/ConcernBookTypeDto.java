@@ -1,6 +1,6 @@
 package com.litarary.book.controller.dto;
 
-import com.litarary.account.domain.InterestType;
+import com.litarary.account.domain.BookCategory;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -11,7 +11,7 @@ import java.util.List;
 @Builder
 public class ConcernBookTypeDto {
     @NotNull
-    private InterestType interestType;
+    private BookCategory bookCategory;
 
     private List<BookInfoDto> bookInfoDtoList;
 }

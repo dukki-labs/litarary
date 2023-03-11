@@ -10,7 +10,7 @@ import com.litarary.account.service.dto.LoginInfo;
 import com.litarary.account.service.dto.RefreshTokenInfo;
 import com.litarary.account.service.dto.SignUpMemberInfo;
 import com.litarary.common.ErrorCode;
-import com.litarary.common.exception.account.AccountErrorException;
+import com.litarary.common.exception.LitararyErrorException;
 import com.litarary.utils.jwt.JwtTokenProvider;
 import com.litarary.utils.jwt.TokenInfo;
 import lombok.RequiredArgsConstructor;
@@ -46,7 +46,7 @@ public class AccountService {
                 .stream()
                 .map(item ->
                         Interest.builder()
-                                .interestType(item)
+                                .bookCategory(item)
                                 .memberId(signUpMember)
                                 .build()
                 )
@@ -67,14 +67,14 @@ public class AccountService {
     private void validDuplicatedEmail(SignUpMemberInfo memberInfo) {
         boolean isDuplicatedEmail = accountRepository.existsByEmail(memberInfo.getMember().getEmail());
         if (isDuplicatedEmail) {
-            throw new AccountErrorException(ErrorCode.DUPLICATED_EMAIL);
+            throw new LitararyErrorException(ErrorCode.DUPLICATED_EMAIL);
         }
     }
 
     public LoginInfo login(String email, String password) {
         Member member = getMember(email);
         if (!passwordEncoder.matches(password, member.getPassword())) {
-            throw new AccountErrorException(ErrorCode.MISS_MATCH_PASSWORD);
+            throw new LitararyErrorException(ErrorCode.MISS_MATCH_PASSWORD);
         }
 
         // 인증 객체 생성
@@ -109,7 +109,7 @@ public class AccountService {
 
     public void updateAccessCode(long memberId, String accessCode) {
         Member member = accountRepository.findById(memberId)
-                .orElseThrow(() -> new AccountErrorException(ErrorCode.MEMBER_NOT_FOUND));
+                .orElseThrow(() -> new LitararyErrorException(ErrorCode.MEMBER_NOT_FOUND));
 
         member.updateAccessCode(accessCode);
     }
@@ -121,7 +121,7 @@ public class AccountService {
 
     public void updatePassword(long memberId, String accessCode, String password) {
         Member member = accountRepository.findById(memberId)
-                .orElseThrow(() -> new AccountErrorException(ErrorCode.MEMBER_NOT_FOUND));
+                .orElseThrow(() -> new LitararyErrorException(ErrorCode.MEMBER_NOT_FOUND));
 
         member.validAccessCode(accessCode);
         member.updatePasswordEncode(passwordEncoder.encode(password));
@@ -129,7 +129,7 @@ public class AccountService {
 
     private Member getMember(String email) {
         Member member = accountRepository.findByEmail(email)
-                .orElseThrow(() -> new AccountErrorException(ErrorCode.ACCOUNT_NOT_FOUND_EMAIL));
+                .orElseThrow(() -> new LitararyErrorException(ErrorCode.ACCOUNT_NOT_FOUND_EMAIL));
         return member;
     }
 }

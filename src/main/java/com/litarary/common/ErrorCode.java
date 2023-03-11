@@ -22,6 +22,10 @@ public enum ErrorCode {
 
     // Controller binding Error
     UN_VALID_BINDING("요청 파라미터 혹은 Body 부분이 잘못되었습니다."),
-    REQUEST_INVALID_JSON("Json 요청 바디 부분이 잘못되었습니다.");
+    REQUEST_INVALID_JSON("Json 요청 바디 부분이 잘못되었습니다."),
+
+    // Book Error
+    JSON_PARSING_ERROR("Json Parse에 실패했습니다."),
+    EXTERNAL_REQUEST_ERROR("외부 API요청에 실패했습니다.");
     private final String message;
 }
