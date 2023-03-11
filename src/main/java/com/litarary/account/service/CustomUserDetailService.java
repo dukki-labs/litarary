@@ -4,7 +4,7 @@ import com.litarary.account.domain.entity.Member;
 import com.litarary.account.domain.entity.MemberRole;
 import com.litarary.account.repository.AccountRepository;
 import com.litarary.common.ErrorCode;
-import com.litarary.common.exception.account.AccountErrorException;
+import com.litarary.common.exception.LitararyErrorException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,14 +21,14 @@ public class CustomUserDetailService implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         return accountRepository.findByEmail(email)
                 .map(this::createUserDetail)
-                .orElseThrow(() -> new AccountErrorException(ErrorCode.ACCOUNT_NOT_FOUND_EMAIL));
+                .orElseThrow(() -> new LitararyErrorException(ErrorCode.ACCOUNT_NOT_FOUND_EMAIL));
     }
 
     private UserDetails createUserDetail(Member member) {
         MemberRole memberRole = member.getMemberRole()
                 .stream()
                 .findFirst()
-                .orElseThrow(() -> new AccountErrorException(ErrorCode.ACCOUNT_ACCESS_ROLE_MISS_MATCH));
+                .orElseThrow(() -> new LitararyErrorException(ErrorCode.ACCOUNT_ACCESS_ROLE_MISS_MATCH));
 
         return User.builder()
                 .username(member.getEmail())
