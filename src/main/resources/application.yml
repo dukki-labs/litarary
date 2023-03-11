@@ -72,3 +72,6 @@ spring:
 
 jwt:
   secretKey: ${JWT_SECRET}
+
+book.container:
+  aladdin: ${ALADDIN_SECRET_KEY}

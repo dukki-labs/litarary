@@ -18,3 +18,6 @@ spring:
       enabled: false
 jwt:
   secretKey: testSecretKeytestSecretKeytestSecretKeytestSecretKey
+
+book.container:
+  aladdin: test
