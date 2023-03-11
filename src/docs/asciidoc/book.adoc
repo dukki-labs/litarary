@@ -14,4 +14,4 @@ operation::book-controller-test/recent-book-list-test[snippets='http-request,req
 operation::book-controller-test/concern-book-list-test[snippets='http-request,request-parameters,response-body,response-fields']
 
 === 외부 도서 검색 API(feat 알라딘)
-operation::book-controller-test/알라딘_도서검색_api_테스트[snippets='http-request,request-parameters,response-body,response-fields']
+operation::book-controller-test/search-container-book-list-test[snippets='http-request,request-parameters,response-body,response-fields']

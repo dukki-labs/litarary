@@ -87,7 +87,7 @@ class BookControllerTest extends RestDocsControllerTest {
 
     @Test
     @WithMockUser
-    void 알라딘_도서검색_API_테스트() throws Exception {
+    void searchContainerBookListTest() throws Exception {
 
         given(bookService.searchBookListByContainer("JPA", PageRequest.of(1, 5)))
                 .willReturn(
@@ -110,7 +110,7 @@ class BookControllerTest extends RestDocsControllerTest {
                                 )
                                 .build());
 
-        ResultActions resultActions = mockMvc.perform(get("/api/v1/books/container/search")
+        mockMvc.perform(get("/api/v1/books/container/search")
                         .param("searchKeyword", "JPA")
                         .param("page", "1")
                         .param("size", "5"))
@@ -136,7 +136,5 @@ class BookControllerTest extends RestDocsControllerTest {
                                 fieldWithPath("bookList.[].publisher").type(JsonFieldType.STRING).description("출판사")
                         )
                 ));
-
-        System.out.println(resultActions);
     }
 }
