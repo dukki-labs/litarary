@@ -35,6 +35,7 @@ public class WebSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
 
         return httpSecurity
+                .cors(cors -> cors.disable())
                 .csrf().disable()
                 .headers().frameOptions().disable()
                 .and()
