@@ -2,7 +2,6 @@ package com.litarary.account.controller;
 
 import com.litarary.account.controller.dto.*;
 import com.litarary.account.domain.AccessRole;
-import com.litarary.account.domain.BookCategory;
 import com.litarary.account.domain.entity.Member;
 import com.litarary.account.service.AccountService;
 import com.litarary.account.service.dto.LoginInfo;
@@ -48,7 +47,6 @@ class AccountControllerTest extends RestDocsControllerTest {
                 .email("test@naver.com")
                 .password("qwer123!@")
                 .accessRoles(List.of(AccessRole.TESTER))
-                .interestItems(List.of(BookCategory.Computer_Mobile, BookCategory.ECONOMY_OPERATE))
                 .accountTerms(true)
                 .serviceTerms(true)
                 .privacyTerms(true)
@@ -74,42 +72,42 @@ class AccountControllerTest extends RestDocsControllerTest {
                                         fieldWithPath("serviceTerms").type(JsonFieldType.BOOLEAN).description("서비스 약관 동의"),
                                         fieldWithPath("privacyTerms").type(JsonFieldType.BOOLEAN).description("개인정보 약관 동의"),
                                         fieldWithPath("serviceAlarm").type(JsonFieldType.BOOLEAN).description("서비스 알림 동의"),
-                                        fieldWithPath("interestItems[]").type(JsonFieldType.ARRAY).description("취미 종류 " +
-                                                "`[HISTORY_CULTURE:가정/요리/뷰티]`\n" +
-                                                "`[HOBBY:취미]`\n" +
-                                                "`[ECONOMY_OPERATE:경제경영]`\n" +
-                                                "`[HIGH_SCHOOL:고등학교참고서]`\n" +
-                                                "`[CLASSIC:고전]`\n" +
-                                                "`[SCIENCE_TECHNOLOGY:과학]`\n" +
-                                                "`[KUMGANG_TRAVEL:금강산여행]`\n" +
-                                                "`[CALENDAR:달력]`\n" +
-                                                "`[UNIVERSITY_BOOK:대학교제]`\n" +
-                                                "`[COMIC_BOOK:만화]`\n" +
-                                                "`[SOCIAL_SCIENCE:사회과학]`\n" +
-                                                "`[NOVEL_POETRY_DRAMA:소설/시/희곡]`\n" +
-                                                "`[CALIFIER_CERTIFICATE:수험서/자격증]`\n" +
-                                                "`[CHILDREN:어린이]`\n" +
-                                                "`[ESSAY:에세이]`\n" +
-                                                "`[TRAVEL:여행]`\n" +
-                                                "`[HISTORY:역사]`\n" +
-                                                "`[ART_POPULAR_CULTURE:예술/대중문화]`\n" +
-                                                "`[FOREIGN_LANGUAGE:외국어]`\n" +
-                                                "`[CHILD:유아]`\n" +
-                                                "`[HUMANITIES:인문학]`\n" +
-                                                "`[JAPANESE_BOOK:일본 도서]`\n" +
-                                                "`[SELF_DEVELOPMENT:자기계발]`\n" +
-                                                "`[MAGAZINE:잡지]`\n" +
-                                                "`[GENRE:장르소설]`\n" +
-                                                "`[COMPLETE_USED_COLLECTION:전집/중고전집]`\n" +
-                                                "`[RELIGION_MECHANICS:종교/역학]`\n" +
-                                                "`[GOOD_PARENT:좋은부모]`\n" +
-                                                "`[MIDDLE_SCHOOL:중학교참고서]`\n" +
-                                                "`[TEENAGER:청소년]`\n" +
-                                                "`[YOUTH_RECOMMENDATION:청소년_추천도서]`\n" +
-                                                "`[Elementary_School:초등학교참고서]`\n" +
-                                                "`[Computer_Mobile:컴퓨터/모바일]`\n" +
-                                                "`[Gift:Gift]`\n" +
-                                                "`[Other:기타]`\n"),
+//                                        fieldWithPath("interestItems[]").type(JsonFieldType.ARRAY).description("취미 종류 " +
+//                                                "`[HISTORY_CULTURE:가정/요리/뷰티]`\n" +
+//                                                "`[HOBBY:취미]`\n" +
+//                                                "`[ECONOMY_OPERATE:경제경영]`\n" +
+//                                                "`[HIGH_SCHOOL:고등학교참고서]`\n" +
+//                                                "`[CLASSIC:고전]`\n" +
+//                                                "`[SCIENCE_TECHNOLOGY:과학]`\n" +
+//                                                "`[KUMGANG_TRAVEL:금강산여행]`\n" +
+//                                                "`[CALENDAR:달력]`\n" +
+//                                                "`[UNIVERSITY_BOOK:대학교제]`\n" +
+//                                                "`[COMIC_BOOK:만화]`\n" +
+//                                                "`[SOCIAL_SCIENCE:사회과학]`\n" +
+//                                                "`[NOVEL_POETRY_DRAMA:소설/시/희곡]`\n" +
+//                                                "`[CALIFIER_CERTIFICATE:수험서/자격증]`\n" +
+//                                                "`[CHILDREN:어린이]`\n" +
+//                                                "`[ESSAY:에세이]`\n" +
+//                                                "`[TRAVEL:여행]`\n" +
+//                                                "`[HISTORY:역사]`\n" +
+//                                                "`[ART_POPULAR_CULTURE:예술/대중문화]`\n" +
+//                                                "`[FOREIGN_LANGUAGE:외국어]`\n" +
+//                                                "`[CHILD:유아]`\n" +
+//                                                "`[HUMANITIES:인문학]`\n" +
+//                                                "`[JAPANESE_BOOK:일본 도서]`\n" +
+//                                                "`[SELF_DEVELOPMENT:자기계발]`\n" +
+//                                                "`[MAGAZINE:잡지]`\n" +
+//                                                "`[GENRE:장르소설]`\n" +
+//                                                "`[COMPLETE_USED_COLLECTION:전집/중고전집]`\n" +
+//                                                "`[RELIGION_MECHANICS:종교/역학]`\n" +
+//                                                "`[GOOD_PARENT:좋은부모]`\n" +
+//                                                "`[MIDDLE_SCHOOL:중학교참고서]`\n" +
+//                                                "`[TEENAGER:청소년]`\n" +
+//                                                "`[YOUTH_RECOMMENDATION:청소년_추천도서]`\n" +
+//                                                "`[Elementary_School:초등학교참고서]`\n" +
+//                                                "`[Computer_Mobile:컴퓨터/모바일]`\n" +
+//                                                "`[Gift:Gift]`\n" +
+//                                                "`[Other:기타]`\n"),
                                         fieldWithPath("accessRoles.[]").type(JsonFieldType.ARRAY).description("가입 권한 정보 [USER, TESTER]")
                                 )
                         )
