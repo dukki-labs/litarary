@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.10">
-<title>액세스 토큰 갱신 요청</title>
+<title>메인화면으로 이동</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -441,19 +441,34 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="header">
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_메인화면으로_이동">메인화면으로 이동</a></li>
+<li><a href="#_액세스_토큰_갱신_요청">액세스 토큰 갱신 요청</a>
 <ul class="sectlevel2">
-<li><a href="#_액세스_토큰_갱신_요청">액세스 토큰 갱신 요청</a></li>
+<li><a href="#_액세스_토큰_갱신_요청_http_request">HTTP request</a></li>
+<li><a href="#_액세스_토큰_갱신_요청_request_fields">Request fields</a></li>
+<li><a href="#_액세스_토큰_갱신_요청_http_response">HTTP response</a></li>
+<li><a href="#_액세스_토큰_갱신_요청_response_fields">Response fields</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
 <div id="content">
-<div class="sect2">
-<h3 id="_액세스_토큰_갱신_요청"><a class="link" href="#_액세스_토큰_갱신_요청">액세스 토큰 갱신 요청</a></h3>
+<div class="sect1">
+<h2 id="_메인화면으로_이동"><a class="link" href="#_메인화면으로_이동"><a href="index.adoc">메인화면으로 이동</a></a></h2>
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="_액세스_토큰_갱신_요청"><a class="link" href="#_액세스_토큰_갱신_요청">액세스 토큰 갱신 요청</a></h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>액세스 토큰만료로 인한 갱신 요청</p>
 </div>
-<div class="sect3">
-<h4 id="_액세스_토큰_갱신_요청_http_request"><a class="link" href="#_액세스_토큰_갱신_요청_http_request">HTTP request</a></h4>
+<div class="sect2">
+<h3 id="_액세스_토큰_갱신_요청_http_request"><a class="link" href="#_액세스_토큰_갱신_요청_http_request">HTTP request</a></h3>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /api/v1/account/token-refresh HTTP/1.1
@@ -468,8 +483,8 @@ Host: localhost:8080
 </div>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_액세스_토큰_갱신_요청_request_fields"><a class="link" href="#_액세스_토큰_갱신_요청_request_fields">Request fields</a></h4>
+<div class="sect2">
+<h3 id="_액세스_토큰_갱신_요청_request_fields"><a class="link" href="#_액세스_토큰_갱신_요청_request_fields">Request fields</a></h3>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 33.3333%;">
@@ -497,8 +512,8 @@ Host: localhost:8080
 </tbody>
 </table>
 </div>
-<div class="sect3">
-<h4 id="_액세스_토큰_갱신_요청_http_response"><a class="link" href="#_액세스_토큰_갱신_요청_http_response">HTTP response</a></h4>
+<div class="sect2">
+<h3 id="_액세스_토큰_갱신_요청_http_response"><a class="link" href="#_액세스_토큰_갱신_요청_http_response">HTTP response</a></h3>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
@@ -513,8 +528,8 @@ Content-Length: 227
 </div>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_액세스_토큰_갱신_요청_response_fields"><a class="link" href="#_액세스_토큰_갱신_요청_response_fields">Response fields</a></h4>
+<div class="sect2">
+<h3 id="_액세스_토큰_갱신_요청_response_fields"><a class="link" href="#_액세스_토큰_갱신_요청_response_fields">Response fields</a></h3>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 33.3333%;">
@@ -549,10 +564,11 @@ Content-Length: 227
 </div>
 </div>
 </div>
+</div>
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2023-03-07 22:50:48 +0900
+Last updated 2023-03-12 17:54:53 +0900
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">

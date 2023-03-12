@@ -49,4 +49,6 @@ operation::error-message-test/request-parameter-valid-test[snippets='response-fi
 
 - link:token.html[토큰 갱신 API]
 - link:account.html[회원가입, 로그인 API]
-- link:book.html[메인화면 도서조회(관심도서, 신규도서) API]
+
+=== Book API
+- link:book.html[메인화면 도서조회(관심도서, 도서검색 등) API]
