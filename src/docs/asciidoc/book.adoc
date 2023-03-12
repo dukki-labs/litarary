@@ -5,7 +5,7 @@
 :toclevels: 2
 :sectlinks:
 
-== link:index.adoc[메인화면으로 이동]
+== link:index.html[메인화면으로 이동]
 
 == 메인화면 도서조회(관심도서, 신규도서) API
 === 신규 도서 조회 API

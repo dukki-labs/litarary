@@ -5,7 +5,7 @@
 :toclevels: 2
 :sectlinks:
 
-== link:index.adoc[메인화면으로 이동]
+== link:index.html[메인화면으로 이동]
 
 == 액세스 토큰 갱신 요청
 액세스 토큰만료로 인한 갱신 요청
