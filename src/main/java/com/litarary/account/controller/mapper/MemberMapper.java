@@ -28,7 +28,7 @@ public class MemberMapper {
                         .createdAt(OffsetDateTime.now())
                         .updatedAt(OffsetDateTime.now())
                         .build())
-                .interests(request.getInterestItems())
+//                .interests(request.getInterestItems())
                 .accessRoles(request.getAccessRoles())
                 .build();
     }

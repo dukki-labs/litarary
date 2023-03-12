@@ -1,10 +1,8 @@
 package com.litarary.account.service;
 
-import com.litarary.account.domain.entity.Interest;
 import com.litarary.account.domain.entity.Member;
 import com.litarary.account.domain.entity.MemberRole;
 import com.litarary.account.repository.AccountRepository;
-import com.litarary.account.repository.InterestRepository;
 import com.litarary.account.repository.MemberRoleRepository;
 import com.litarary.account.service.dto.LoginInfo;
 import com.litarary.account.service.dto.RefreshTokenInfo;
@@ -29,7 +27,6 @@ import java.util.List;
 public class AccountService {
 
     private final AccountRepository accountRepository;
-    private final InterestRepository interestRepository;
     private final MemberRoleRepository memberRoleRepository;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final JwtTokenProvider jwtTokenProvider;
@@ -41,17 +38,6 @@ public class AccountService {
         Member member = memberInfo.getMember();
         member.updatePasswordEncode(passwordEncoder.encode(member.getPassword()));
         Member signUpMember = accountRepository.save(member);
-
-        List<Interest> interests = memberInfo.getInterests()
-                .stream()
-                .map(item ->
-                        Interest.builder()
-                                .bookCategory(item)
-                                .memberId(signUpMember)
-                                .build()
-                )
-                .toList();
-        interestRepository.saveAll(interests);
 
         List<MemberRole> memberRoles = memberInfo.getAccessRoles()
                 .stream()
