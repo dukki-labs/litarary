@@ -5,6 +5,8 @@
 :toclevels: 2
 :sectlinks:
 
+== link:index.html[메인화면으로 이동]
+
 == Health API
 === Sever 상태 조회
 operation::health-check-controller-test/health-test[snippets='http-request,http-response,response-fields']

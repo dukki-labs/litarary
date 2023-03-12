@@ -456,6 +456,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <ul class="sectlevel2">
 <li><a href="#_health_check_api">Health Check API</a></li>
 <li><a href="#_account_api">Account API</a></li>
+<li><a href="#_book_api">Book API</a></li>
 </ul>
 </li>
 </ul>
@@ -573,10 +574,10 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
   "errorMessage" : "요청 파라미터 혹은 Body 부분이 잘못되었습니다.",
   "detailErrorMessage" : null,
   "errorFields" : [ {
-    "fieldName" : "email",
+    "fieldName" : "password",
     "message" : "must not be blank"
   }, {
-    "fieldName" : "password",
+    "fieldName" : "email",
     "message" : "must not be blank"
   } ]
 }</code></pre>
@@ -609,8 +610,15 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li>
 <p><a href="account.html">회원가입, 로그인 API</a></p>
 </li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_book_api"><a class="link" href="#_book_api">Book API</a></h3>
+<div class="ulist">
+<ul>
 <li>
-<p><a href="book.html">메인화면 도서조회(관심도서, 신규도서) API</a></p>
+<p><a href="book.html">메인화면 도서조회(관심도서, 도서검색 등) API</a></p>
 </li>
 </ul>
 </div>
@@ -621,7 +629,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2023-03-07 22:50:48 +0900
+Last updated 2023-03-12 17:50:16 +0900
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
