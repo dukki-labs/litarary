@@ -40,9 +40,6 @@ public class Member {
     private String accessCode;
 
     @Column(nullable = false)
-    private boolean isAccountTerms;
-
-    @Column(nullable = false)
     private boolean isServiceTerms;
 
     @Column(nullable = false)

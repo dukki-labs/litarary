@@ -21,7 +21,6 @@ public class MemberMapper {
                         .nickName(request.getNickName())
                         .email(request.getEmail())
                         .password(request.getPassword())
-                        .isAccountTerms(request.isAccountTerms())
                         .isServiceTerms(request.isServiceTerms())
                         .isPrivacyTerms(request.isPrivacyTerms())
                         .isServiceAlarm(request.isServiceAlarm())

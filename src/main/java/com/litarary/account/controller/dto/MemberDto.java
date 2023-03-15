@@ -17,6 +17,7 @@ public class MemberDto {
     @Getter
     public static class Request {
         @NotBlank(message = "닉네임은 필수 입력값 입니다.")
+        @Size(min = 4)
         private String nickName;
 
         @Email(regexp = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+.[A-Za-z]{2,6}$", message = "이메일이 잘못 입력되었어요!")
@@ -28,10 +29,6 @@ public class MemberDto {
 
         @NotEmpty(message = "가입하고 싶은 역할을 입력해주세요.")
         private List<AccessRole> accessRoles;
-
-        @NotNull(message = "계정약관 동의는 필수입니다.")
-        @AssertTrue
-        private boolean accountTerms;
 
         @NotNull(message = "서비스 약관 동의는 필수입니다.")
         @AssertTrue
