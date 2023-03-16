@@ -17,6 +17,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/api/**")
                 .allowedOrigins("https://litarary.vercel.app")
+                .allowedOrigins("http://localhost:3000")
                 .allowedMethods("GET", "POST", "PATCH", "PUT", "DELETE")
                 .allowCredentials(true);
     }
