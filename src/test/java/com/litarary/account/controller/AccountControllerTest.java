@@ -47,7 +47,6 @@ class AccountControllerTest extends RestDocsControllerTest {
                 .email("test@naver.com")
                 .password("qwer123!@")
                 .accessRoles(List.of(AccessRole.TESTER))
-                .accountTerms(true)
                 .serviceTerms(true)
                 .privacyTerms(true)
                 .serviceAlarm(true)
@@ -68,7 +67,6 @@ class AccountControllerTest extends RestDocsControllerTest {
                                         fieldWithPath("nickName").type(JsonFieldType.STRING).description("닉네임"),
                                         fieldWithPath("email").type(JsonFieldType.STRING).description("이메일"),
                                         fieldWithPath("password").type(JsonFieldType.STRING).description("비밀번호"),
-                                        fieldWithPath("accountTerms").type(JsonFieldType.BOOLEAN).description("계정 약관 동의"),
                                         fieldWithPath("serviceTerms").type(JsonFieldType.BOOLEAN).description("서비스 약관 동의"),
                                         fieldWithPath("privacyTerms").type(JsonFieldType.BOOLEAN).description("개인정보 약관 동의"),
                                         fieldWithPath("serviceAlarm").type(JsonFieldType.BOOLEAN).description("서비스 알림 동의"),
