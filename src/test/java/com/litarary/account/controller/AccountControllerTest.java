@@ -7,7 +7,10 @@ import com.litarary.account.service.AccountService;
 import com.litarary.account.service.dto.LoginInfo;
 import com.litarary.account.service.dto.RefreshTokenInfo;
 import com.litarary.account.service.dto.SignUpMemberInfo;
+import com.litarary.account.service.mail.MailSenderService;
+import com.litarary.common.ErrorCode;
 import com.litarary.common.RestDocsControllerTest;
+import com.litarary.common.exception.LitararyErrorException;
 import com.litarary.utils.jwt.TokenInfo;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -21,10 +24,7 @@ import java.util.List;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doNothing;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
-import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
-import static org.springframework.restdocs.request.RequestDocumentation.requestParameters;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -35,6 +35,8 @@ class AccountControllerTest extends RestDocsControllerTest {
 
     @MockBean
     private AccountService accountService;
+    @MockBean
+    private MailSenderService mailSenderService;
 
     private final String REQUEST_PREFIX = "/api/v1/account";
 
@@ -198,23 +200,30 @@ class AccountControllerTest extends RestDocsControllerTest {
     }
 
     @Test
-    void findMemberByEmailTest() throws Exception {
+    void emailCertificationTest() throws Exception {
         String email = "test@test.com";
         Member member = Member.builder()
                 .id(1L)
                 .nickName("test")
                 .email(email)
                 .build();
+        MemberEmailDto.Request requestDto = MemberEmailDto.Request.builder()
+                .email(email)
+                .build();
         given(accountService.findMember(anyString())).willReturn(member);
+        given(mailSenderService.sendAuthCode(anyString())).willReturn(email);
+        doNothing().when(accountService).updateAuthCode(anyLong(), anyString());
 
-        mockMvc.perform(get(REQUEST_PREFIX)
-                        .param("email", email)
+        String uri = REQUEST_PREFIX + "/password/send-code";
+        String content = objectMapper.writeValueAsString(requestDto);
+        mockMvc.perform(patch(uri)
+                        .content(content)
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk())
                 .andDo(
                         restDocs.document(
-                                requestParameters(
-                                        parameterWithName("email").description("이메일")
+                                requestFields(
+                                        fieldWithPath("email").type(JsonFieldType.STRING).description("이메일")
                                 ),
                                 responseFields(
                                         fieldWithPath("memberId").type(JsonFieldType.NUMBER).description("회원 고유번호"),
@@ -234,7 +243,7 @@ class AccountControllerTest extends RestDocsControllerTest {
                 .accessCode(accessCode)
                 .build();
         String content = objectMapper.writeValueAsString(request);
-        doNothing().when(accountService).updateAccessCode(memberId, accessCode);
+        doNothing().when(accountService).updateAuthCode(memberId, accessCode);
 
         String uri = REQUEST_PREFIX + "/access-code";
         mockMvc.perform(patch(uri)
@@ -285,7 +294,7 @@ class AccountControllerTest extends RestDocsControllerTest {
                 .email(email)
                 .build();
         String content = objectMapper.writeValueAsString(request);
-        doNothing().when(accountService).sendMailSender(anyString());
+        given(mailSenderService.sendAuthCode(anyString())).willReturn(email);
 
         String uri = REQUEST_PREFIX + "/send-code";
         mockMvc.perform(RestDocumentationRequestBuilders.post(uri)
@@ -319,6 +328,24 @@ class AccountControllerTest extends RestDocsControllerTest {
 
     }
 
+    @Test
+    void 비밀번호변경을위해_인증코드전송시_등록되지않는_이메일인경우_에러발생_테스트() throws Exception {
+        String email = "test@test.com";
+        MemberEmailDto.Request request = MemberEmailDto.Request.builder()
+                .email(email)
+                .build();
+        given(accountService.findMember(email)).willThrow(new LitararyErrorException(ErrorCode.ACCOUNT_NOT_FOUND_EMAIL));
+
+        String content = objectMapper.writeValueAsString(request);
+        String uri = REQUEST_PREFIX + "/password/send-code";
+        mockMvc.perform(patch(uri)
+                .content(content)
+                .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.status").value(400))
+                .andExpect(jsonPath("$.errorCode").value("ACCOUNT_NOT_FOUND_EMAIL"))
+                .andDo(print());
+    }
     @Test
     void 비밀번호_변경요청시_포멧_불일치할경우_에러발생_테스트() throws Exception {
         MemberPasswordDto.Request request = MemberPasswordDto.Request.builder()

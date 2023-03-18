@@ -14,6 +14,7 @@ public enum ErrorCode {
     MEMBER_NOT_FOUND("등록된 회원이 없습니다."),
     MISS_MATCH_PASSWORD("비밀번호가 일치하지 않습니다."),
     GMAIL_SENDER_ERROR("SMTP 이메일 전송에 실패했습니다."),
+    MISS_MATCH_AUTH_CODE("인증문자가 일치하지 않습니다."),
 
     //JWT Error
     EXPIRED_TOKEN("만료된 토큰입니다."),
@@ -27,7 +28,7 @@ public enum ErrorCode {
 
     // Book Error
     JSON_PARSING_ERROR("Json Parse에 실패했습니다."),
-    EXTERNAL_REQUEST_ERROR("외부 API요청에 실패했습니다.")
-    ;
+    EXTERNAL_REQUEST_ERROR("외부 API요청에 실패했습니다.");
+
     private final String message;
 }

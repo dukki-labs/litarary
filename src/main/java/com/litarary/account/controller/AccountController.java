@@ -7,6 +7,7 @@ import com.litarary.account.service.AccountService;
 import com.litarary.account.service.dto.LoginInfo;
 import com.litarary.account.service.dto.RefreshTokenInfo;
 import com.litarary.account.service.dto.SignUpMemberInfo;
+import com.litarary.account.service.mail.MailSenderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +20,7 @@ import javax.validation.Valid;
 public class AccountController {
 
     private final AccountService accountService;
+    private final MailSenderService mailSenderService;
     private final MemberMapper memberMapper;
 
     @ResponseStatus(HttpStatus.CREATED)
@@ -36,16 +38,18 @@ public class AccountController {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping
-    public MemberEmailDto.Response findMemberByEmail(@Valid @ModelAttribute MemberEmailDto.Request request) {
+    @PatchMapping("/password/send-code")
+    public MemberEmailDto.Response emailCertification(@Valid @RequestBody MemberEmailDto.Request request) {
         Member member = accountService.findMember(request.getEmail());
+        String authCode = mailSenderService.sendAuthCode(request.getEmail());
+        accountService.updateAuthCode(member.getId(), authCode);
         return memberMapper.memberResponse(member);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @PatchMapping("access-code")
     public void updateAccessCode(@Valid @RequestBody MemberAccessCode.Request request) {
-        accountService.updateAccessCode(request.getMemberId(), request.getAccessCode());
+        accountService.updateAuthCode(request.getMemberId(), request.getAccessCode());
     }
 
     @ResponseStatus(HttpStatus.OK)
@@ -57,7 +61,8 @@ public class AccountController {
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/send-code")
     public void sendAuthCode(@Valid @RequestBody MemberEmailDto.Request request) {
-        accountService.sendMailSender(request.getEmail());
+        accountService.validDuplicatedEmail(request.getEmail());
+        mailSenderService.sendAuthCode(request.getEmail());
     }
 
     @ResponseStatus(HttpStatus.OK)

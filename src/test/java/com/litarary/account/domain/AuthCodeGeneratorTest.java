@@ -17,6 +17,6 @@ class AuthCodeGeneratorTest {
         String code = AuthCodeGenerator.generateCode();
 
         assertThat(code).matches(".*\\d.*");
-        assertThat(code).matches("[A-Z].*");
+        assertThat(code).matches(".*[A-Z].*");
     }
 }

@@ -16,14 +16,16 @@ operation::account-controller-test/sign-up-test[snippets='http-request,request-f
 === 로그인 요청
 operation::account-controller-test/login-test[snippets='http-request,request-fields,http-response,response-fields']
 
-=== 이메일 찾기
-operation::account-controller-test/find-member-by-email-test[snippets='http-request,request-parameters,response-body,response-fields']
+=== 인증문자 전송
+operation::account-controller-test/send-auth-code-test[snippets='http-request,request-fields']
+
+=== 비밀번호 변경 시 인증문자 요청
+패스워드를 분실하여 이메일 인증 시 사용한다.
+
+operation::account-controller-test/email-certification-test[snippets='http-request,request-fields,response-body,response-fields']
 
 === 인증번호 업데이트
 operation::account-controller-test/update-access-code-test[snippets='http-request,request-fields']
 
 === 비밀번호 변경
 operation::account-controller-test/update-password-test[snippets='http-request,request-fields']
-
-=== 인증문자 전송
-operation::account-controller-test/send-auth-code-test[snippets='http-request,request-fields']
