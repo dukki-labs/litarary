@@ -7,6 +7,7 @@ import com.litarary.account.repository.MemberRoleRepository;
 import com.litarary.account.service.dto.LoginInfo;
 import com.litarary.account.service.dto.RefreshTokenInfo;
 import com.litarary.account.service.dto.SignUpMemberInfo;
+import com.litarary.account.service.mail.MailSenderService;
 import com.litarary.common.ErrorCode;
 import com.litarary.common.exception.LitararyErrorException;
 import com.litarary.utils.jwt.JwtTokenProvider;
@@ -31,9 +32,10 @@ public class AccountService {
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final JwtTokenProvider jwtTokenProvider;
     private final PasswordEncoder passwordEncoder;
+    private final MailSenderService mailSenderService;
 
     public void signUpMember(SignUpMemberInfo memberInfo) {
-        validDuplicatedEmail(memberInfo);
+        validDuplicatedEmail(memberInfo.getMember().getEmail());
 
         Member member = memberInfo.getMember();
         member.updatePasswordEncode(passwordEncoder.encode(member.getPassword()));
@@ -50,8 +52,8 @@ public class AccountService {
         memberRoleRepository.saveAll(memberRoles);
     }
 
-    private void validDuplicatedEmail(SignUpMemberInfo memberInfo) {
-        boolean isDuplicatedEmail = accountRepository.existsByEmail(memberInfo.getMember().getEmail());
+    private void validDuplicatedEmail(String email) {
+        boolean isDuplicatedEmail = accountRepository.existsByEmail(email);
         if (isDuplicatedEmail) {
             throw new LitararyErrorException(ErrorCode.DUPLICATED_EMAIL);
         }
@@ -98,6 +100,11 @@ public class AccountService {
                 .orElseThrow(() -> new LitararyErrorException(ErrorCode.MEMBER_NOT_FOUND));
 
         member.updateAccessCode(accessCode);
+    }
+
+    public void sendMailSender(String email) {
+        validDuplicatedEmail(email);
+        mailSenderService.sendAuthCode(email);
     }
 
     @Transactional(readOnly = true)

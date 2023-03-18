@@ -55,6 +55,12 @@ public class AccountController {
     }
 
     @ResponseStatus(HttpStatus.OK)
+    @PostMapping("/send-code")
+    public void sendAuthCode(@Valid @RequestBody MemberEmailDto.Request request) {
+        accountService.sendMailSender(request.getEmail());
+    }
+
+    @ResponseStatus(HttpStatus.OK)
     @PostMapping("/token-refresh")
     public MemberTokenDto.Response refreshToken(@Valid @RequestBody MemberTokenDto.Request request) {
         RefreshTokenInfo refreshTokenInfo = accountService.refreshToken(request.getEmail(), request.getRefreshToken());
