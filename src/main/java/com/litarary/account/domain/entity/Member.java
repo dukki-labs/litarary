@@ -37,7 +37,7 @@ public class Member {
     private String password;
 
     @Column
-    private String accessCode;
+    private String authCode;
 
     @Column(nullable = false)
     private boolean isServiceTerms;
@@ -66,13 +66,13 @@ public class Member {
         this.refreshToken = token;
     }
 
-    public void validAccessCode(String accessCode) {
-        if (!accessCode.equals(this.accessCode)) {
-            throw new LitararyErrorException(ErrorCode.ACCOUNT_ACCESS_ROLE_MISS_MATCH);
+    public void validAuthCode(String accessCode) {
+        if (!accessCode.equals(this.authCode)) {
+            throw new LitararyErrorException(ErrorCode.MISS_MATCH_AUTH_CODE);
         }
     }
 
-    public void updateAccessCode(String accessCode) {
-        this.accessCode = accessCode;
+    public void updateAuthCode(String authCode) {
+        this.authCode = authCode;
     }
 }
