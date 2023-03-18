@@ -47,9 +47,9 @@ public class AccountController {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @PatchMapping("access-code")
-    public void updateAccessCode(@Valid @RequestBody MemberAccessCode.Request request) {
-        accountService.updateAuthCode(request.getMemberId(), request.getAccessCode());
+    @GetMapping("/check-auth-code")
+    public void checkAuthCode(@Valid @RequestBody MemberAccessCode.Request request) {
+        accountService.checkAuthCode(request.getMemberId(), request.getAuthCode());
     }
 
     @ResponseStatus(HttpStatus.OK)

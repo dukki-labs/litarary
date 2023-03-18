@@ -51,7 +51,7 @@ public class AccountService {
     }
 
     public LoginInfo login(String email, String password) {
-        Member member = getMember(email);
+        Member member = getMemberByEmail(email);
         if (!passwordEncoder.matches(password, member.getPassword())) {
             throw new LitararyErrorException(ErrorCode.MISS_MATCH_PASSWORD);
         }
@@ -74,7 +74,7 @@ public class AccountService {
 
 
     public RefreshTokenInfo refreshToken(String email, String refreshToken) {
-        Member member = getMember(email);
+        Member member = getMemberByEmail(email);
         //Todo: refreshToken이 일치하는지 체크할 것.
         TokenInfo tokenInfo = jwtTokenProvider.refreshAccessToken(refreshToken);
         member.updateRefreshToken(tokenInfo.getRefreshToken());
@@ -87,8 +87,7 @@ public class AccountService {
     }
 
     public void updateAuthCode(long memberId, String accessCode) {
-        Member member = accountRepository.findById(memberId)
-                .orElseThrow(() -> new LitararyErrorException(ErrorCode.MEMBER_NOT_FOUND));
+        Member member = getMemberById(memberId);
 
         member.updateAuthCode(accessCode);
     }
@@ -103,18 +102,28 @@ public class AccountService {
 
     @Transactional(readOnly = true)
     public Member findMember(String email) {
-        return getMember(email);
+        return getMemberByEmail(email);
     }
 
     public void updatePassword(long memberId, String authCode, String password) {
-        Member member = accountRepository.findById(memberId)
-                .orElseThrow(() -> new LitararyErrorException(ErrorCode.MEMBER_NOT_FOUND));
+        Member member = getMemberById(memberId);
 
         member.validAuthCode(authCode);
         member.updatePasswordEncode(passwordEncoder.encode(password));
     }
 
-    private Member getMember(String email) {
+    @Transactional(readOnly = true)
+    public void checkAuthCode(long memberId, String authCode) {
+        Member member = getMemberById(memberId);
+        member.isSameAuthCode(authCode);
+    }
+
+    private Member getMemberById(long memberId) {
+        return accountRepository.findById(memberId)
+                .orElseThrow(() -> new LitararyErrorException(ErrorCode.MEMBER_NOT_FOUND));
+    }
+
+    private Member getMemberByEmail(String email) {
         Member member = accountRepository.findByEmail(email)
                 .orElseThrow(() -> new LitararyErrorException(ErrorCode.ACCOUNT_NOT_FOUND_EMAIL));
         return member;

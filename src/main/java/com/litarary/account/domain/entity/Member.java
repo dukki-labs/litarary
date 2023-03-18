@@ -75,4 +75,10 @@ public class Member {
     public void updateAuthCode(String authCode) {
         this.authCode = authCode;
     }
+
+    public void isSameAuthCode(String authCode) {
+        if (!this.authCode.equals(authCode)) {
+            throw new LitararyErrorException(ErrorCode.MISS_MATCH_AUTH_CODE);
+        }
+    }
 }
