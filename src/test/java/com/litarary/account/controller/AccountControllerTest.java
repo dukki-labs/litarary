@@ -238,8 +238,8 @@ class AccountControllerTest extends RestDocsControllerTest {
 
         String uri = REQUEST_PREFIX + "/access-code";
         mockMvc.perform(patch(uri)
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .content(content))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .content(content))
                 .andExpect(status().isOk())
                 .andDo(
                         restDocs.document(
@@ -272,6 +272,30 @@ class AccountControllerTest extends RestDocsControllerTest {
                                         fieldWithPath("memberId").type(JsonFieldType.NUMBER).description("회원 고유번호"),
                                         fieldWithPath("password").type(JsonFieldType.STRING).description("변경할 비밀번호"),
                                         fieldWithPath("accessCode").type(JsonFieldType.STRING).description("인증번호")
+                                )
+                        )
+                );
+    }
+
+
+    @Test
+    void sendAuthCodeTest() throws Exception {
+        String email = "test@gmail.com";
+        MemberEmailDto.Request request = MemberEmailDto.Request.builder()
+                .email(email)
+                .build();
+        String content = objectMapper.writeValueAsString(request);
+        doNothing().when(accountService).sendMailSender(anyString());
+
+        String uri = REQUEST_PREFIX + "/send-code";
+        mockMvc.perform(RestDocumentationRequestBuilders.post(uri)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .content(content))
+                .andExpect(status().isOk())
+                .andDo(
+                        restDocs.document(
+                                requestFields(
+                                        fieldWithPath("email").type(JsonFieldType.STRING).description("인증문자 전송할 메일주소")
                                 )
                         )
                 );
