@@ -25,8 +25,7 @@ import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doNothing;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -235,18 +234,18 @@ class AccountControllerTest extends RestDocsControllerTest {
     }
 
     @Test
-    void updateAccessCodeTest() throws Exception {
+    void checkAuthCodeTest() throws Exception {
         long memberId = 1L;
-        String accessCode = "1515134";
+        String authCode = "0AD2EF";
         MemberAccessCode.Request request = MemberAccessCode.Request.builder()
                 .memberId(memberId)
-                .accessCode(accessCode)
+                .authCode(authCode)
                 .build();
         String content = objectMapper.writeValueAsString(request);
-        doNothing().when(accountService).updateAuthCode(memberId, accessCode);
+        doNothing().when(accountService).checkAuthCode(memberId, authCode);
 
-        String uri = REQUEST_PREFIX + "/access-code";
-        mockMvc.perform(patch(uri)
+        String uri = REQUEST_PREFIX + "/check-auth-code";
+        mockMvc.perform(get(uri)
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .content(content))
                 .andExpect(status().isOk())
@@ -254,7 +253,7 @@ class AccountControllerTest extends RestDocsControllerTest {
                         restDocs.document(
                                 requestFields(
                                         fieldWithPath("memberId").type(JsonFieldType.NUMBER).description("회원 고유번호"),
-                                        fieldWithPath("accessCode").type(JsonFieldType.STRING).description("인증번호")
+                                        fieldWithPath("authCode").type(JsonFieldType.STRING).description("인증문자")
                                 )
                         )
                 );
@@ -382,10 +381,10 @@ class AccountControllerTest extends RestDocsControllerTest {
     @Test
     void 인증번호등록_요청시_회원번호가_없이_요청한경우_에러가발생한다() throws Exception {
         MemberAccessCode.Request request = MemberAccessCode.Request.builder()
-                .accessCode("21415")
+                .authCode("A3WRV4")
                 .build();
         String content = objectMapper.writeValueAsString(request);
-        mockMvc.perform(patch("/api/v1/account/access-code")
+        mockMvc.perform(get("/api/v1/account/check-auth-code")
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .content(content))
                 .andExpect(status().isBadRequest())

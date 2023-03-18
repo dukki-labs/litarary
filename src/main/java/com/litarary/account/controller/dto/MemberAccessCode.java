@@ -18,7 +18,7 @@ public class MemberAccessCode {
 
         @Min(1)
         public long memberId;
-        @NotBlank(message = "인증번호는 필수값 입니다.")
-        public String accessCode;
+        @NotBlank(message = "인증문자는 필수값 입니다.")
+        public String authCode;
     }
 }
