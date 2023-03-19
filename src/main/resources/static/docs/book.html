@@ -444,10 +444,31 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <ul class="sectlevel1">
 <li><a href="#_메인화면으로_이동">메인화면으로 이동</a></li>
 <li><a href="#_메인화면_도서조회관심도서_신규도서_api">메인화면 도서조회(관심도서, 신규도서) API</a>
+<ul class="sectlevel1">
+<li><a href="#_신규_도서_조회_api">신규 도서 조회 API</a>
 <ul class="sectlevel2">
-<li><a href="#_신규_도서_조회_api">신규 도서 조회 API</a></li>
-<li><a href="#_관심_도서_조회_api">관심 도서 조회 API</a></li>
-<li><a href="#_외부_도서_검색_apifeat_알라딘">외부 도서 검색 API(feat 알라딘)</a></li>
+<li><a href="#_신규_도서_조회_api_http_request">HTTP request</a></li>
+<li><a href="#_신규_도서_조회_api_request_parameters">Request parameters</a></li>
+<li><a href="#_신규_도서_조회_api_response_body">Response body</a></li>
+<li><a href="#_신규_도서_조회_api_response_fields">Response fields</a></li>
+</ul>
+</li>
+<li><a href="#_관심_도서_조회_api">관심 도서 조회 API</a>
+<ul class="sectlevel2">
+<li><a href="#_관심_도서_조회_api_http_request">HTTP request</a></li>
+<li><a href="#_관심_도서_조회_api_request_parameters">Request parameters</a></li>
+<li><a href="#_관심_도서_조회_api_response_body">Response body</a></li>
+<li><a href="#_관심_도서_조회_api_response_fields">Response fields</a></li>
+</ul>
+</li>
+<li><a href="#_외부_도서_검색_apifeat_알라딘">외부 도서 검색 API(feat 알라딘)</a>
+<ul class="sectlevel2">
+<li><a href="#_외부_도서_검색_apifeat_알라딘_http_request">HTTP request</a></li>
+<li><a href="#_외부_도서_검색_apifeat_알라딘_request_parameters">Request parameters</a></li>
+<li><a href="#_외부_도서_검색_apifeat_알라딘_response_body">Response body</a></li>
+<li><a href="#_외부_도서_검색_apifeat_알라딘_response_fields">Response fields</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -460,13 +481,12 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 
 </div>
 </div>
+<h1 id="_메인화면_도서조회관심도서_신규도서_api" class="sect0"><a class="link" href="#_메인화면_도서조회관심도서_신규도서_api">메인화면 도서조회(관심도서, 신규도서) API</a></h1>
 <div class="sect1">
-<h2 id="_메인화면_도서조회관심도서_신규도서_api"><a class="link" href="#_메인화면_도서조회관심도서_신규도서_api">메인화면 도서조회(관심도서, 신규도서) API</a></h2>
+<h2 id="_신규_도서_조회_api"><a class="link" href="#_신규_도서_조회_api">신규 도서 조회 API</a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_신규_도서_조회_api"><a class="link" href="#_신규_도서_조회_api">신규 도서 조회 API</a></h3>
-<div class="sect3">
-<h4 id="_신규_도서_조회_api_http_request"><a class="link" href="#_신규_도서_조회_api_http_request">HTTP request</a></h4>
+<h3 id="_신규_도서_조회_api_http_request"><a class="link" href="#_신규_도서_조회_api_http_request">HTTP request</a></h3>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /api/v1/books/recent?inquiryDate=2023-02-23 HTTP/1.1
@@ -475,8 +495,8 @@ Host: localhost:8080</code></pre>
 </div>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_신규_도서_조회_api_request_parameters"><a class="link" href="#_신규_도서_조회_api_request_parameters">Request parameters</a></h4>
+<div class="sect2">
+<h3 id="_신규_도서_조회_api_request_parameters"><a class="link" href="#_신규_도서_조회_api_request_parameters">Request parameters</a></h3>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 50%;">
@@ -496,8 +516,8 @@ Host: localhost:8080</code></pre>
 </tbody>
 </table>
 </div>
-<div class="sect3">
-<h4 id="_신규_도서_조회_api_response_body"><a class="link" href="#_신규_도서_조회_api_response_body">Response body</a></h4>
+<div class="sect2">
+<h3 id="_신규_도서_조회_api_response_body"><a class="link" href="#_신규_도서_조회_api_response_body">Response body</a></h3>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-none hljs">{
@@ -508,7 +528,7 @@ Host: localhost:8080</code></pre>
     "content" : "테스형이 말씀하셨다. 우리가 먹는것이 곧 우리의 자신이 된다.",
     "likeCount" : 12,
     "viewCount" : 2,
-    "regDt" : "2023-03-12T15:15:01.528033"
+    "regDt" : "2023-03-19T20:33:48.973825"
   }, {
     "imageUrl" : "https://www.taragrp.co.kr/wp-content/uploads/2022/07/%EB%8F%84%EC%84%9C-%EC%A0%9C%EB%B3%B8_01-2.png",
     "title" : "몸의 교감",
@@ -516,7 +536,7 @@ Host: localhost:8080</code></pre>
     "content" : "테스형이 말씀하셨다. 우리가 먹는것이 곧 우리의 자신이 된다.",
     "likeCount" : 3,
     "viewCount" : 1,
-    "regDt" : "2023-03-12T16:15:01.52805"
+    "regDt" : "2023-03-19T21:33:48.973843"
   }, {
     "imageUrl" : "https://www.taragrp.co.kr/wp-content/uploads/2022/07/%EB%8F%84%EC%84%9C-%EC%A0%9C%EB%B3%B8_01-2.png",
     "title" : "몸의 교감",
@@ -524,14 +544,14 @@ Host: localhost:8080</code></pre>
     "content" : "테스형이 말씀하셨다. 우리가 먹는것이 곧 우리의 자신이 된다.",
     "likeCount" : 2,
     "viewCount" : 18,
-    "regDt" : "2023-03-12T13:15:01.528055"
+    "regDt" : "2023-03-19T18:33:48.973847"
   } ]
 }</code></pre>
 </div>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_신규_도서_조회_api_response_fields"><a class="link" href="#_신규_도서_조회_api_response_fields">Response fields</a></h4>
+<div class="sect2">
+<h3 id="_신규_도서_조회_api_response_fields"><a class="link" href="#_신규_도서_조회_api_response_fields">Response fields</a></h3>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 33.3333%;">
@@ -585,10 +605,12 @@ Host: localhost:8080</code></pre>
 </table>
 </div>
 </div>
+</div>
+<div class="sect1">
+<h2 id="_관심_도서_조회_api"><a class="link" href="#_관심_도서_조회_api">관심 도서 조회 API</a></h2>
+<div class="sectionbody">
 <div class="sect2">
-<h3 id="_관심_도서_조회_api"><a class="link" href="#_관심_도서_조회_api">관심 도서 조회 API</a></h3>
-<div class="sect3">
-<h4 id="_관심_도서_조회_api_http_request"><a class="link" href="#_관심_도서_조회_api_http_request">HTTP request</a></h4>
+<h3 id="_관심_도서_조회_api_http_request"><a class="link" href="#_관심_도서_조회_api_http_request">HTTP request</a></h3>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /api/v1/books/concern?inquiryDate=2023-02-23 HTTP/1.1
@@ -597,8 +619,8 @@ Host: localhost:8080</code></pre>
 </div>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_관심_도서_조회_api_request_parameters"><a class="link" href="#_관심_도서_조회_api_request_parameters">Request parameters</a></h4>
+<div class="sect2">
+<h3 id="_관심_도서_조회_api_request_parameters"><a class="link" href="#_관심_도서_조회_api_request_parameters">Request parameters</a></h3>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 50%;">
@@ -618,8 +640,8 @@ Host: localhost:8080</code></pre>
 </tbody>
 </table>
 </div>
-<div class="sect3">
-<h4 id="_관심_도서_조회_api_response_body"><a class="link" href="#_관심_도서_조회_api_response_body">Response body</a></h4>
+<div class="sect2">
+<h3 id="_관심_도서_조회_api_response_body"><a class="link" href="#_관심_도서_조회_api_response_body">Response body</a></h3>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-none hljs">{
@@ -632,7 +654,7 @@ Host: localhost:8080</code></pre>
       "content" : "테스형이 말씀하셨다. 우리가 먹는것이 곧 우리의 자신이 된다.",
       "likeCount" : 12,
       "viewCount" : 2,
-      "regDt" : "2023-03-12T15:15:01.539583"
+      "regDt" : "2023-03-19T20:33:48.98878"
     }, {
       "imageUrl" : "https://www.taragrp.co.kr/wp-content/uploads/2022/07/%EB%8F%84%EC%84%9C-%EC%A0%9C%EB%B3%B8_01-2.png",
       "title" : "몸의 교감",
@@ -640,7 +662,7 @@ Host: localhost:8080</code></pre>
       "content" : "테스형이 말씀하셨다. 우리가 먹는것이 곧 우리의 자신이 된다.",
       "likeCount" : 3,
       "viewCount" : 1,
-      "regDt" : "2023-03-12T16:15:01.539597"
+      "regDt" : "2023-03-19T21:33:48.988796"
     }, {
       "imageUrl" : "https://www.taragrp.co.kr/wp-content/uploads/2022/07/%EB%8F%84%EC%84%9C-%EC%A0%9C%EB%B3%B8_01-2.png",
       "title" : "몸의 교감",
@@ -648,7 +670,7 @@ Host: localhost:8080</code></pre>
       "content" : "테스형이 말씀하셨다. 우리가 먹는것이 곧 우리의 자신이 된다.",
       "likeCount" : 2,
       "viewCount" : 18,
-      "regDt" : "2023-03-12T13:15:01.5396"
+      "regDt" : "2023-03-19T18:33:48.9888"
     } ]
   }, {
     "bookCategory" : "Computer_Mobile",
@@ -659,15 +681,15 @@ Host: localhost:8080</code></pre>
       "content" : "테스형이 말씀하셨다. 우리가 먹는것이 곧 우리의 자신이 된다.",
       "likeCount" : 2,
       "viewCount" : 18,
-      "regDt" : "2023-03-12T12:15:01.539607"
+      "regDt" : "2023-03-19T17:33:48.988807"
     } ]
   } ]
 }</code></pre>
 </div>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_관심_도서_조회_api_response_fields"><a class="link" href="#_관심_도서_조회_api_response_fields">Response fields</a></h4>
+<div class="sect2">
+<h3 id="_관심_도서_조회_api_response_fields"><a class="link" href="#_관심_도서_조회_api_response_fields">Response fields</a></h3>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 33.3333%;">
@@ -726,10 +748,12 @@ Host: localhost:8080</code></pre>
 </table>
 </div>
 </div>
+</div>
+<div class="sect1">
+<h2 id="_외부_도서_검색_apifeat_알라딘"><a class="link" href="#_외부_도서_검색_apifeat_알라딘">외부 도서 검색 API(feat 알라딘)</a></h2>
+<div class="sectionbody">
 <div class="sect2">
-<h3 id="_외부_도서_검색_apifeat_알라딘"><a class="link" href="#_외부_도서_검색_apifeat_알라딘">외부 도서 검색 API(feat 알라딘)</a></h3>
-<div class="sect3">
-<h4 id="_외부_도서_검색_apifeat_알라딘_http_request"><a class="link" href="#_외부_도서_검색_apifeat_알라딘_http_request">HTTP request</a></h4>
+<h3 id="_외부_도서_검색_apifeat_알라딘_http_request"><a class="link" href="#_외부_도서_검색_apifeat_알라딘_http_request">HTTP request</a></h3>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /api/v1/books/container/search?searchKeyword=JPA&amp;page=1&amp;size=5 HTTP/1.1
@@ -737,8 +761,8 @@ Host: localhost:8080</code></pre>
 </div>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_외부_도서_검색_apifeat_알라딘_request_parameters"><a class="link" href="#_외부_도서_검색_apifeat_알라딘_request_parameters">Request parameters</a></h4>
+<div class="sect2">
+<h3 id="_외부_도서_검색_apifeat_알라딘_request_parameters"><a class="link" href="#_외부_도서_검색_apifeat_알라딘_request_parameters">Request parameters</a></h3>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 50%;">
@@ -766,8 +790,8 @@ Host: localhost:8080</code></pre>
 </tbody>
 </table>
 </div>
-<div class="sect3">
-<h4 id="_외부_도서_검색_apifeat_알라딘_response_body"><a class="link" href="#_외부_도서_검색_apifeat_알라딘_response_body">Response body</a></h4>
+<div class="sect2">
+<h3 id="_외부_도서_검색_apifeat_알라딘_response_body"><a class="link" href="#_외부_도서_검색_apifeat_알라딘_response_body">Response body</a></h3>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-none hljs">{
@@ -788,8 +812,8 @@ Host: localhost:8080</code></pre>
 </div>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_외부_도서_검색_apifeat_알라딘_response_fields"><a class="link" href="#_외부_도서_검색_apifeat_알라딘_response_fields">Response fields</a></h4>
+<div class="sect2">
+<h3 id="_외부_도서_검색_apifeat_알라딘_response_fields"><a class="link" href="#_외부_도서_검색_apifeat_알라딘_response_fields">Response fields</a></h3>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 33.3333%;">
@@ -865,11 +889,10 @@ Host: localhost:8080</code></pre>
 </div>
 </div>
 </div>
-</div>
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2023-03-12 18:14:39 +0900
+Last updated 2023-03-19 23:31:51 +0900
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">

@@ -23,6 +23,6 @@ public class MemberPasswordDto {
         private String password;
 
         @NotBlank(message = "인증번호는 필수값 입니다.")
-        private String accessCode;
+        private String authCode;
     }
 }

@@ -1,5 +1,8 @@
 package com.litarary.account.domain.entity;
 
+import com.litarary.account.domain.AccessRole;
+import com.litarary.account.domain.UseYn;
+import com.litarary.book.domain.entity.Category;
 import com.litarary.common.ErrorCode;
 import com.litarary.common.exception.LitararyErrorException;
 import lombok.AllArgsConstructor;
@@ -25,7 +28,6 @@ public class Member {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
     private String nickName;
 
     @Column(unique = true, nullable = false)
@@ -33,20 +35,22 @@ public class Member {
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<MemberRole> memberRole = new ArrayList<>();
-    @Column(nullable = false)
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<MemberCategory> memberCategoryList = new ArrayList<>();
+
     private String password;
 
-    @Column
     private String authCode;
 
-    @Column(nullable = false)
     private boolean isServiceTerms;
 
-    @Column(nullable = false)
     private boolean isPrivacyTerms;
 
-    @Column(nullable = false)
     private boolean isServiceAlarm;
+
+    @Enumerated(EnumType.STRING)
+    private UseYn useYn;
 
     @Column(nullable = false)
     @CreatedDate
@@ -80,5 +84,37 @@ public class Member {
         if (!this.authCode.equals(authCode)) {
             throw new LitararyErrorException(ErrorCode.MISS_MATCH_AUTH_CODE);
         }
+    }
+
+    public void updateCategories(List<Category> categories) {
+        if (this.memberCategoryList == null) {
+            this.memberCategoryList = new ArrayList<>();
+        }
+        this.memberCategoryList.clear();
+        List<MemberCategory> memberCategories = categories.stream()
+                .map(category -> new MemberCategory(this, category))
+                .toList();
+        this.memberCategoryList.addAll(memberCategories);
+    }
+
+    public void updateAccountSignUp(Member updateMember) {
+        this.nickName = updateMember.nickName;
+        this.email = updateMember.email;
+        this.isServiceTerms = updateMember.isServiceTerms;
+        this.isPrivacyTerms = updateMember.isPrivacyTerms;
+        this.isServiceAlarm = updateMember.isServiceAlarm;
+        this.useYn = updateMember.useYn;
+        this.updatedAt = updateMember.updatedAt;
+    }
+
+    public void updateMemberRole(List<AccessRole> accessRoleList) {
+        if (this.memberRole == null) {
+            this.memberRole = new ArrayList<>();
+        }
+        this.memberRole.clear();
+        List<MemberRole> memberRoles = accessRoleList.stream()
+              .map(role -> new MemberRole(this, role))
+              .toList();
+        this.memberRole.addAll(memberRoles);
     }
 }

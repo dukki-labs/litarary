@@ -1,15 +1,18 @@
 package com.litarary.account.domain;
 
+import org.springframework.stereotype.Component;
+
 import java.security.SecureRandom;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+@Component
 public class AuthCodeGenerator {
     private static final String AUTH_CODE_RULE = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     public static final int START_INCLUSIVE = 0;
     public static final int END_EXCLUSIVE = 6;
 
-    public static String generateCode() {
+    public String generateCode() {
         SecureRandom random = new SecureRandom();
         String generatedCode = IntStream.range(START_INCLUSIVE, END_EXCLUSIVE)
                 .mapToObj(i -> getAuthCodeChar(random))

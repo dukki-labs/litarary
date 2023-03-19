@@ -7,25 +7,27 @@
 
 == link:index.html[메인화면으로 이동]
 
-== Account API
+= Account API
 로그인, 회원가입 등 계정관련 API를 제공한다.
 
-=== 회원 가입 요청
+== 회원 가입 요청
 operation::account-controller-test/sign-up-test[snippets='http-request,request-fields,http-response,']
 
-=== 로그인 요청
+== 로그인 요청
 operation::account-controller-test/login-test[snippets='http-request,request-fields,http-response,response-fields']
 
-=== 인증문자 전송
-operation::account-controller-test/send-auth-code-test[snippets='http-request,request-fields']
+== 인증문자 전송
+회원가입 시 이메일 인증문자 전송 시 사용한다.
 
-=== 비밀번호 변경 시 인증문자 요청
+operation::account-controller-test/send-auth-code-test[snippets='http-request,request-fields,response-body,response-fields']
+
+== 비밀번호 변경 시 인증문자 요청
 패스워드를 분실하여 이메일 인증 시 사용한다.
 
 operation::account-controller-test/email-certification-test[snippets='http-request,request-fields,response-body,response-fields']
 
-=== 인증번호 검증
+== 인증번호 검증
 operation::account-controller-test/check-auth-code-test[snippets='http-request,request-fields']
 
-=== 비밀번호 변경
+== 비밀번호 변경
 operation::account-controller-test/update-password-test[snippets='http-request,request-fields']
