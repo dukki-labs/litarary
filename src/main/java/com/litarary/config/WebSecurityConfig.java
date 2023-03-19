@@ -34,8 +34,6 @@ public class WebSecurityConfig {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
-
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
 
@@ -59,23 +57,6 @@ public class WebSecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) //JWT토큰을 사용할 것임으로 세션적용하지 않도록 설정
                 .build();
     }
-
-//    @Bean
-//    public CorsConfigurationSource corsConfigurationSource() {
-//        CorsConfiguration configuration = new CorsConfiguration();
-//        configuration.addAllowedOrigin("*");
-//        configuration.addAllowedHeader("*");
-//        configuration.addAllowedMethod("*");
-//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//        source.registerCorsConfiguration("/**", configuration);
-//        return source;
-//    }
-//
-//    @Bean
-//    public CorsFilter corsFilter() {
-//        CorsFilter corsFilter = new CorsFilter(corsConfigurationSource);
-//        return corsFilter;
-//    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {

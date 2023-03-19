@@ -20,15 +20,14 @@ public class GmailSenderServiceImpl implements MailSenderService {
     private final JavaMailSender gmailSender;
 
     @Override
-    public String sendAuthCode(String email) {
+    public String sendAuthCode(String email, String authCode) {
 
         MimeMessage mimeMessage = gmailSender.createMimeMessage();
-        return sendMessage(email, mimeMessage);
+        return sendMessage(email, authCode, mimeMessage);
     }
 
-    private String sendMessage(String email, MimeMessage mimeMessage) {
+    private String sendMessage(String email, String authCode, MimeMessage mimeMessage) {
         try {
-            String authCode = AuthCodeGenerator.generateCode();
             MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, false, "UTF-8");
             mimeMessageHelper.setTo(email);
             mimeMessageHelper.setSubject("Litarary 이메일 인증문자");

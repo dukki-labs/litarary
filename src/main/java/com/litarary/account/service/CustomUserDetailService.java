@@ -1,5 +1,6 @@
 package com.litarary.account.service;
 
+import com.litarary.account.domain.UseYn;
 import com.litarary.account.domain.entity.Member;
 import com.litarary.account.domain.entity.MemberRole;
 import com.litarary.account.repository.AccountRepository;
@@ -19,7 +20,7 @@ public class CustomUserDetailService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        return accountRepository.findByEmail(email)
+        return accountRepository.findByEmailAndUseYn(email, UseYn.Y)
                 .map(this::createUserDetail)
                 .orElseThrow(() -> new LitararyErrorException(ErrorCode.ACCOUNT_NOT_FOUND_EMAIL));
     }

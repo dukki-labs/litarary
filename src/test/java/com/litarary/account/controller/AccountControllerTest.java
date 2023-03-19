@@ -2,9 +2,13 @@ package com.litarary.account.controller;
 
 import com.litarary.account.controller.dto.*;
 import com.litarary.account.domain.AccessRole;
+import com.litarary.account.domain.AuthCodeGenerator;
+import com.litarary.account.domain.BookCategory;
+import com.litarary.account.domain.UseYn;
 import com.litarary.account.domain.entity.Member;
 import com.litarary.account.service.AccountService;
 import com.litarary.account.service.dto.LoginInfo;
+import com.litarary.account.service.dto.MemberDefaultInfo;
 import com.litarary.account.service.dto.RefreshTokenInfo;
 import com.litarary.account.service.dto.SignUpMemberInfo;
 import com.litarary.account.service.mail.MailSenderService;
@@ -37,6 +41,9 @@ class AccountControllerTest extends RestDocsControllerTest {
     @MockBean
     private MailSenderService mailSenderService;
 
+    @MockBean
+    private AuthCodeGenerator authCodeGenerator;
+
     private final String REQUEST_PREFIX = "/api/v1/account";
 
     @Test
@@ -44,10 +51,12 @@ class AccountControllerTest extends RestDocsControllerTest {
 
         MemberDto.Request request = MemberDto.Request
                 .builder()
+                .memberId(1L)
                 .nickName("test")
                 .email("test@naver.com")
                 .password("qwer123!@")
-                .accessRoles(List.of(AccessRole.TESTER))
+                .bookCategoryList(List.of(BookCategory.GENRE, BookCategory.MAGAZINE))
+                .accessRoles(List.of(AccessRole.USER))
                 .serviceTerms(true)
                 .privacyTerms(true)
                 .serviceAlarm(true)
@@ -65,48 +74,26 @@ class AccountControllerTest extends RestDocsControllerTest {
                 .andDo(
                         restDocs.document(
                                 requestFields(
+                                        fieldWithPath("memberId").type(JsonFieldType.NUMBER).description("회원 고유번호"),
                                         fieldWithPath("nickName").type(JsonFieldType.STRING).description("닉네임"),
                                         fieldWithPath("email").type(JsonFieldType.STRING).description("이메일"),
                                         fieldWithPath("password").type(JsonFieldType.STRING).description("비밀번호"),
                                         fieldWithPath("serviceTerms").type(JsonFieldType.BOOLEAN).description("서비스 약관 동의"),
                                         fieldWithPath("privacyTerms").type(JsonFieldType.BOOLEAN).description("개인정보 약관 동의"),
                                         fieldWithPath("serviceAlarm").type(JsonFieldType.BOOLEAN).description("서비스 알림 동의"),
-//                                        fieldWithPath("interestItems[]").type(JsonFieldType.ARRAY).description("취미 종류 " +
-//                                                "`[HISTORY_CULTURE:가정/요리/뷰티]`\n" +
-//                                                "`[HOBBY:취미]`\n" +
-//                                                "`[ECONOMY_OPERATE:경제경영]`\n" +
-//                                                "`[HIGH_SCHOOL:고등학교참고서]`\n" +
-//                                                "`[CLASSIC:고전]`\n" +
-//                                                "`[SCIENCE_TECHNOLOGY:과학]`\n" +
-//                                                "`[KUMGANG_TRAVEL:금강산여행]`\n" +
-//                                                "`[CALENDAR:달력]`\n" +
-//                                                "`[UNIVERSITY_BOOK:대학교제]`\n" +
-//                                                "`[COMIC_BOOK:만화]`\n" +
-//                                                "`[SOCIAL_SCIENCE:사회과학]`\n" +
-//                                                "`[NOVEL_POETRY_DRAMA:소설/시/희곡]`\n" +
-//                                                "`[CALIFIER_CERTIFICATE:수험서/자격증]`\n" +
-//                                                "`[CHILDREN:어린이]`\n" +
-//                                                "`[ESSAY:에세이]`\n" +
-//                                                "`[TRAVEL:여행]`\n" +
-//                                                "`[HISTORY:역사]`\n" +
-//                                                "`[ART_POPULAR_CULTURE:예술/대중문화]`\n" +
-//                                                "`[FOREIGN_LANGUAGE:외국어]`\n" +
-//                                                "`[CHILD:유아]`\n" +
-//                                                "`[HUMANITIES:인문학]`\n" +
-//                                                "`[JAPANESE_BOOK:일본 도서]`\n" +
-//                                                "`[SELF_DEVELOPMENT:자기계발]`\n" +
-//                                                "`[MAGAZINE:잡지]`\n" +
-//                                                "`[GENRE:장르소설]`\n" +
-//                                                "`[COMPLETE_USED_COLLECTION:전집/중고전집]`\n" +
-//                                                "`[RELIGION_MECHANICS:종교/역학]`\n" +
-//                                                "`[GOOD_PARENT:좋은부모]`\n" +
-//                                                "`[MIDDLE_SCHOOL:중학교참고서]`\n" +
-//                                                "`[TEENAGER:청소년]`\n" +
-//                                                "`[YOUTH_RECOMMENDATION:청소년_추천도서]`\n" +
-//                                                "`[Elementary_School:초등학교참고서]`\n" +
-//                                                "`[Computer_Mobile:컴퓨터/모바일]`\n" +
-//                                                "`[Gift:Gift]`\n" +
-//                                                "`[Other:기타]`\n"),
+                                        fieldWithPath("bookCategoryList.[]").type(JsonFieldType.ARRAY).description("관심 카테고리 " +
+                                                "`[HISTORY_CULTURE:가정/요리/뷰티]`\n" +
+                                                "`[HOBBY:취미]`\n" +
+                                                "`[ECONOMY_OPERATE:경제경영]`\n" +
+                                                "`[HIGH_SCHOOL:고등학교참고서]`\n" +
+                                                "`[CLASSIC:고전]`\n" +
+                                                "`[SCIENCE_TECHNOLOGY:과학]`\n" +
+                                                "`[KUMGANG_TRAVEL:금강산여행]`\n" +
+                                                "`[CALENDAR:달력]`\n" +
+                                                "`[UNIVERSITY_BOOK:대학교제]`\n" +
+                                                "`[COMIC_BOOK:만화]`\n" +
+                                                "`[SOCIAL_SCIENCE:사회과학]`\n" +
+                                                "`[Other:기타]`\n"),
                                         fieldWithPath("accessRoles.[]").type(JsonFieldType.ARRAY).description("가입 권한 정보 [USER, TESTER]")
                                 )
                         )
@@ -209,8 +196,8 @@ class AccountControllerTest extends RestDocsControllerTest {
         MemberEmailDto.Request requestDto = MemberEmailDto.Request.builder()
                 .email(email)
                 .build();
-        given(accountService.findMember(anyString())).willReturn(member);
-        given(mailSenderService.sendAuthCode(anyString())).willReturn(email);
+        given(accountService.findMember(anyString(), any(UseYn.class))).willReturn(member);
+        given(mailSenderService.sendAuthCode(anyString(), anyString())).willReturn(email);
         doNothing().when(accountService).updateAuthCode(anyLong(), anyString());
 
         String uri = REQUEST_PREFIX + "/password/send-code";
@@ -264,7 +251,7 @@ class AccountControllerTest extends RestDocsControllerTest {
         MemberPasswordDto.Request request = MemberPasswordDto.Request.builder()
                 .memberId(1L)
                 .password("test123!")
-                .accessCode("3425235")
+                .authCode("KS4SV5")
                 .build();
         String content = objectMapper.writeValueAsString(request);
         doNothing().when(accountService).updatePassword(anyLong(), anyString(), anyString());
@@ -279,7 +266,7 @@ class AccountControllerTest extends RestDocsControllerTest {
                                 requestFields(
                                         fieldWithPath("memberId").type(JsonFieldType.NUMBER).description("회원 고유번호"),
                                         fieldWithPath("password").type(JsonFieldType.STRING).description("변경할 비밀번호"),
-                                        fieldWithPath("accessCode").type(JsonFieldType.STRING).description("인증번호")
+                                        fieldWithPath("authCode").type(JsonFieldType.STRING).description("인증문자")
                                 )
                         )
                 );
@@ -292,18 +279,29 @@ class AccountControllerTest extends RestDocsControllerTest {
         MemberEmailDto.Request request = MemberEmailDto.Request.builder()
                 .email(email)
                 .build();
+        MemberDefaultInfo defaultMember = MemberDefaultInfo.builder()
+                .memberId(1L)
+                .email(email)
+                .build();
         String content = objectMapper.writeValueAsString(request);
-        given(mailSenderService.sendAuthCode(anyString())).willReturn(email);
+        String authCode = "0AD2EF";
+        given(authCodeGenerator.generateCode()).willReturn(authCode);
+        given(accountService.createMember(email, authCode)).willReturn(defaultMember);
+        given(mailSenderService.sendAuthCode(anyString(), anyString())).willReturn(email);
 
         String uri = REQUEST_PREFIX + "/send-code";
         mockMvc.perform(RestDocumentationRequestBuilders.post(uri)
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .content(content))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .content(content))
                 .andExpect(status().isOk())
                 .andDo(
                         restDocs.document(
                                 requestFields(
                                         fieldWithPath("email").type(JsonFieldType.STRING).description("인증문자 전송할 메일주소")
+                                ),
+                                responseFields(
+                                        fieldWithPath("memberId").type(JsonFieldType.NUMBER).description("회원 고유번호"),
+                                        fieldWithPath("email").type(JsonFieldType.STRING).description("이메일")
                                 )
                         )
                 );
@@ -314,7 +312,7 @@ class AccountControllerTest extends RestDocsControllerTest {
         MemberPasswordDto.Request request = MemberPasswordDto.Request.builder()
                 .memberId(0L)
                 .password("test123")
-                .accessCode("3425235")
+                .authCode("A3WRV4")
                 .build();
         String content = objectMapper.writeValueAsString(request);
         mockMvc.perform(patch("/api/v1/account/password")
@@ -333,24 +331,25 @@ class AccountControllerTest extends RestDocsControllerTest {
         MemberEmailDto.Request request = MemberEmailDto.Request.builder()
                 .email(email)
                 .build();
-        given(accountService.findMember(email)).willThrow(new LitararyErrorException(ErrorCode.ACCOUNT_NOT_FOUND_EMAIL));
+        given(accountService.findMember(email, UseYn.Y)).willThrow(new LitararyErrorException(ErrorCode.ACCOUNT_NOT_FOUND_EMAIL));
 
         String content = objectMapper.writeValueAsString(request);
         String uri = REQUEST_PREFIX + "/password/send-code";
         mockMvc.perform(patch(uri)
-                .content(content)
-                .contentType(MediaType.APPLICATION_JSON_VALUE))
+                        .content(content)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.status").value(400))
                 .andExpect(jsonPath("$.errorCode").value("ACCOUNT_NOT_FOUND_EMAIL"))
                 .andDo(print());
     }
+
     @Test
     void 비밀번호_변경요청시_포멧_불일치할경우_에러발생_테스트() throws Exception {
         MemberPasswordDto.Request request = MemberPasswordDto.Request.builder()
                 .memberId(1L)
                 .password("test123")
-                .accessCode("3425235")
+                .authCode("A3WRV4")
                 .build();
         String content = objectMapper.writeValueAsString(request);
         mockMvc.perform(patch("/api/v1/account/password")

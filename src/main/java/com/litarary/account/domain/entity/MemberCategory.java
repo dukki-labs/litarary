@@ -1,6 +1,6 @@
 package com.litarary.account.domain.entity;
 
-import com.litarary.account.domain.AccessRole;
+import com.litarary.book.domain.entity.Category;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,21 +13,22 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Getter
 @Entity
-public class MemberRole {
+public class MemberCategory {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private AccessRole roleType;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
 
-    public MemberRole(Member member, AccessRole roleType) {
-        this.roleType = roleType;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id")
+    private Category category;
+
+    public MemberCategory(Member member, Category category) {
         this.member = member;
+        this.category = category;
     }
 }

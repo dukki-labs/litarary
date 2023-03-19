@@ -4,6 +4,7 @@ import com.litarary.account.controller.dto.MemberDto;
 import com.litarary.account.controller.dto.MemberEmailDto;
 import com.litarary.account.controller.dto.MemberLoginDto;
 import com.litarary.account.controller.dto.MemberTokenDto;
+import com.litarary.account.domain.UseYn;
 import com.litarary.account.domain.entity.Member;
 import com.litarary.account.service.dto.LoginInfo;
 import com.litarary.account.service.dto.RefreshTokenInfo;
@@ -17,9 +18,11 @@ import java.time.OffsetDateTime;
 public class MemberMapper {
     public SignUpMemberInfo mapToSignUpMember(MemberDto.Request request) {
         return SignUpMemberInfo.builder()
+                .memberId(request.getMemberId())
                 .member(Member.builder()
                         .nickName(request.getNickName())
                         .email(request.getEmail())
+                        .useYn(UseYn.Y)
                         .password(request.getPassword())
                         .isServiceTerms(request.isServiceTerms())
                         .isPrivacyTerms(request.isPrivacyTerms())
@@ -27,7 +30,7 @@ public class MemberMapper {
                         .createdAt(OffsetDateTime.now())
                         .updatedAt(OffsetDateTime.now())
                         .build())
-//                .interests(request.getInterestItems())
+                .bookCategoryList(request.getBookCategoryList())
                 .accessRoles(request.getAccessRoles())
                 .build();
     }
