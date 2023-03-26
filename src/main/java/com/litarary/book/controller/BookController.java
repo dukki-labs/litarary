@@ -29,9 +29,9 @@ public class BookController {
     @GetMapping("/recent")
     public RecentBookDto.Response recentBookList(RecentBookDto.Request request) {
         List<BookInfoDto> bookInfoDtos = Arrays.asList(
-                getBookInfo(12, 2, 3, BookCategory.HISTORY),
-                getBookInfo(3, 1, 2, BookCategory.HISTORY),
-                getBookInfo(2, 18, 5, BookCategory.HISTORY)
+                getBookInfo(12, 2, 3, BookCategory.SCIENCE_TECHNOLOGY),
+                getBookInfo(3, 1, 2, BookCategory.SCIENCE_TECHNOLOGY),
+                getBookInfo(2, 18, 5, BookCategory.SCIENCE_TECHNOLOGY)
         );
         return RecentBookDto.Response
                 .builder()
@@ -43,12 +43,12 @@ public class BookController {
     public ConcernBookDto.Response concernBookList(ConcernBookDto request) {
         List<ConcernBookTypeDto> concernBookTypeDtos = Arrays.asList(
                 ConcernBookTypeDto.builder()
-                        .bookCategory(BookCategory.HISTORY)
-                        .bookInfoDtoList(getBookList(BookCategory.COMIC_BOOK))
+                        .bookCategory(BookCategory.SCIENCE_TECHNOLOGY)
+                        .bookInfoDtoList(getBookList(BookCategory.EDUCATION))
                         .build(),
                 ConcernBookTypeDto.builder()
-                        .bookCategory(BookCategory.Computer_Mobile)
-                        .bookInfoDtoList(List.of(getBookInfo(2, 18, 6, BookCategory.Computer_Mobile)))
+                        .bookCategory(BookCategory.COMPUTER_MOBILE)
+                        .bookInfoDtoList(List.of(getBookInfo(2, 18, 6, BookCategory.COMPUTER_MOBILE)))
                         .build()
         );
 

@@ -11,7 +11,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.web.servlet.ResultActions;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -103,7 +102,7 @@ class BookControllerTest extends RestDocsControllerTest {
                                                 .description("도서 내용 설명")
                                                 .imageUrl("https://image.aladin.co.kr/product/6268/14/cover150/8960777331_1.jpg")
                                                 .categoryMapId(33)
-                                                .bookCategory(BookCategory.Computer_Mobile)
+                                                .bookCategory(BookCategory.COMPUTER_MOBILE)
                                                 .publisher("에이콘출판")
                                                 .build()
                                         )
