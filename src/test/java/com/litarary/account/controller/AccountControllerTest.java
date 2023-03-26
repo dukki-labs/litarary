@@ -55,7 +55,7 @@ class AccountControllerTest extends RestDocsControllerTest {
                 .nickName("test")
                 .email("test@naver.com")
                 .password("qwer123!@")
-                .bookCategoryList(List.of(BookCategory.GENRE, BookCategory.MAGAZINE))
+                .bookCategoryList(List.of(BookCategory.SCIENCE_TECHNOLOGY, BookCategory.LANGUAGE))
                 .accessRoles(List.of(AccessRole.USER))
                 .serviceTerms(true)
                 .privacyTerms(true)
@@ -81,19 +81,19 @@ class AccountControllerTest extends RestDocsControllerTest {
                                         fieldWithPath("serviceTerms").type(JsonFieldType.BOOLEAN).description("서비스 약관 동의"),
                                         fieldWithPath("privacyTerms").type(JsonFieldType.BOOLEAN).description("개인정보 약관 동의"),
                                         fieldWithPath("serviceAlarm").type(JsonFieldType.BOOLEAN).description("서비스 알림 동의"),
-                                        fieldWithPath("bookCategoryList.[]").type(JsonFieldType.ARRAY).description("관심 카테고리 " +
-                                                "`[HISTORY_CULTURE:가정/요리/뷰티]`\n" +
-                                                "`[HOBBY:취미]`\n" +
-                                                "`[ECONOMY_OPERATE:경제경영]`\n" +
-                                                "`[HIGH_SCHOOL:고등학교참고서]`\n" +
-                                                "`[CLASSIC:고전]`\n" +
-                                                "`[SCIENCE_TECHNOLOGY:과학]`\n" +
-                                                "`[KUMGANG_TRAVEL:금강산여행]`\n" +
-                                                "`[CALENDAR:달력]`\n" +
-                                                "`[UNIVERSITY_BOOK:대학교제]`\n" +
-                                                "`[COMIC_BOOK:만화]`\n" +
-                                                "`[SOCIAL_SCIENCE:사회과학]`\n" +
-                                                "`[Other:기타]`\n"),
+                                        fieldWithPath("bookCategoryList.[]").type(JsonFieldType.ARRAY).description("관심 카테고리 \n\n" +
+                                                "`[HISTORY_CULTURE:역사/예술/문화]`\n\n" +
+                                                "`[EDUCATION:교육]`\n\n" +
+                                                "`[FAMILY_LIFE:가정/요리/뷰티]`\n\n" +
+                                                "`[HOBBY:건강/취미/레저/여행]`\n\n" +
+                                                "`[ECONOMIC_MANAGEMENT:경제경영]`\n\n" +
+                                                "`[SCIENCE_TECHNOLOGY:사회과학/과학]`\n\n" +
+                                                "`[COMPUTER_MOBILE:컴퓨터/모바일]`\n\n" +
+                                                "`[LITERATURE:문학]`\n\n" +
+                                                "`[ENTERTAINMENT:엔터테인먼트]`\n\n" +
+                                                "`[SELF_DEVELOPMENT:자기계발]`\n\n" +
+                                                "`[LANGUAGE:언어]`\n\n" +
+                                                "`[OTHER:기타]`"),
                                         fieldWithPath("accessRoles.[]").type(JsonFieldType.ARRAY).description("가입 권한 정보 [USER, TESTER]")
                                 )
                         )
