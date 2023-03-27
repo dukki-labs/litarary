@@ -28,7 +28,8 @@ public enum ErrorCode {
 
     // Book Error
     JSON_PARSING_ERROR("Json Parse에 실패했습니다."),
-    EXTERNAL_REQUEST_ERROR("외부 API요청에 실패했습니다.");
+    EXTERNAL_REQUEST_ERROR("외부 API요청에 실패했습니다."),
+    CONVERT_STRING_ENCODE_ERROR("인코딩에 실패했습니다.");
 
     private final String message;
 }

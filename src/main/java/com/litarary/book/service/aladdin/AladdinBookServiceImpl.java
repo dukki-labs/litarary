@@ -29,6 +29,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.annotation.PostConstruct;
+import java.net.URI;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -102,7 +103,7 @@ public class AladdinBookServiceImpl implements BookContainerService {
     }
 
     private AladdinBookResponse requestBookInfo(AladdinBookRequest requestEntity) {
-        String uriString = createRequestUrl(this.endPointUrl, requestEntity);
+        URI uriString = createRequestUrl(this.endPointUrl, requestEntity);
         HttpEntity<AladdinBookRequest> requestHttpEntity = new HttpEntity<>(requestEntity, this.httpHeaders);
 
         try {
@@ -115,7 +116,7 @@ public class AladdinBookServiceImpl implements BookContainerService {
         }
     }
 
-    private String createRequestUrl(String endPointUrl, AladdinBookRequest requestEntity) {
+    private URI createRequestUrl(String endPointUrl, AladdinBookRequest requestEntity) {
         return UriComponentsBuilder.fromUriString(endPointUrl)
                 .queryParam("TTBKey", requestEntity.getSecretKey())
                 .queryParam("Query", requestEntity.getQuery())
@@ -126,6 +127,8 @@ public class AladdinBookServiceImpl implements BookContainerService {
                 .queryParam("Sort", requestEntity.getSort())
                 .queryParam("Output", requestEntity.getOutput())
                 .queryParam("Cover", requestEntity.getCover())
-                .toUriString();
+                .build()
+                .encode()
+                .toUri();
     }
 }
