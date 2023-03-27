@@ -202,7 +202,7 @@ class AccountControllerTest extends RestDocsControllerTest {
 
         String uri = REQUEST_PREFIX + "/password/send-code";
         String content = objectMapper.writeValueAsString(requestDto);
-        mockMvc.perform(patch(uri)
+        mockMvc.perform(post(uri)
                         .content(content)
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk())
@@ -232,7 +232,7 @@ class AccountControllerTest extends RestDocsControllerTest {
         doNothing().when(accountService).checkAuthCode(memberId, authCode);
 
         String uri = REQUEST_PREFIX + "/check-auth-code";
-        mockMvc.perform(get(uri)
+        mockMvc.perform(post(uri)
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .content(content))
                 .andExpect(status().isOk())
@@ -335,7 +335,7 @@ class AccountControllerTest extends RestDocsControllerTest {
 
         String content = objectMapper.writeValueAsString(request);
         String uri = REQUEST_PREFIX + "/password/send-code";
-        mockMvc.perform(patch(uri)
+        mockMvc.perform(post(uri)
                         .content(content)
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
@@ -383,7 +383,7 @@ class AccountControllerTest extends RestDocsControllerTest {
                 .authCode("A3WRV4")
                 .build();
         String content = objectMapper.writeValueAsString(request);
-        mockMvc.perform(get("/api/v1/account/check-auth-code")
+        mockMvc.perform(post("/api/v1/account/check-auth-code")
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .content(content))
                 .andExpect(status().isBadRequest())
