@@ -2,10 +2,7 @@ package com.litarary.account.controller.dto;
 
 import com.litarary.account.domain.AccessRole;
 import com.litarary.account.domain.BookCategory;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.validation.constraints.*;
 import java.util.List;
@@ -15,6 +12,8 @@ import java.util.List;
 public class MemberDto {
 
     @Builder
+    @AllArgsConstructor
+    @NoArgsConstructor
     @Getter
     public static class Request {
 

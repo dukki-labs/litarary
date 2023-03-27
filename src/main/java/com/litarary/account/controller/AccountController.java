@@ -42,7 +42,7 @@ public class AccountController {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @PatchMapping("/password/send-code")
+    @PostMapping("/password/send-code")
     public MemberEmailDto.Response emailCertification(@Valid @RequestBody MemberEmailDto.Request request) {
         Member member = accountService.findMember(request.getEmail(), UseYn.Y);
         String authCode = authCodeGenerator.generateCode();
@@ -52,7 +52,7 @@ public class AccountController {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/check-auth-code")
+    @PostMapping("/check-auth-code")
     public void checkAuthCode(@Valid @RequestBody MemberAccessCode.Request request) {
         accountService.checkAuthCode(request.getMemberId(), request.getAuthCode());
     }

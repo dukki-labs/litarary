@@ -121,6 +121,15 @@ public class AccountService {
     }
 
     public MemberDefaultInfo createMember(String email, String authCode) {
+        Member findMember = accountRepository.findByEmail(email);
+        if (findMember != null) {
+            findMember.updateAuthCode(authCode);
+            return MemberDefaultInfo.builder()
+                    .memberId(findMember.getId())
+                    .email(findMember.getEmail())
+                    .build();
+        }
+
         Member member = Member.builder()
                 .email(email)
                 .authCode(authCode)
@@ -129,6 +138,7 @@ public class AccountService {
                 .useYn(UseYn.N)
                 .build();
 
+        accountRepository.findByEmail(email);
         Member savedMember = accountRepository.save(member);
         return MemberDefaultInfo.builder()
                 .memberId(savedMember.getId())

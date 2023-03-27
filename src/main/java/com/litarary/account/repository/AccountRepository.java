@@ -13,4 +13,6 @@ public interface AccountRepository extends JpaRepository<Member, Long> {
     Optional<Member> findByEmailAndUseYn(String email, UseYn useYn);
 
     boolean existsByEmailAndUseYn(String email, UseYn useYn);
+
+    Member findByEmail(String email);
 }
