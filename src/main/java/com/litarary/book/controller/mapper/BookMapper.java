@@ -1,7 +1,9 @@
 package com.litarary.book.controller.mapper;
 
+import com.litarary.book.controller.dto.BookRegistrationDto;
 import com.litarary.book.controller.dto.ContainerBookInfoDto;
 import com.litarary.book.service.dto.ContainerBookInfo;
+import com.litarary.book.service.dto.RegisterBook;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -32,6 +34,19 @@ public class BookMapper {
                 .size(containerBookInfo.getSize())
                 .totalCount(containerBookInfo.getTotalCount())
                 .bookList(containerBookDtos)
+                .build();
+    }
+
+    public RegisterBook toRegisterBook(BookRegistrationDto.Request request) {
+        return RegisterBook.builder()
+                .title(request.getTitle())
+                .author(request.getAuthor())
+                .review(request.getReview())
+                .deadLine(request.getDeadLine())
+                .imageUrl(request.getImageUrl())
+                .returnLocation(request.getReturnLocation())
+                .content(request.getContent())
+                .publisher(request.getPublisher())
                 .build();
     }
 }
