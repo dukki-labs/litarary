@@ -4,16 +4,14 @@ import com.litarary.account.domain.AccessRole;
 import com.litarary.account.domain.UseYn;
 import com.litarary.book.domain.entity.Category;
 import com.litarary.common.ErrorCode;
+import com.litarary.common.entity.BaseEntity;
 import com.litarary.common.exception.LitararyErrorException;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
-import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +20,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Member {
+public class Member extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -52,15 +50,11 @@ public class Member {
     @Enumerated(EnumType.STRING)
     private UseYn useYn;
 
-    @Column(nullable = false)
-    @CreatedDate
-    private OffsetDateTime createdAt;
-
-    @Column(nullable = false)
-    @LastModifiedDate
-    private OffsetDateTime updatedAt;
-
     private String refreshToken;
+
+    @JoinColumn(name = "company_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Company company;
 
     public void updatePasswordEncode(String password) {
         this.password = password;
@@ -104,7 +98,6 @@ public class Member {
         this.isPrivacyTerms = updateMember.isPrivacyTerms;
         this.isServiceAlarm = updateMember.isServiceAlarm;
         this.useYn = updateMember.useYn;
-        this.updatedAt = updateMember.updatedAt;
     }
 
     public void updateMemberRole(List<AccessRole> accessRoleList) {
@@ -116,5 +109,9 @@ public class Member {
               .map(role -> new MemberRole(this, role))
               .toList();
         this.memberRole.addAll(memberRoles);
+    }
+
+    public void updateCompany(Company company) {
+        this.company = company;
     }
 }

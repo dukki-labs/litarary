@@ -1,9 +1,9 @@
 package com.litarary.account.service;
 
 import com.litarary.account.domain.UseYn;
+import com.litarary.account.domain.entity.Company;
 import com.litarary.account.domain.entity.Member;
 import com.litarary.account.repository.AccountRepository;
-import com.litarary.account.repository.MemberRoleRepository;
 import com.litarary.account.service.dto.LoginInfo;
 import com.litarary.account.service.dto.MemberDefaultInfo;
 import com.litarary.account.service.dto.RefreshTokenInfo;
@@ -22,7 +22,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.OffsetDateTime;
 import java.util.List;
 
 @Service
@@ -31,11 +30,11 @@ import java.util.List;
 public class AccountService {
 
     private final AccountRepository accountRepository;
-    private final MemberRoleRepository memberRoleRepository;
     private final CategoryRepository categoryRepository;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final JwtTokenProvider jwtTokenProvider;
     private final PasswordEncoder passwordEncoder;
+    private final CompanyService companyService;
 
     public void signUpMember(SignUpMemberInfo memberInfo) {
         Member updateMember = memberInfo.getMember();
@@ -50,6 +49,9 @@ public class AccountService {
 
         List<Category> categories = categoryRepository.findByBookCategoryIn(memberInfo.getBookCategoryList());
         member.updateCategories(categories);
+
+        Company company = companyService.findCompany(member.getEmail());
+        member.updateCompany(company);
     }
 
     public LoginInfo login(String email, String password) {
@@ -133,8 +135,6 @@ public class AccountService {
         Member member = Member.builder()
                 .email(email)
                 .authCode(authCode)
-                .createdAt(OffsetDateTime.now())
-                .updatedAt(OffsetDateTime.now())
                 .useYn(UseYn.N)
                 .build();
 

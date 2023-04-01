@@ -27,8 +27,6 @@ public class MemberMapper {
                         .isServiceTerms(request.isServiceTerms())
                         .isPrivacyTerms(request.isPrivacyTerms())
                         .isServiceAlarm(request.isServiceAlarm())
-                        .createdAt(OffsetDateTime.now())
-                        .updatedAt(OffsetDateTime.now())
                         .build())
                 .bookCategoryList(request.getBookCategoryList())
                 .accessRoles(request.getAccessRoles())
