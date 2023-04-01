@@ -8,10 +8,8 @@ import com.litarary.book.service.dto.ContainerBookInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -19,14 +17,14 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/v1/books")
+@RequestMapping("/api/v1")
 public class BookController {
 
     private final BookService bookService;
     private final BookMapper bookMapper;
 
 
-    @GetMapping("/recent")
+    @GetMapping("/books/recent")
     public RecentBookDto.Response recentBookList(RecentBookDto.Request request) {
         List<BookInfoDto> bookInfoDtos = Arrays.asList(
                 getBookInfo(12, 2, 3, BookCategory.SCIENCE_TECHNOLOGY),
@@ -39,7 +37,13 @@ public class BookController {
                 .build();
     }
 
-    @GetMapping("/concern")
+    @PostMapping("/categories/{categoryId}/books")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void bookRegistration(@PathVariable Long categoryId, @RequestBody BookRegistrationDto.Request request) {
+        bookService.registerBook(categoryId, bookMapper.toRegisterBook(request));
+    }
+
+    @GetMapping("/books/concern")
     public ConcernBookDto.Response concernBookList(ConcernBookDto request) {
         List<ConcernBookTypeDto> concernBookTypeDtos = Arrays.asList(
                 ConcernBookTypeDto.builder()
@@ -58,7 +62,7 @@ public class BookController {
                 .build();
     }
 
-    @GetMapping("/container/search")
+    @GetMapping("/books/container/search")
     public ContainerBookInfoDto.Response searchContainerBookList(@RequestParam("searchKeyword") String searchKeyword,
                                                                  @PageableDefault Pageable pageable) {
         ContainerBookInfo containerBookInfo = bookService.searchBookListByContainer(searchKeyword, pageable);

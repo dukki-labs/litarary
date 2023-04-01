@@ -1,6 +1,8 @@
 package com.litarary.book.controller;
 
 import com.litarary.account.domain.BookCategory;
+import com.litarary.book.controller.dto.BookRegistrationDto;
+import com.litarary.book.domain.entity.DeadLine;
 import com.litarary.book.service.BookService;
 import com.litarary.book.service.dto.ContainerBook;
 import com.litarary.book.service.dto.ContainerBookInfo;
@@ -17,16 +19,16 @@ import java.util.List;
 
 import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
-import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
-import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
-import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
-import static org.springframework.restdocs.request.RequestDocumentation.requestParameters;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
+import static org.springframework.restdocs.payload.PayloadDocumentation.*;
+import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 class BookControllerTest extends RestDocsControllerTest {
 
     @MockBean
     private BookService bookService;
+    private final String BASE_URI = "/api/v1";
 
     @Test
     @WithMockUser
@@ -82,6 +84,47 @@ class BookControllerTest extends RestDocsControllerTest {
                                         .type(JsonFieldType.STRING).description("등록 날짜")
                         )
                 ));
+    }
+
+    @Test
+    @WithMockUser
+    void bookRegistrationTest() throws Exception {
+        String uri = BASE_URI + "/categories/{categoryId}/books";
+        BookRegistrationDto.Request request = BookRegistrationDto.Request.builder()
+                .title("도서제목")
+                .imageUrl("http://test.com")
+                .content("본문내용")
+                .review("소감 글")
+                .deadLine(DeadLine.ONE_WEEK)
+                .author("저자명")
+                .publisher("출판사")
+                .publishDate(LocalDate.now())
+                .returnLocation("반납장소")
+                .build();
+        String content = objectMapper.writeValueAsString(request);
+
+        mockMvc.perform(post(uri, 1)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .content(content))
+                .andExpect(status().isCreated())
+                .andDo(
+                        restDocs.document(
+                                pathParameters(
+                                        parameterWithName("categoryId").description("카테고리 고유번호")
+                                ),
+                                requestFields(
+                                        fieldWithPath("title").type(JsonFieldType.STRING).description("제목"),
+                                        fieldWithPath("imageUrl").type(JsonFieldType.STRING).description("이미지 URL"),
+                                        fieldWithPath("content").type(JsonFieldType.STRING).description("본문내용"),
+                                        fieldWithPath("review").type(JsonFieldType.STRING).description("한줄 평"),
+                                        fieldWithPath("deadLine").type(JsonFieldType.STRING).description("반납기한"),
+                                        fieldWithPath("author").type(JsonFieldType.STRING).description("저자명"),
+                                        fieldWithPath("publisher").type(JsonFieldType.STRING).description("출판사"),
+                                        fieldWithPath("publishDate").type(JsonFieldType.STRING).description("출판일"),
+                                        fieldWithPath("returnLocation").type(JsonFieldType.STRING).description("반납 장소")
+                                )
+                        ));
+
     }
 
     @Test
