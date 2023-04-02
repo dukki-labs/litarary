@@ -17,7 +17,7 @@ public class CompanyService {
         String companyName = companyNameFinder.findCompanyName(email);
         Company company = companyRepository.findByName(companyName);
         if (company == null) {
-            companyRepository.save(
+            return companyRepository.save(
                     Company.builder()
                             .name(companyName)
                             .build()

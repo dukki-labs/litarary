@@ -33,5 +33,6 @@ public class BookRegistrationDto {
         private LocalDate publishDate;
         @NotBlank
         private String returnLocation;
+        private long memberId;
     }
 }

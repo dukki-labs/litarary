@@ -19,4 +19,5 @@ public class RegisterBook {
     private LocalDate publishDate;
     private String returnLocation;
     private Long categoryId;
+    private Long memberId;
 }

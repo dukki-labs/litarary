@@ -47,6 +47,8 @@ public class BookMapper {
                 .returnLocation(request.getReturnLocation())
                 .content(request.getContent())
                 .publisher(request.getPublisher())
+                .publishDate(request.getPublishDate())
+                .memberId(request.getMemberId())
                 .build();
     }
 }
