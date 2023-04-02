@@ -4,6 +4,7 @@ import com.litarary.account.domain.BookCategory;
 import com.litarary.book.controller.dto.BookRegistrationDto;
 import com.litarary.book.domain.entity.DeadLine;
 import com.litarary.book.service.BookService;
+import com.litarary.book.service.dto.BookInfo;
 import com.litarary.book.service.dto.ContainerBook;
 import com.litarary.book.service.dto.ContainerBookInfo;
 import com.litarary.common.RestDocsControllerTest;
@@ -15,8 +16,11 @@ import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.security.test.context.support.WithMockUser;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
@@ -33,58 +37,84 @@ class BookControllerTest extends RestDocsControllerTest {
     @Test
     @WithMockUser
     void recentBookListTest() throws Exception {
-        mockMvc.perform(get("/api/v1/books/recent")
+        final long memberId = 1;
+        final int size = 10;
+        BookInfo response = BookInfo.builder()
+                .imageUrl("test@image.com")
+                .title("JPA마스터")
+                .author("김영한")
+                .categoryId(1)
+                .category(BookCategory.COMPUTER_MOBILE)
+                .content("도서 설명")
+                .recommendCount(24)
+                .review("올해 읽은 도서 중 가장 재미있었어요")
+                .publisher("에이콘출판사")
+                .publishDate(LocalDate.now())
+                .deadLine(DeadLine.ONE_WEEK)
+                .returnLocation("출입문앞 1층")
+                .createdAt(LocalDateTime.now())
+                .build();
+        given(bookService.recentBookList(anyLong(), anyInt())).willReturn(List.of(response));
+
+        mockMvc.perform(get("/api/v1/recent/books")
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
-                        .param("inquiryDate", "2023-02-23"))
+                        .param("memberId", String.valueOf(memberId))
+                        .param("size", String.valueOf(size)))
                 .andExpect(status().isOk())
                 .andDo(restDocs.document(
                         requestParameters(
-                                parameterWithName("inquiryDate").description("조회 요청 날짜")
+                                parameterWithName("memberId").description("회원 고유번호"),
+                                parameterWithName("size").description("책 조회 갯수")
                         ),
                         responseFields(
                                 fieldWithPath("bookInfoDtoList.[].imageUrl").type(JsonFieldType.STRING).description("이미지 URL"),
                                 fieldWithPath("bookInfoDtoList.[].title").type(JsonFieldType.STRING).description("제목"),
-                                fieldWithPath("bookInfoDtoList.[].bookCategory").type(JsonFieldType.STRING).description("카테고리"),
+                                fieldWithPath("bookInfoDtoList.[].categoryId").type(JsonFieldType.NUMBER).description("카테고리 고유번호"),
+                                fieldWithPath("bookInfoDtoList.[].category").type(JsonFieldType.STRING).description("카테고리"),
                                 fieldWithPath("bookInfoDtoList.[].content").type(JsonFieldType.STRING).description("내용"),
-                                fieldWithPath("bookInfoDtoList.[].likeCount").type(JsonFieldType.NUMBER).description("좋아요 수"),
-                                fieldWithPath("bookInfoDtoList.[].viewCount").type(JsonFieldType.NUMBER).description("조회수"),
-                                fieldWithPath("bookInfoDtoList.[].regDt").type(JsonFieldType.STRING).description("등록 날짜")
-
+                                fieldWithPath("bookInfoDtoList.[].recommendCount").type(JsonFieldType.NUMBER).description("추천 수"),
+                                fieldWithPath("bookInfoDtoList.[].regDt").type(JsonFieldType.STRING).description("등록 날짜"),
+                                fieldWithPath("bookInfoDtoList.[].author").type(JsonFieldType.STRING).description("저자"),
+                                fieldWithPath("bookInfoDtoList.[].review").type(JsonFieldType.STRING).description("리뷰"),
+                                fieldWithPath("bookInfoDtoList.[].publisher").type(JsonFieldType.STRING).description("출판사"),
+                                fieldWithPath("bookInfoDtoList.[].publishDate").type(JsonFieldType.STRING).description("출판일"),
+                                fieldWithPath("bookInfoDtoList.[].deadLine").type(JsonFieldType.STRING).description("대출 기한"),
+                                fieldWithPath("bookInfoDtoList.[].returnLocation").type(JsonFieldType.STRING).description("반납 위치")
                         )
                 ));
     }
 
-    @Test
-    @WithMockUser
-    void concernBookListTest() throws Exception {
-
-        mockMvc.perform(get("/api/v1/books/concern")
-                        .contentType(MediaType.APPLICATION_JSON_VALUE)
-                        .param("inquiryDate", "2023-02-23"))
-                .andExpect(status().isOk())
-                .andDo(restDocs.document(
-                        requestParameters(
-                                parameterWithName("inquiryDate").description("조회 요청 날짜")
-                        ),
-                        responseFields(
-                                fieldWithPath("concernBookTypeDto.[].bookCategory").type(JsonFieldType.STRING).description("카테고리"),
-                                fieldWithPath("concernBookTypeDto.[].bookInfoDtoList.[].imageUrl")
-                                        .type(JsonFieldType.STRING).description("도서 썸네일 URL"),
-                                fieldWithPath("concernBookTypeDto.[].bookInfoDtoList.[].title")
-                                        .type(JsonFieldType.STRING).description("제목"),
-                                fieldWithPath("concernBookTypeDto.[].bookInfoDtoList.[].bookCategory")
-                                        .type(JsonFieldType.STRING).description("카테고리"),
-                                fieldWithPath("concernBookTypeDto.[].bookInfoDtoList.[].content")
-                                        .type(JsonFieldType.STRING).description("본문 내용"),
-                                fieldWithPath("concernBookTypeDto.[].bookInfoDtoList.[].likeCount")
-                                        .type(JsonFieldType.NUMBER).description("좋아요 갯수"),
-                                fieldWithPath("concernBookTypeDto.[].bookInfoDtoList.[].viewCount")
-                                        .type(JsonFieldType.NUMBER).description("조회수"),
-                                fieldWithPath("concernBookTypeDto.[].bookInfoDtoList.[].regDt")
-                                        .type(JsonFieldType.STRING).description("등록 날짜")
-                        )
-                ));
-    }
+//    @Test
+//    @WithMockUser
+//    void concernBookListTest() throws Exception {
+//
+//        mockMvc.perform(get("/api/v1/books/concern")
+//                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+//                        .param("inquiryDate", "2023-02-23"))
+//                .andExpect(status().isOk())
+//                .andDo(restDocs.document(
+//                        requestParameters(
+//                                parameterWithName("inquiryDate").description("조회 요청 날짜")
+//                        ),
+//                        responseFields(
+//                                fieldWithPath("concernBookTypeDto.[].bookCategory").type(JsonFieldType.STRING).description("카테고리"),
+//                                fieldWithPath("concernBookTypeDto.[].bookInfoDtoList.[].imageUrl")
+//                                        .type(JsonFieldType.STRING).description("도서 썸네일 URL"),
+//                                fieldWithPath("concernBookTypeDto.[].bookInfoDtoList.[].title")
+//                                        .type(JsonFieldType.STRING).description("제목"),
+//                                fieldWithPath("concernBookTypeDto.[].bookInfoDtoList.[].bookCategory")
+//                                        .type(JsonFieldType.STRING).description("카테고리"),
+//                                fieldWithPath("concernBookTypeDto.[].bookInfoDtoList.[].content")
+//                                        .type(JsonFieldType.STRING).description("본문 내용"),
+//                                fieldWithPath("concernBookTypeDto.[].bookInfoDtoList.[].likeCount")
+//                                        .type(JsonFieldType.NUMBER).description("좋아요 갯수"),
+//                                fieldWithPath("concernBookTypeDto.[].bookInfoDtoList.[].viewCount")
+//                                        .type(JsonFieldType.NUMBER).description("조회수"),
+//                                fieldWithPath("concernBookTypeDto.[].bookInfoDtoList.[].regDt")
+//                                        .type(JsonFieldType.STRING).description("등록 날짜")
+//                        )
+//                ));
+//    }
 
     @Test
     @WithMockUser

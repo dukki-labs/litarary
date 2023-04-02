@@ -24,16 +24,15 @@ public class BookController {
     private final BookMapper bookMapper;
 
 
-    @GetMapping("/books/recent")
-    public RecentBookDto.Response recentBookList(RecentBookDto.Request request) {
-        List<BookInfoDto> bookInfoDtos = Arrays.asList(
-                getBookInfo(12, 2, 3, BookCategory.SCIENCE_TECHNOLOGY),
-                getBookInfo(3, 1, 2, BookCategory.SCIENCE_TECHNOLOGY),
-                getBookInfo(2, 18, 5, BookCategory.SCIENCE_TECHNOLOGY)
-        );
+    @GetMapping("/recent/books")
+    public RecentBookDto.Response recentBookList(@RequestParam("memberId") long memberId,
+                                                 @RequestParam("size") int size) {
+
+        List<BookInfoDto> bookInfoList = bookMapper.toRecentBook(bookService.recentBookList(memberId, size));
+
         return RecentBookDto.Response
                 .builder()
-                .bookInfoDtoList(bookInfoDtos)
+                .bookInfoDtoList(bookInfoList)
                 .build();
     }
 
@@ -81,10 +80,9 @@ public class BookController {
         return BookInfoDto.builder()
                 .imageUrl("https://www.taragrp.co.kr/wp-content/uploads/2022/07/%EB%8F%84%EC%84%9C-%EC%A0%9C%EB%B3%B8_01-2.png")
                 .title("몸의 교감")
-                .bookCategory(bookCategory)
+                .category(bookCategory)
                 .content("테스형이 말씀하셨다. 우리가 먹는것이 곧 우리의 자신이 된다.")
-                .likeCount(likeCount)
-                .viewCount(viewCount)
+                .recommendCount(likeCount)
                 .regDt(LocalDateTime.now().minusHours(minusNumber))
                 .build();
     }

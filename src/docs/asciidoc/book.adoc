@@ -8,12 +8,12 @@
 == link:index.html[메인화면으로 이동]
 
 = 메인화면 도서조회(관심도서, 신규도서) API
-== 신규 도서 조회 API
 
+== 신규 도서 조회 API
 operation::book-controller-test/recent-book-list-test[snippets='http-request,request-parameters,response-body,response-fields']
 
-== 관심 도서 조회 API
-operation::book-controller-test/concern-book-list-test[snippets='http-request,request-parameters,response-body,response-fields']
+// == 관심 도서 조회 API
+// operation::book-controller-test/concern-book-list-test[snippets='http-request,request-parameters,response-body,response-fields']
 
 == 외부 도서 검색 API(feat 알라딘)
 operation::book-controller-test/search-container-book-list-test[snippets='http-request,request-parameters,response-body,response-fields']

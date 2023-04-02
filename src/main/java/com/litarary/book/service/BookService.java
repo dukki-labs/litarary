@@ -6,14 +6,18 @@ import com.litarary.book.domain.entity.Book;
 import com.litarary.book.domain.entity.Category;
 import com.litarary.book.repository.BookRepository;
 import com.litarary.book.repository.CategoryRepository;
+import com.litarary.book.service.dto.BookInfo;
 import com.litarary.book.service.dto.ContainerBookInfo;
 import com.litarary.book.service.dto.RegisterBook;
 import com.litarary.common.ErrorCode;
 import com.litarary.common.exception.LitararyErrorException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @Transactional
@@ -38,5 +42,15 @@ public class BookService {
                 .orElseThrow(() -> new LitararyErrorException(ErrorCode.MEMBER_NOT_FOUND));
 
         bookRepository.save(new Book(member, category, registerBook));
+    }
+
+    public List<BookInfo> recentBookList(long memberId, int size) {
+        Member member = accountRepository.findById(memberId)
+                .orElseThrow(() -> new LitararyErrorException(ErrorCode.MEMBER_NOT_FOUND));
+
+        List<Book> bookList = bookRepository.findByRecentBookList(member.getCompany(), PageRequest.of(0, size));
+        return bookList.stream()
+                .map(BookInfo::of)
+                .toList();
     }
 }
