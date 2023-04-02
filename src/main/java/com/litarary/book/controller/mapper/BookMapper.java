@@ -1,7 +1,9 @@
 package com.litarary.book.controller.mapper;
 
+import com.litarary.book.controller.dto.BookInfoDto;
 import com.litarary.book.controller.dto.BookRegistrationDto;
 import com.litarary.book.controller.dto.ContainerBookInfoDto;
+import com.litarary.book.service.dto.BookInfo;
 import com.litarary.book.service.dto.ContainerBookInfo;
 import com.litarary.book.service.dto.RegisterBook;
 import org.springframework.stereotype.Component;
@@ -50,5 +52,26 @@ public class BookMapper {
                 .publishDate(request.getPublishDate())
                 .memberId(request.getMemberId())
                 .build();
+    }
+
+    public List<BookInfoDto> toRecentBook(List<BookInfo> recentBookList) {
+        return recentBookList.stream()
+                .map(book ->
+                        BookInfoDto.builder()
+                                .title(book.getTitle())
+                                .categoryId(book.getCategoryId())
+                                .category(book.getCategory())
+                                .imageUrl(book.getImageUrl())
+                                .content(book.getContent())
+                                .review(book.getReview())
+                                .author(book.getAuthor())
+                                .publisher(book.getPublisher())
+                                .publishDate(book.getPublishDate())
+                                .deadLine(book.getDeadLine())
+                                .recommendCount(book.getRecommendCount())
+                                .returnLocation(book.getReturnLocation())
+                                .regDt(book.getCreatedAt())
+                                .build()
+                ).toList();
     }
 }

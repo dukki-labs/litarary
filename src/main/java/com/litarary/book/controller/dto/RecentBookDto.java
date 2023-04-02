@@ -4,23 +4,12 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.validation.constraints.NotNull;
-import java.time.LocalDate;
 import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class RecentBookDto {
-
-    @Getter
-    @Builder
-    public static class Request {
-        @NotNull
-        @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-        private LocalDate inquiryDate;
-    }
 
     @Getter
     @Builder

@@ -4,15 +4,15 @@ import com.litarary.account.domain.UseYn;
 import com.litarary.account.domain.entity.Company;
 import com.litarary.account.domain.entity.Member;
 import com.litarary.book.service.dto.RegisterBook;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
+@Builder
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 public class Book {
