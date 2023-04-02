@@ -1,5 +1,7 @@
 package com.litarary.book.service;
 
+import com.litarary.account.domain.entity.Member;
+import com.litarary.account.repository.AccountRepository;
 import com.litarary.book.domain.entity.Book;
 import com.litarary.book.domain.entity.Category;
 import com.litarary.book.repository.BookRepository;
@@ -21,6 +23,8 @@ public class BookService {
     private final BookContainerService bookContainerService;
     private final BookRepository bookRepository;
     private final CategoryRepository categoryRepository;
+    private final AccountRepository accountRepository;
+
     @Transactional(readOnly = true)
     public ContainerBookInfo searchBookListByContainer(String searchKeyword, Pageable pageable) {
         return bookContainerService.searchBookList(searchKeyword, pageable);
@@ -29,6 +33,10 @@ public class BookService {
     public void registerBook(Long categoryId, RegisterBook registerBook) {
         Category category = categoryRepository.findById(categoryId)
                 .orElseThrow(() -> new LitararyErrorException(ErrorCode.NOT_ALLOWED_CATEGORIES));
-        bookRepository.save(new Book(category, registerBook));
+
+        Member member = accountRepository.findById(registerBook.getMemberId())
+                .orElseThrow(() -> new LitararyErrorException(ErrorCode.MEMBER_NOT_FOUND));
+
+        bookRepository.save(new Book(member, category, registerBook));
     }
 }

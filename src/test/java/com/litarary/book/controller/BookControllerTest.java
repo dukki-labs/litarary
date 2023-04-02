@@ -100,6 +100,7 @@ class BookControllerTest extends RestDocsControllerTest {
                 .publisher("출판사")
                 .publishDate(LocalDate.now())
                 .returnLocation("반납장소")
+                .memberId(1L)
                 .build();
         String content = objectMapper.writeValueAsString(request);
 
@@ -121,7 +122,8 @@ class BookControllerTest extends RestDocsControllerTest {
                                         fieldWithPath("author").type(JsonFieldType.STRING).description("저자명"),
                                         fieldWithPath("publisher").type(JsonFieldType.STRING).description("출판사"),
                                         fieldWithPath("publishDate").type(JsonFieldType.STRING).description("출판일"),
-                                        fieldWithPath("returnLocation").type(JsonFieldType.STRING).description("반납 장소")
+                                        fieldWithPath("returnLocation").type(JsonFieldType.STRING).description("반납 장소"),
+                                        fieldWithPath("memberId").type(JsonFieldType.NUMBER).description("회원 고유번호")
                                 )
                         ));
 

@@ -535,7 +535,7 @@ Host: localhost:8080</code></pre>
     "content" : "테스형이 말씀하셨다. 우리가 먹는것이 곧 우리의 자신이 된다.",
     "likeCount" : 12,
     "viewCount" : 2,
-    "regDt" : "2023-04-01T11:50:37.646223"
+    "regDt" : "2023-04-02T12:32:25.71719"
   }, {
     "imageUrl" : "https://www.taragrp.co.kr/wp-content/uploads/2022/07/%EB%8F%84%EC%84%9C-%EC%A0%9C%EB%B3%B8_01-2.png",
     "title" : "몸의 교감",
@@ -543,7 +543,7 @@ Host: localhost:8080</code></pre>
     "content" : "테스형이 말씀하셨다. 우리가 먹는것이 곧 우리의 자신이 된다.",
     "likeCount" : 3,
     "viewCount" : 1,
-    "regDt" : "2023-04-01T12:50:37.646241"
+    "regDt" : "2023-04-02T13:32:25.717214"
   }, {
     "imageUrl" : "https://www.taragrp.co.kr/wp-content/uploads/2022/07/%EB%8F%84%EC%84%9C-%EC%A0%9C%EB%B3%B8_01-2.png",
     "title" : "몸의 교감",
@@ -551,7 +551,7 @@ Host: localhost:8080</code></pre>
     "content" : "테스형이 말씀하셨다. 우리가 먹는것이 곧 우리의 자신이 된다.",
     "likeCount" : 2,
     "viewCount" : 18,
-    "regDt" : "2023-04-01T09:50:37.646246"
+    "regDt" : "2023-04-02T10:32:25.717218"
   } ]
 }</code></pre>
 </div>
@@ -661,7 +661,7 @@ Host: localhost:8080</code></pre>
       "content" : "테스형이 말씀하셨다. 우리가 먹는것이 곧 우리의 자신이 된다.",
       "likeCount" : 12,
       "viewCount" : 2,
-      "regDt" : "2023-04-01T11:50:37.659085"
+      "regDt" : "2023-04-02T12:32:25.738787"
     }, {
       "imageUrl" : "https://www.taragrp.co.kr/wp-content/uploads/2022/07/%EB%8F%84%EC%84%9C-%EC%A0%9C%EB%B3%B8_01-2.png",
       "title" : "몸의 교감",
@@ -669,7 +669,7 @@ Host: localhost:8080</code></pre>
       "content" : "테스형이 말씀하셨다. 우리가 먹는것이 곧 우리의 자신이 된다.",
       "likeCount" : 3,
       "viewCount" : 1,
-      "regDt" : "2023-04-01T12:50:37.659101"
+      "regDt" : "2023-04-02T13:32:25.738801"
     }, {
       "imageUrl" : "https://www.taragrp.co.kr/wp-content/uploads/2022/07/%EB%8F%84%EC%84%9C-%EC%A0%9C%EB%B3%B8_01-2.png",
       "title" : "몸의 교감",
@@ -677,7 +677,7 @@ Host: localhost:8080</code></pre>
       "content" : "테스형이 말씀하셨다. 우리가 먹는것이 곧 우리의 자신이 된다.",
       "likeCount" : 2,
       "viewCount" : 18,
-      "regDt" : "2023-04-01T09:50:37.659105"
+      "regDt" : "2023-04-02T10:32:25.738805"
     } ]
   }, {
     "bookCategory" : "COMPUTER_MOBILE",
@@ -688,7 +688,7 @@ Host: localhost:8080</code></pre>
       "content" : "테스형이 말씀하셨다. 우리가 먹는것이 곧 우리의 자신이 된다.",
       "likeCount" : 2,
       "viewCount" : 18,
-      "regDt" : "2023-04-01T08:50:37.659113"
+      "regDt" : "2023-04-02T09:32:25.738811"
     } ]
   } ]
 }</code></pre>
@@ -904,7 +904,7 @@ Host: localhost:8080</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /api/v1/categories/1/books HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Content-Length: 272
+Content-Length: 290
 Host: localhost:8080
 
 {
@@ -915,8 +915,9 @@ Host: localhost:8080
   "deadLine" : "ONE_WEEK",
   "author" : "저자명",
   "publisher" : "출판사",
-  "publishDate" : "2023-04-01",
-  "returnLocation" : "반납장소"
+  "publishDate" : "2023-04-02",
+  "returnLocation" : "반납장소",
+  "memberId" : 1
 }</code></pre>
 </div>
 </div>
@@ -1004,6 +1005,11 @@ Host: localhost:8080
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">반납 장소</p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>memberId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">회원 고유번호</p></td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -1013,7 +1019,7 @@ Host: localhost:8080
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2023-04-01 14:47:10 +0900
+Last updated 2023-04-01 15:09:22 +0900
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">

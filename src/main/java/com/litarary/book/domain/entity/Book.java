@@ -1,6 +1,8 @@
 package com.litarary.book.domain.entity;
 
 import com.litarary.account.domain.UseYn;
+import com.litarary.account.domain.entity.Company;
+import com.litarary.account.domain.entity.Member;
 import com.litarary.book.service.dto.RegisterBook;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -37,7 +39,16 @@ public class Book {
     @OneToOne
     @JoinColumn(name = "category_id")
     private Category category;
-    public Book(Category category, RegisterBook registerBook) {
+
+    @ManyToOne
+    @JoinColumn(name = "member_id")
+    private Member member;
+
+    @ManyToOne
+    @JoinColumn(name = "company_id")
+    private Company company;
+
+    public Book(Member member, Category category, RegisterBook registerBook) {
         this.title = registerBook.getTitle();
         this.imageUrl = registerBook.getImageUrl();
         this.content = registerBook.getContent();
@@ -53,5 +64,7 @@ public class Book {
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
         this.category = category;
+        this.member = member;
+        this.company = member.getCompany();
     }
 }
