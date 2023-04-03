@@ -1,21 +1,27 @@
+-- member
+-- insert into member (id, email, is_service_terms, is_privacy_terms, is_service_alarm, use_yn, created_at, updated_at, password) values (1,'junehee@bodycodi.com',true,true,true, 'Y','2023-03-19 15:03:18.866684', '2023-03-19 15:03:18.866684', '{bcrypt}$2a$10$FOwOhrxLScGk2tAKxyGHUumxQqafddiSeJ4fBwyyPDimIDvFZbFZ6');
+
+-- member_role
+-- insert into member_role (id, role_type, member_id) values (1,'USER',1);
+
 -- category init data
 
 insert into category (book_category) values ( 'HISTORY_CULTURE' );
+insert into category (book_category) values ( 'EDUCATION' );
+insert into category (book_category) values ( 'FAMILY_LIFE' );
 insert into category (book_category) values ( 'HOBBY' );
-insert into category (book_category) values ( 'ECONOMY_OPERATE' );
-insert into category (book_category) values ( 'HIGH_SCHOOL' );
-insert into category (book_category) values ( 'CLASSIC' );
+insert into category (book_category) values ( 'ECONOMIC_MANAGEMENT' );
 insert into category (book_category) values ( 'SCIENCE_TECHNOLOGY' );
-insert into category (book_category) values ( 'KUMGANG_TRAVEL' );
-insert into category (book_category) values ( 'CALENDAR' );
-insert into category (book_category) values ( 'UNIVERSITY_BOOK' );
-insert into category (book_category) values ( 'COMIC_BOOK' );
-insert into category (book_category) values ( 'SOCIAL_SCIENCE' );
+insert into category (book_category) values ( 'COMPUTER_MOBILE' );
+insert into category (book_category) values ( 'LITERATURE' );
+insert into category (book_category) values ( 'ENTERTAINMENT' );
+insert into category (book_category) values ( 'SELF_DEVELOPMENT' );
+insert into category (book_category) values ( 'LANGUAGE' );
 insert into category (book_category) values ( 'OTHER' );
 
 
 -- categoryMap init data
-insert into category_map (original_id, category_id) values (1230,	3);
+insert into category_map (original_id, category_id) values (1230, 3);
 insert into category_map (original_id, category_id) values (90452, 3);
 insert into category_map (original_id, category_id) values (53471, 3);
 insert into category_map (original_id, category_id) values (53489, 3);

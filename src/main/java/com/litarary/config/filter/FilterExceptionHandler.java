@@ -42,7 +42,7 @@ public class FilterExceptionHandler extends OncePerRequestFilter {
 
     @RequiredArgsConstructor
     @Getter
-    public class JwtFilterError {
+    public static class JwtFilterError {
         private final ErrorCode errorCode;
         private final String errorMessage;
     }
