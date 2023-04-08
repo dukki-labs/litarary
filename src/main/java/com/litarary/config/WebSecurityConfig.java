@@ -1,5 +1,7 @@
 package com.litarary.config;
 
+import com.litarary.account.repository.AccountRepository;
+import com.litarary.account.service.AccountService;
 import com.litarary.config.filter.FilterExceptionHandler;
 import com.litarary.config.filter.JwtAuthenticationFilter;
 import com.litarary.utils.jwt.JwtTokenProvider;
@@ -27,6 +29,8 @@ public class WebSecurityConfig {
 
     private final FilterExceptionHandler filterExceptionHandler;
     private final JwtTokenProvider jwtTokenProvider;
+    private final AccountRepository accountRepository;
+
     private final CorsConfigurationSource corsConfigurationSource;
 
     @Bean
@@ -51,7 +55,7 @@ public class WebSecurityConfig {
                                 .antMatchers("/docs/**").permitAll()
                                 .anyRequest().authenticated() // 이외 모든 요청은 권한이 있어야 한다.
                                 .and()
-                                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
+                                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider, accountRepository), UsernamePasswordAuthenticationFilter.class)
                                 .addFilterBefore(filterExceptionHandler, JwtAuthenticationFilter.class)
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) //JWT토큰을 사용할 것임으로 세션적용하지 않도록 설정
