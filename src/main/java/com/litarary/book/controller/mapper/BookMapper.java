@@ -2,10 +2,12 @@ package com.litarary.book.controller.mapper;
 
 import com.litarary.book.controller.dto.BookInfoDto;
 import com.litarary.book.controller.dto.BookRegistrationDto;
+import com.litarary.book.controller.dto.BookReturnDto;
 import com.litarary.book.controller.dto.ContainerBookInfoDto;
 import com.litarary.book.service.dto.BookInfo;
 import com.litarary.book.service.dto.ContainerBookInfo;
 import com.litarary.book.service.dto.RegisterBook;
+import com.litarary.book.service.dto.ReturnBook;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -73,5 +75,9 @@ public class BookMapper {
                                 .regDt(book.getCreatedAt())
                                 .build()
                 ).toList();
+    }
+
+    public ReturnBook.Request toReturnBook(BookReturnDto.Request request) {
+        return new ReturnBook.Request(request.getRentalReview(), request.getRecommend());
     }
 }

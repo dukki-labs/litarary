@@ -23,3 +23,11 @@ operation::book-controller-test/book-registration-test[snippets='http-request,pa
 
 == 도서 대여 신청 API
 operation::book-controller-test/book-rental-test[snippets='http-request,path-parameters']
+
+== 도서 반납해야될 도서 조회 API
+도서 반납 화면에 표출될 도서를 조회한다.
+
+operation::book-controller-test/find-book-return-test[snippets='http-request,response-body,response-fields']
+
+== 도서 반납 API
+operation::book-controller-test/book-return-test[snippets='http-request,request-body,request-fields']

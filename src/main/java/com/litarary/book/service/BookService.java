@@ -5,13 +5,16 @@ import com.litarary.account.repository.AccountRepository;
 import com.litarary.book.domain.RentalUseYn;
 import com.litarary.book.domain.entity.Book;
 import com.litarary.book.domain.entity.BookRental;
-import com.litarary.book.domain.entity.BookRentalRepository;
+import com.litarary.book.domain.entity.RentalReview;
+import com.litarary.book.repository.BookRentalRepository;
 import com.litarary.book.domain.entity.Category;
 import com.litarary.book.repository.BookRepository;
 import com.litarary.book.repository.CategoryRepository;
+import com.litarary.book.repository.RentalReviewRepository;
 import com.litarary.book.service.dto.BookInfo;
 import com.litarary.book.service.dto.ContainerBookInfo;
 import com.litarary.book.service.dto.RegisterBook;
+import com.litarary.book.service.dto.ReturnBook;
 import com.litarary.common.ErrorCode;
 import com.litarary.common.exception.LitararyErrorException;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +35,7 @@ public class BookService {
     private final CategoryRepository categoryRepository;
     private final AccountRepository accountRepository;
     private final BookRentalRepository bookRentalRepository;
+    private final RentalReviewRepository rentalReviewRepository;
 
     @Transactional(readOnly = true)
     public ContainerBookInfo searchBookListByContainer(String searchKeyword, Pageable pageable) {
@@ -48,6 +52,7 @@ public class BookService {
         bookRepository.save(new Book(member, category, registerBook));
     }
 
+    @Transactional(readOnly = true)
     public List<BookInfo> recentBookList(long memberId, int size) {
         Member member = accountRepository.findById(memberId)
                 .orElseThrow(() -> new LitararyErrorException(ErrorCode.MEMBER_NOT_FOUND));
@@ -58,18 +63,46 @@ public class BookService {
                 .toList();
     }
 
-    @Transactional
     public void rentalBook(Long memberId, Long bookId) {
         Member member = accountRepository.findById(memberId)
                 .orElseThrow(() -> new LitararyErrorException(ErrorCode.MEMBER_NOT_FOUND));
         validateBookRental(member);
 
         Book book = bookRepository.findByIdAndRentalUseYnAndCompany(bookId, RentalUseYn.Y, member.getCompany())
-                .orElseThrow(() -> new LitararyErrorException(ErrorCode.RENTAL_NOT_FOUND_BOOK));
+                .orElseThrow(() -> new LitararyErrorException(ErrorCode.ALREADY_RENTAL_USER));
 
         book.updateRentalUseYn(RentalUseYn.N);
         BookRental defaultRental = BookRental.createDefaultRental(member, book);
         bookRentalRepository.save(defaultRental);
+    }
+
+    public void returnBook(Long memberId, ReturnBook.Request returnBook) {
+        BookRental bookRental = bookRentalRepository.findByMemberIdAndReturnDateTimeIsNull(memberId)
+                .orElseThrow(() -> new LitararyErrorException(ErrorCode.NOT_RENTAL_BOOK));
+
+        Book book = bookRental.getBook();
+        createRentalReview(returnBook.getRentalReview(), book);
+        book.updateRentalUseYn(RentalUseYn.Y);
+        book.updateRecommendCount(returnBook.getRecommend());
+        bookRental.updateReturnDateTime();
+    }
+
+    @Transactional(readOnly = true)
+    public ReturnBook.Response findBookReturn(Long memberId) {
+        final BookRental bookRental = bookRentalRepository.findByMemberIdAndReturnDateTimeIsNull(memberId)
+                .orElse(null);
+        if (bookRental == null) {
+            return new ReturnBook.Response();
+        }
+
+        final Book book = bookRental.getBook();
+        return new ReturnBook.Response(book);
+    }
+
+    private void createRentalReview(String rentalReview, Book book) {
+        if (rentalReview.length() > 0) {
+            rentalReviewRepository.save(RentalReview.createRentalReview(rentalReview, book));
+        }
     }
 
     private void validateBookRental(Member member) {
