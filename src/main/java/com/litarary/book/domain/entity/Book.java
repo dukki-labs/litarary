@@ -3,6 +3,7 @@ package com.litarary.book.domain.entity;
 import com.litarary.account.domain.UseYn;
 import com.litarary.account.domain.entity.Company;
 import com.litarary.account.domain.entity.Member;
+import com.litarary.book.domain.RentalUseYn;
 import com.litarary.book.service.dto.RegisterBook;
 import lombok.*;
 
@@ -33,6 +34,8 @@ public class Book {
     private String returnLocation;
     private int recommendCount;
     private int viewCount;
+    @Enumerated(value = EnumType.STRING)
+    private RentalUseYn rentalUseYn;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
@@ -66,5 +69,10 @@ public class Book {
         this.category = category;
         this.member = member;
         this.company = member.getCompany();
+        this.rentalUseYn = RentalUseYn.Y;
+    }
+
+    public void updateRentalUseYn(RentalUseYn rentalUseYn) {
+        this.rentalUseYn = rentalUseYn;
     }
 }

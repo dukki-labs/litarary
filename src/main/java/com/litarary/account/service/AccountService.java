@@ -152,8 +152,7 @@ public class AccountService {
     }
 
     private Member getMemberByEmail(String email, UseYn useYn) {
-        Member member = accountRepository.findByEmailAndUseYn(email, useYn)
+        return accountRepository.findByEmailAndUseYn(email, useYn)
                 .orElseThrow(() -> new LitararyErrorException(ErrorCode.ACCOUNT_NOT_FOUND_EMAIL));
-        return member;
     }
 }
