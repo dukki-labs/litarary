@@ -75,4 +75,7 @@ public class Book {
     public void updateRentalUseYn(RentalUseYn rentalUseYn) {
         this.rentalUseYn = rentalUseYn;
     }
+    public void updateRecommendCount(int addCount) {
+        this.recommendCount += addCount;
+    }
 }

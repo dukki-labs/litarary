@@ -2,11 +2,11 @@ package com.litarary.book.controller;
 
 import com.litarary.account.domain.BookCategory;
 import com.litarary.book.controller.dto.BookRegistrationDto;
+import com.litarary.book.controller.dto.BookReturnDto;
+import com.litarary.book.domain.entity.Category;
 import com.litarary.book.domain.entity.DeadLine;
 import com.litarary.book.service.BookService;
-import com.litarary.book.service.dto.BookInfo;
-import com.litarary.book.service.dto.ContainerBook;
-import com.litarary.book.service.dto.ContainerBookInfo;
+import com.litarary.book.service.dto.*;
 import com.litarary.common.RestDocsControllerTest;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -19,10 +19,10 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.when;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
@@ -212,6 +212,7 @@ class BookControllerTest extends RestDocsControllerTest {
                         )
                 ));
     }
+
     @Test
     @WithMockUser
     void bookRentalTest() throws Exception {
@@ -226,6 +227,80 @@ class BookControllerTest extends RestDocsControllerTest {
                         restDocs.document(
                                 pathParameters(
                                         parameterWithName("bookId").description("도서 고유번호")
+                                )
+                        )
+                );
+    }
+
+    @Test
+    @WithMockUser
+    void findBookReturnTest() throws Exception {
+        final String uri = BASE_URI + "/books/return";
+        final long memberId = 1L;
+        when(bookService.findBookReturn(memberId)).thenReturn(
+                ReturnBook.Response.builder()
+                        .memberId(1L)
+                        .providerNickName("도서 제공자 닉네임")
+                        .bookUrl("http://testwefwef.com")
+                        .title("도서 제목")
+                        .publisher("출판사")
+                        .category(
+                                Category.builder()
+                                        .id(1L)
+                                        .bookCategory(BookCategory.COMPUTER_MOBILE)
+                                        .build()
+                        )
+                        .content("도서 내용")
+                        .deadLine(DeadLine.ONE_WEEK)
+                        .returnLocation("반납 장소")
+                        .review("한줄 평")
+                        .newTag(NewTag.NEW)
+                        .build()
+        );
+
+        mockMvc.perform(get(uri)
+                        .requestAttr("memberId", memberId))
+                .andExpect(status().isOk())
+                .andDo(
+                        restDocs.document(
+                                responseFields(
+                                        fieldWithPath("memberId").type(JsonFieldType.NUMBER).description("회원 고유번호"),
+                                        fieldWithPath("providerNickName").type(JsonFieldType.STRING).description("도서 제공자 닉네임"),
+                                        fieldWithPath("bookUrl").type(JsonFieldType.STRING).description("도서 이미지 URL"),
+                                        fieldWithPath("title").type(JsonFieldType.STRING).description("도서 제목"),
+                                        fieldWithPath("publisher").type(JsonFieldType.STRING).description("출판사"),
+                                        fieldWithPath("category.id").type(JsonFieldType.NUMBER).description("카테고리 고유번호"),
+                                        fieldWithPath("category.bookCategory").type(JsonFieldType.STRING).description("카테고리"),
+                                        fieldWithPath("content").type(JsonFieldType.STRING).description("도서 설명"),
+                                        fieldWithPath("deadLine").type(JsonFieldType.STRING).description("대여기간"),
+                                        fieldWithPath("returnLocation").type(JsonFieldType.STRING).description("대여 반납장소"),
+                                        fieldWithPath("review").type(JsonFieldType.STRING).description("전달 내용"),
+                                        fieldWithPath("newTag").type(JsonFieldType.STRING).description("[신규: NEW] \n [일반도서: NORMAL]")
+                                )
+                        )
+                );
+    }
+
+    @Test
+    @WithMockUser
+    void bookReturnTest() throws Exception {
+        final String uri = BASE_URI + "/books/return";
+        final BookReturnDto.Request requestDto = BookReturnDto.Request.builder()
+                .recommend(1)
+                .rentalReview("대여 후기")
+                .build();
+        doNothing().when(bookService).returnBook(anyLong(), any());
+
+        mockMvc.perform(post(uri)
+                        .requestAttr("memberId", 1L)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .content(objectMapper.writeValueAsString(requestDto)))
+                .andExpect(status().isOk())
+                .andDo(
+                        restDocs.document(
+                                requestFields(
+                                        fieldWithPath("recommend").type(JsonFieldType.NUMBER).description("추천 [추천한다: 1] \n [추천하지 않는다 : 0]"),
+                                        fieldWithPath("rentalReview").type(JsonFieldType.STRING).description("대여 후기")
                                 )
                         )
                 );

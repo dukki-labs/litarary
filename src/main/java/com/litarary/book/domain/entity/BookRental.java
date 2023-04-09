@@ -1,14 +1,12 @@
 package com.litarary.book.domain.entity;
 
 import com.litarary.account.domain.entity.Member;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@Getter
 @Builder
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -37,5 +35,9 @@ public class BookRental {
                 .member(member)
                 .book(book)
                 .build();
+    }
+
+    public void updateReturnDateTime() {
+        this.returnDateTime = LocalDateTime.now();
     }
 }

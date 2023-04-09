@@ -5,6 +5,7 @@ import com.litarary.book.controller.dto.*;
 import com.litarary.book.controller.mapper.BookMapper;
 import com.litarary.book.service.BookService;
 import com.litarary.book.service.dto.ContainerBookInfo;
+import com.litarary.book.service.dto.ReturnBook;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -47,6 +48,20 @@ public class BookController {
     public void bookRental(@RequestAttribute("memberId") Long memberId,
                            @PathVariable Long bookId) {
         bookService.rentalBook(memberId, bookId);
+    }
+
+    @GetMapping("/books/return")
+    @ResponseStatus(HttpStatus.OK)
+    public ReturnBook.Response findBookReturn(@RequestAttribute("memberId") Long memberId) {
+        return bookService.findBookReturn(memberId);
+    }
+
+    @PostMapping("/books/return")
+    @ResponseStatus(HttpStatus.OK)
+    public void bookReturn(@RequestAttribute("memberId") Long memberId,
+                           @RequestBody BookReturnDto.Request request) {
+        ReturnBook.Request returnBook = bookMapper.toReturnBook(request);
+        bookService.returnBook(memberId, returnBook);
     }
 
     @GetMapping("/books/concern")
