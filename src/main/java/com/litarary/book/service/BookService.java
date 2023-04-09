@@ -62,11 +62,21 @@ public class BookService {
     public void rentalBook(Long memberId, Long bookId) {
         Member member = accountRepository.findById(memberId)
                 .orElseThrow(() -> new LitararyErrorException(ErrorCode.MEMBER_NOT_FOUND));
+        validateBookRental(member);
+
         Book book = bookRepository.findByIdAndRentalUseYnAndCompany(bookId, RentalUseYn.Y, member.getCompany())
                 .orElseThrow(() -> new LitararyErrorException(ErrorCode.RENTAL_NOT_FOUND_BOOK));
 
         book.updateRentalUseYn(RentalUseYn.N);
         BookRental defaultRental = BookRental.createDefaultRental(member, book);
         bookRentalRepository.save(defaultRental);
+    }
+
+    private void validateBookRental(Member member) {
+        BookRental bookRental = bookRentalRepository.findByMemberIdAndReturnDateTimeIsNull(member.getId())
+                .orElse(null);
+        if (bookRental != null) {
+            throw new LitararyErrorException(ErrorCode.ALREADY_RENTAL_BOOK);
+        }
     }
 }

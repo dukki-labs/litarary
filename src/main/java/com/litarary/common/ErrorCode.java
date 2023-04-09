@@ -31,8 +31,8 @@ public enum ErrorCode {
     EXTERNAL_REQUEST_ERROR("외부 API요청에 실패했습니다."),
     CONVERT_STRING_ENCODE_ERROR("인코딩에 실패했습니다."),
     NOT_ALLOWED_CATEGORIES("사용하지 않는 카테고리입니다."),
-    RENTAL_NOT_FOUND_BOOK("대여 가능한 도서가 아닙니다.")
-    ;
+    RENTAL_NOT_FOUND_BOOK("이 도서를 먼저 대여하고 있는 사람이 있어요."),
+    ALREADY_RENTAL_BOOK("대여 기간 동안 다른 도서는 대여할 수 없어요.");
 
     private final String message;
 }
