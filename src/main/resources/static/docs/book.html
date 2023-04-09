@@ -468,6 +468,12 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_도서_등록_api_request_fields">Request fields</a></li>
 </ul>
 </li>
+<li><a href="#_도서_대여_신청_api">도서 대여 신청 API</a>
+<ul class="sectlevel2">
+<li><a href="#_도서_대여_신청_api_http_request">HTTP request</a></li>
+<li><a href="#_도서_대여_신청_api_path_parameters">Path parameters</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -534,10 +540,10 @@ Host: localhost:8080</code></pre>
     "recommendCount" : 24,
     "review" : "올해 읽은 도서 중 가장 재미있었어요",
     "publisher" : "에이콘출판사",
-    "publishDate" : "2023-04-02",
+    "publishDate" : "2023-04-09",
     "deadLine" : "ONE_WEEK",
     "returnLocation" : "출입문앞 1층",
-    "regDt" : "2023-04-02T18:18:13.779444"
+    "regDt" : "2023-04-09T13:55:27.4543"
   } ]
 }</code></pre>
 </div>
@@ -788,7 +794,7 @@ Host: localhost:8080
   "deadLine" : "ONE_WEEK",
   "author" : "저자명",
   "publisher" : "출판사",
-  "publishDate" : "2023-04-02",
+  "publishDate" : "2023-04-09",
   "returnLocation" : "반납장소",
   "memberId" : 1
 }</code></pre>
@@ -888,11 +894,47 @@ Host: localhost:8080
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="_도서_대여_신청_api"><a class="link" href="#_도서_대여_신청_api">도서 대여 신청 API</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_도서_대여_신청_api_http_request"><a class="link" href="#_도서_대여_신청_api_http_request">HTTP request</a></h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /api/v1/books/1/rental HTTP/1.1
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_도서_대여_신청_api_path_parameters"><a class="link" href="#_도서_대여_신청_api_path_parameters">Path parameters</a></h3>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. /api/v1/books/{bookId}/rental</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>bookId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">도서 고유번호</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2023-04-02 18:18:05 +0900
+Last updated 2023-04-09 13:54:46 +0900
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">

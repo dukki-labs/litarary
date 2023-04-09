@@ -20,3 +20,6 @@ operation::book-controller-test/search-container-book-list-test[snippets='http-r
 
 == 도서 등록 API
 operation::book-controller-test/book-registration-test[snippets='http-request,path-parameters,request-fields']
+
+== 도서 대여 신청 API
+operation::book-controller-test/book-rental-test[snippets='http-request,path-parameters']

@@ -2,7 +2,10 @@ package com.litarary.book.service;
 
 import com.litarary.account.domain.entity.Member;
 import com.litarary.account.repository.AccountRepository;
+import com.litarary.book.domain.RentalUseYn;
 import com.litarary.book.domain.entity.Book;
+import com.litarary.book.domain.entity.BookRental;
+import com.litarary.book.domain.entity.BookRentalRepository;
 import com.litarary.book.domain.entity.Category;
 import com.litarary.book.repository.BookRepository;
 import com.litarary.book.repository.CategoryRepository;
@@ -28,6 +31,7 @@ public class BookService {
     private final BookRepository bookRepository;
     private final CategoryRepository categoryRepository;
     private final AccountRepository accountRepository;
+    private final BookRentalRepository bookRentalRepository;
 
     @Transactional(readOnly = true)
     public ContainerBookInfo searchBookListByContainer(String searchKeyword, Pageable pageable) {
@@ -52,5 +56,17 @@ public class BookService {
         return bookList.stream()
                 .map(BookInfo::of)
                 .toList();
+    }
+
+    @Transactional
+    public void rentalBook(Long memberId, Long bookId) {
+        Member member = accountRepository.findById(memberId)
+                .orElseThrow(() -> new LitararyErrorException(ErrorCode.MEMBER_NOT_FOUND));
+        Book book = bookRepository.findByIdAndRentalUseYnAndCompany(bookId, RentalUseYn.Y, member.getCompany())
+                .orElseThrow(() -> new LitararyErrorException(ErrorCode.RENTAL_NOT_FOUND_BOOK));
+
+        book.updateRentalUseYn(RentalUseYn.N);
+        BookRental defaultRental = BookRental.createDefaultRental(member, book);
+        bookRentalRepository.save(defaultRental);
     }
 }

@@ -22,6 +22,7 @@ import java.util.List;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.doNothing;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
@@ -210,5 +211,23 @@ class BookControllerTest extends RestDocsControllerTest {
                                 fieldWithPath("bookList.[].publisher").type(JsonFieldType.STRING).description("출판사")
                         )
                 ));
+    }
+    @Test
+    @WithMockUser
+    void bookRentalTest() throws Exception {
+        doNothing().when(bookService).rentalBook(anyLong(), anyLong());
+        final String uri = BASE_URI + "/books/{bookId}/rental";
+        final long memberId = 1L;
+
+        mockMvc.perform(post(uri, 1)
+                        .requestAttr("memberId", memberId))
+                .andExpect(status().isOk())
+                .andDo(
+                        restDocs.document(
+                                pathParameters(
+                                        parameterWithName("bookId").description("도서 고유번호")
+                                )
+                        )
+                );
     }
 }

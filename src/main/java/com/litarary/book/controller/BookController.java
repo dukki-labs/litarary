@@ -42,6 +42,13 @@ public class BookController {
         bookService.registerBook(categoryId, bookMapper.toRegisterBook(request));
     }
 
+    @PostMapping("/books/{bookId}/rental")
+    @ResponseStatus(HttpStatus.OK)
+    public void bookRental(@RequestAttribute("memberId") Long memberId,
+                           @PathVariable Long bookId) {
+        bookService.rentalBook(memberId, bookId);
+    }
+
     @GetMapping("/books/concern")
     public ConcernBookDto.Response concernBookList(ConcernBookDto request) {
         List<ConcernBookTypeDto> concernBookTypeDtos = Arrays.asList(
