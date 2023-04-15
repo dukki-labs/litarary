@@ -40,6 +40,10 @@ dependencies {
     // gmail smtp 전송
     implementation 'org.springframework.boot:spring-boot-starter-mail'
 
+    // 복잡한 동적 쿼리를 위해서 추가
+    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.0'
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+
     // Spring Rest Docs 추가
     asciidoctorExt group: 'org.springframework.restdocs', name: 'spring-restdocs-asciidoctor', version: '2.0.7.RELEASE'
     testImplementation group: 'org.springframework.restdocs', name: 'spring-restdocs-mockmvc', version: '2.0.7.RELEASE'

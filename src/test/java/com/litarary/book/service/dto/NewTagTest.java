@@ -11,7 +11,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class NewTagTest {
 
-    @ParameterizedTest(name = "[{index}] => {0}는 30일이 지났으면 DEFAULT, 30일 이내이면 NEW를 반환한다.")
+    @ParameterizedTest(name = "[{index}] => {0}는 현재 날짜기준으로 30일이 지났으면 DEFAULT, 30일 이내이면 NEW를 반환한다.")
     @MethodSource("createTimeSource")
     void newTagTest2(LocalDateTime day, NewTag expected) {
         NewTag result = NewTag.isNewTag(day);
