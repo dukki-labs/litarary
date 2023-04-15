@@ -5,6 +5,8 @@ import com.litarary.book.controller.dto.*;
 import com.litarary.book.controller.mapper.BookMapper;
 import com.litarary.book.service.BookService;
 import com.litarary.book.service.dto.ContainerBookInfo;
+import com.litarary.book.service.dto.RentalBook;
+import com.litarary.book.service.dto.RentalBookResponse;
 import com.litarary.book.service.dto.ReturnBook;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -48,6 +50,18 @@ public class BookController {
     public void bookRental(@RequestAttribute("memberId") Long memberId,
                            @PathVariable Long bookId) {
         bookService.rentalBook(memberId, bookId);
+    }
+
+    @GetMapping("/books/rentals")
+    @ResponseStatus(HttpStatus.OK)
+    public RentalBookDto.Response rentalBookList(@RequestAttribute("memberId") Long memberId,
+                                                   @RequestBody RentalBookDto.Request request) {
+        RentalBook rentalBook = bookMapper.toRentalBook(request);
+        List<RentalBookResponse> rentalBookList = bookService.findRentalBookList(memberId, rentalBook);
+        return RentalBookDto.Response
+                .builder()
+                .rentalBookResponseList(rentalBookList)
+                .build();
     }
 
     @GetMapping("/books/return")

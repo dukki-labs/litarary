@@ -3,6 +3,8 @@ package com.litarary.book.controller;
 import com.litarary.account.domain.BookCategory;
 import com.litarary.book.controller.dto.BookRegistrationDto;
 import com.litarary.book.controller.dto.BookReturnDto;
+import com.litarary.book.controller.dto.RentalBookDto;
+import com.litarary.book.domain.SearchType;
 import com.litarary.book.domain.entity.Category;
 import com.litarary.book.domain.entity.DeadLine;
 import com.litarary.book.service.BookService;
@@ -304,5 +306,94 @@ class BookControllerTest extends RestDocsControllerTest {
                                 )
                         )
                 );
+    }
+
+    @Test
+    @WithMockUser
+    void rentalBookListTest() throws Exception {
+        final String uri = BASE_URI + "/books/rentals";
+        RentalBookDto.Request requestDto = RentalBookDto.Request
+                .builder()
+                .searchType(SearchType.NEW)
+                .bookCategory(BookCategory.COMPUTER_MOBILE)
+                .searchKeyword("키워드")
+                .page(1)
+                .size(10)
+                .build();
+        String request = objectMapper.writeValueAsString(requestDto);
+
+        when(bookService.findRentalBookList(anyLong(), any())).thenReturn(
+                List.of(
+                        RentalBookResponse.builder()
+                                .id(1L)
+                                .title("도서 제목")
+                                .publisher("출판사")
+                                .publishDate(LocalDate.now())
+                                .recommendCount(1)
+                                .categoryId(1L)
+                                .bookCategory(BookCategory.COMPUTER_MOBILE)
+                                .content("도서 설명")
+                                .deadLine("대여기간")
+                                .returnLocation("대여 반납장소")
+                                .review("전달 내용")
+                                .newTag(NewTag.NEW)
+                                .imageUrl("http://testImage.com")
+                                .createdAt(LocalDateTime.now())
+                                .updatedAt(LocalDateTime.now())
+                                .author("저자")
+                                .memberId(1L)
+                                .companyId(1L)
+                                .rentalUseYn("대여 가능 여부")
+                        .build())
+        );
+        mockMvc.perform(get(uri)
+                        .requestAttr("memberId", 1L)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .content(request))
+                .andExpect(status().isOk())
+                .andDo(
+                        restDocs.document(
+                                requestFields(
+                                        fieldWithPath("searchType").type(JsonFieldType.STRING).description("검색 타입 [신규: NEW] \n [추천: RECOMMEND]"),
+                                        fieldWithPath("bookCategory").type(JsonFieldType.STRING).description("관심 카테고리 \n\n" +
+                                                "`[HISTORY_CULTURE:역사/예술/문화]`\n\n" +
+                                                "`[EDUCATION:교육]`\n\n" +
+                                                "`[FAMILY_LIFE:가정/요리/뷰티]`\n\n" +
+                                                "`[HOBBY:건강/취미/레저/여행]`\n\n" +
+                                                "`[ECONOMIC_MANAGEMENT:경제경영]`\n\n" +
+                                                "`[SCIENCE_TECHNOLOGY:사회과학/과학]`\n\n" +
+                                                "`[COMPUTER_MOBILE:컴퓨터/모바일]`\n\n" +
+                                                "`[LITERATURE:문학]`\n\n" +
+                                                "`[ENTERTAINMENT:엔터테인먼트]`\n\n" +
+                                                "`[SELF_DEVELOPMENT:자기계발]`\n\n" +
+                                                "`[LANGUAGE:언어]`\n\n" +
+                                                "`[OTHER:기타]`"),
+                                        fieldWithPath("searchKeyword").type(JsonFieldType.STRING).description("검색 키워드"),
+                                        fieldWithPath("page").type(JsonFieldType.NUMBER).description("페이지"),
+                                        fieldWithPath("size").type(JsonFieldType.NUMBER).description("사이즈(조회 갯수)")
+                                ),
+                                responseFields(
+                                        fieldWithPath("rentalBookResponseList[].id").type(JsonFieldType.NUMBER).description("도서 고유번호"),
+                                        fieldWithPath("rentalBookResponseList[].title").type(JsonFieldType.STRING).description("도서 제목"),
+                                        fieldWithPath("rentalBookResponseList[].publisher").type(JsonFieldType.STRING).description("출판사"),
+                                        fieldWithPath("rentalBookResponseList[].publishDate").type(JsonFieldType.STRING).description("출판일"),
+                                        fieldWithPath("rentalBookResponseList[].recommendCount").type(JsonFieldType.NUMBER).description("추천 갯수"),
+                                        fieldWithPath("rentalBookResponseList[].categoryId").type(JsonFieldType.NUMBER).description("카테고리 고유번호"),
+                                        fieldWithPath("rentalBookResponseList[].bookCategory").type(JsonFieldType.STRING).description("카테고리"),
+                                        fieldWithPath("rentalBookResponseList[].content").type(JsonFieldType.STRING).description("도서 설명"),
+                                        fieldWithPath("rentalBookResponseList[].deadLine").type(JsonFieldType.STRING).description("대여기간"),
+                                        fieldWithPath("rentalBookResponseList[].returnLocation").type(JsonFieldType.STRING).description("대여 반납장소"),
+                                        fieldWithPath("rentalBookResponseList[].review").type(JsonFieldType.STRING).description("전달 내용"),
+                                        fieldWithPath("rentalBookResponseList[].newTag").type(JsonFieldType.STRING).description("[신규: NEW] \n [일반도서: NORMAL]"),
+                                        fieldWithPath("rentalBookResponseList[].imageUrl").type(JsonFieldType.STRING).description("도서 이미지 URL"),
+                                        fieldWithPath("rentalBookResponseList[].createdAt").type(JsonFieldType.STRING).description("도서 등록일"),
+                                        fieldWithPath("rentalBookResponseList[].updatedAt").type(JsonFieldType.STRING).description("도서 수정일"),
+                                        fieldWithPath("rentalBookResponseList[].author").type(JsonFieldType.STRING).description("저자"),
+                                        fieldWithPath("rentalBookResponseList[].memberId").type(JsonFieldType.NUMBER).description("회원 고유번호"),
+                                        fieldWithPath("rentalBookResponseList[].companyId").type(JsonFieldType.NUMBER).description("회사 고유번호"),
+                                        fieldWithPath("rentalBookResponseList[].rentalUseYn").type(JsonFieldType.STRING).description("대여 가능 여부 [Y: 대여가능] [N: 대여불가]")
+                                )
+
+                ));
     }
 }

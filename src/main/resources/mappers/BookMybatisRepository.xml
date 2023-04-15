@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.litarary.book.repository.BookMybatisRepository">
+
+    <select id="findByRentalBookList" resultType="com.litarary.book.service.dto.RentalBookResponse">
+        SELECT b.id,
+               b.author,
+               b.content,
+               b.created_at,
+               b.dead_line,
+               b.image_url,
+               b.publish_date,
+               b.publisher,
+               b.recommend_count,
+               b.return_location,
+               b.review,
+               b.title,
+               b.updated_at,
+               b.category_id,
+               b.company_id,
+               b.member_id,
+               b.rental_use_yn,
+               c.book_category
+          FROM book b
+    INNER JOIN category c
+            on c.id = b.category_id
+         WHERE b.company_id = #{companyId}
+        <if test="rentalBook.bookCategory != null">
+           AND c.book_category = #{rentalBook.bookCategory}
+        </if>
+        <if test="rentalBook.searchKeyword != null">
+              AND b.title LIKE CONCAT('%', #{rentalBook.searchKeyword}, '%')
+        </if>
+        <choose>
+            <when test="rentalBook.searchType.name() == 'NEW'">
+                ORDER BY b.created_at DESC
+            </when>
+            <when test="rentalBook.searchType.name() == 'RECOMMEND'">
+                ORDER BY b.recommend_count DESC
+            </when>
+            <otherwise>
+                ORDER BY b.id DESC
+            </otherwise>
+        </choose>
+         limit #{rentalBook.size}
+        OFFSET #{rentalBook.page}
+    </select>
+</mapper>

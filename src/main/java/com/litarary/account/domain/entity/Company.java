@@ -22,4 +22,8 @@ public class Company extends BaseEntity {
     private Long id;
 
     private String name;
+
+    public Long getId() {
+        return id;
+    }
 }

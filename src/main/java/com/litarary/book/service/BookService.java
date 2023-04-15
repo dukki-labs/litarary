@@ -1,20 +1,15 @@
 package com.litarary.book.service;
 
+import com.litarary.account.domain.entity.Company;
 import com.litarary.account.domain.entity.Member;
 import com.litarary.account.repository.AccountRepository;
 import com.litarary.book.domain.RentalUseYn;
 import com.litarary.book.domain.entity.Book;
 import com.litarary.book.domain.entity.BookRental;
 import com.litarary.book.domain.entity.RentalReview;
-import com.litarary.book.repository.BookRentalRepository;
+import com.litarary.book.repository.*;
 import com.litarary.book.domain.entity.Category;
-import com.litarary.book.repository.BookRepository;
-import com.litarary.book.repository.CategoryRepository;
-import com.litarary.book.repository.RentalReviewRepository;
-import com.litarary.book.service.dto.BookInfo;
-import com.litarary.book.service.dto.ContainerBookInfo;
-import com.litarary.book.service.dto.RegisterBook;
-import com.litarary.book.service.dto.ReturnBook;
+import com.litarary.book.service.dto.*;
 import com.litarary.common.ErrorCode;
 import com.litarary.common.exception.LitararyErrorException;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +27,7 @@ public class BookService {
 
     private final BookContainerService bookContainerService;
     private final BookRepository bookRepository;
+    private final BookMybatisRepository bookMybatisRepository;
     private final CategoryRepository categoryRepository;
     private final AccountRepository accountRepository;
     private final BookRentalRepository bookRentalRepository;
@@ -97,6 +93,15 @@ public class BookService {
 
         final Book book = bookRental.getBook();
         return new ReturnBook.Response(book);
+    }
+
+    @Transactional(readOnly = true)
+    public List<RentalBookResponse> findRentalBookList(Long memberId, RentalBook rentalBook) {
+        final Member member = accountRepository.findById(memberId)
+                .orElseThrow(() -> new LitararyErrorException(ErrorCode.MEMBER_NOT_FOUND));
+        final Company company = member.getCompany();
+
+        return bookMybatisRepository.findByRentalBookList(company.getId(), rentalBook);
     }
 
     private void createRentalReview(String rentalReview, Book book) {

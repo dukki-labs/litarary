@@ -1,13 +1,7 @@
 package com.litarary.book.controller.mapper;
 
-import com.litarary.book.controller.dto.BookInfoDto;
-import com.litarary.book.controller.dto.BookRegistrationDto;
-import com.litarary.book.controller.dto.BookReturnDto;
-import com.litarary.book.controller.dto.ContainerBookInfoDto;
-import com.litarary.book.service.dto.BookInfo;
-import com.litarary.book.service.dto.ContainerBookInfo;
-import com.litarary.book.service.dto.RegisterBook;
-import com.litarary.book.service.dto.ReturnBook;
+import com.litarary.book.controller.dto.*;
+import com.litarary.book.service.dto.*;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -79,5 +73,16 @@ public class BookMapper {
 
     public ReturnBook.Request toReturnBook(BookReturnDto.Request request) {
         return new ReturnBook.Request(request.getRentalReview(), request.getRecommend());
+    }
+
+    public RentalBook toRentalBook(RentalBookDto.Request request) {
+        final int defaultMinusPage = 1;
+        return RentalBook.builder()
+                .searchType(request.getSearchType())
+                .bookCategory(request.getBookCategory())
+                .searchKeyword(request.getSearchKeyword())
+                .page(request.getPage() - defaultMinusPage)
+                .size(request.getSize())
+                .build();
     }
 }
