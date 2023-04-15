@@ -8,4 +8,4 @@
 
 - 
 
-closed <#Issue_number>
+closed #issue_number
