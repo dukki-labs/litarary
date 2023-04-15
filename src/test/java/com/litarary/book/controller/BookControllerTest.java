@@ -42,21 +42,7 @@ class BookControllerTest extends RestDocsControllerTest {
     void recentBookListTest() throws Exception {
         final long memberId = 1;
         final int size = 10;
-        BookInfo response = BookInfo.builder()
-                .imageUrl("test@image.com")
-                .title("JPA마스터")
-                .author("김영한")
-                .categoryId(1)
-                .category(BookCategory.COMPUTER_MOBILE)
-                .content("도서 설명")
-                .recommendCount(24)
-                .review("올해 읽은 도서 중 가장 재미있었어요")
-                .publisher("에이콘출판사")
-                .publishDate(LocalDate.now())
-                .deadLine(DeadLine.ONE_WEEK)
-                .returnLocation("출입문앞 1층")
-                .createdAt(LocalDateTime.now())
-                .build();
+        BookInfo response = createDummyBookInfo();
         given(bookService.recentBookList(anyLong(), anyInt())).willReturn(List.of(response));
 
         mockMvc.perform(get("/api/v1/recent/books")
@@ -70,19 +56,21 @@ class BookControllerTest extends RestDocsControllerTest {
                                 parameterWithName("size").description("책 조회 갯수")
                         ),
                         responseFields(
-                                fieldWithPath("bookInfoDtoList.[].imageUrl").type(JsonFieldType.STRING).description("이미지 URL"),
-                                fieldWithPath("bookInfoDtoList.[].title").type(JsonFieldType.STRING).description("제목"),
-                                fieldWithPath("bookInfoDtoList.[].categoryId").type(JsonFieldType.NUMBER).description("카테고리 고유번호"),
-                                fieldWithPath("bookInfoDtoList.[].category").type(JsonFieldType.STRING).description("카테고리"),
-                                fieldWithPath("bookInfoDtoList.[].content").type(JsonFieldType.STRING).description("내용"),
-                                fieldWithPath("bookInfoDtoList.[].recommendCount").type(JsonFieldType.NUMBER).description("추천 수"),
-                                fieldWithPath("bookInfoDtoList.[].regDt").type(JsonFieldType.STRING).description("등록 날짜"),
-                                fieldWithPath("bookInfoDtoList.[].author").type(JsonFieldType.STRING).description("저자"),
-                                fieldWithPath("bookInfoDtoList.[].review").type(JsonFieldType.STRING).description("리뷰"),
-                                fieldWithPath("bookInfoDtoList.[].publisher").type(JsonFieldType.STRING).description("출판사"),
-                                fieldWithPath("bookInfoDtoList.[].publishDate").type(JsonFieldType.STRING).description("출판일"),
-                                fieldWithPath("bookInfoDtoList.[].deadLine").type(JsonFieldType.STRING).description("대출 기한"),
-                                fieldWithPath("bookInfoDtoList.[].returnLocation").type(JsonFieldType.STRING).description("반납 위치")
+                                fieldWithPath("bookInfoDtoList[].id").type(JsonFieldType.NUMBER).description("도서 고유번호"),
+                                fieldWithPath("bookInfoDtoList[].imageUrl").type(JsonFieldType.STRING).description("이미지 URL"),
+                                fieldWithPath("bookInfoDtoList[].title").type(JsonFieldType.STRING).description("제목"),
+                                fieldWithPath("bookInfoDtoList[].categoryId").type(JsonFieldType.NUMBER).description("카테고리 고유번호"),
+                                fieldWithPath("bookInfoDtoList[].category").type(JsonFieldType.STRING).description("카테고리"),
+                                fieldWithPath("bookInfoDtoList[].content").type(JsonFieldType.STRING).description("내용"),
+                                fieldWithPath("bookInfoDtoList[].recommendCount").type(JsonFieldType.NUMBER).description("추천 수"),
+                                fieldWithPath("bookInfoDtoList[].author").type(JsonFieldType.STRING).description("저자"),
+                                fieldWithPath("bookInfoDtoList[].review").type(JsonFieldType.STRING).description("리뷰"),
+                                fieldWithPath("bookInfoDtoList[].publisher").type(JsonFieldType.STRING).description("출판사"),
+                                fieldWithPath("bookInfoDtoList[].publishDate").type(JsonFieldType.STRING).description("출판일"),
+                                fieldWithPath("bookInfoDtoList[].deadLine").type(JsonFieldType.STRING).description("대출 기한"),
+                                fieldWithPath("bookInfoDtoList[].returnLocation").type(JsonFieldType.STRING).description("반납 위치"),
+                                fieldWithPath("bookInfoDtoList[].newTag").type(JsonFieldType.STRING).description("[신규: NEW] \n [일반도서: NORMAL]"),
+                                fieldWithPath("bookInfoDtoList.[].regDt").type(JsonFieldType.STRING).description("등록 날짜")
                         )
                 ));
     }
@@ -118,6 +106,48 @@ class BookControllerTest extends RestDocsControllerTest {
 //                        )
 //                ));
 //    }
+
+    @Test
+    @WithMockUser
+    void mostBorrowedBookListTest() throws Exception {
+        final String uri = BASE_URI + "/books/most-borrowed";
+
+        when(bookService.mostBorrowedBookList(anyLong(), any())).thenReturn(
+                List.of(createDummyBookInfo())
+        );
+
+        mockMvc.perform(get(uri)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .param("page", "1")
+                        .param("size", "6")
+                .requestAttr("memberId", 1L))
+                .andExpect(status().isOk())
+                .andDo(
+                        restDocs.document(
+                                requestParameters(
+                                        parameterWithName("page").description("페이지 번호"),
+                                        parameterWithName("size").description("페이지당 조회 갯수")
+                                ),
+                                responseFields(
+                                        fieldWithPath("bookInfoDtoList[].id").type(JsonFieldType.NUMBER).description("도서 고유번호"),
+                                        fieldWithPath("bookInfoDtoList[].imageUrl").type(JsonFieldType.STRING).description("이미지 URL"),
+                                        fieldWithPath("bookInfoDtoList[].title").type(JsonFieldType.STRING).description("제목"),
+                                        fieldWithPath("bookInfoDtoList[].categoryId").type(JsonFieldType.NUMBER).description("카테고리 고유번호"),
+                                        fieldWithPath("bookInfoDtoList[].category").type(JsonFieldType.STRING).description("카테고리"),
+                                        fieldWithPath("bookInfoDtoList[].content").type(JsonFieldType.STRING).description("내용"),
+                                        fieldWithPath("bookInfoDtoList[].recommendCount").type(JsonFieldType.NUMBER).description("추천 수"),
+                                        fieldWithPath("bookInfoDtoList[].author").type(JsonFieldType.STRING).description("저자"),
+                                        fieldWithPath("bookInfoDtoList[].review").type(JsonFieldType.STRING).description("리뷰"),
+                                        fieldWithPath("bookInfoDtoList[].publisher").type(JsonFieldType.STRING).description("출판사"),
+                                        fieldWithPath("bookInfoDtoList[].publishDate").type(JsonFieldType.STRING).description("출판일"),
+                                        fieldWithPath("bookInfoDtoList[].deadLine").type(JsonFieldType.STRING).description("대출 기한"),
+                                        fieldWithPath("bookInfoDtoList[].returnLocation").type(JsonFieldType.STRING).description("반납 위치"),
+                                        fieldWithPath("bookInfoDtoList[].newTag").type(JsonFieldType.STRING).description("[신규: NEW] \n [일반도서: NORMAL]"),
+                                        fieldWithPath("bookInfoDtoList[].regDt").type(JsonFieldType.STRING).description("등록 날짜")
+                                )
+                        )
+                );
+    }
 
     @Test
     @WithMockUser
@@ -344,7 +374,7 @@ class BookControllerTest extends RestDocsControllerTest {
                                 .memberId(1L)
                                 .companyId(1L)
                                 .rentalUseYn("대여 가능 여부")
-                        .build())
+                                .build())
         );
         mockMvc.perform(get(uri)
                         .requestAttr("memberId", 1L)
@@ -394,6 +424,26 @@ class BookControllerTest extends RestDocsControllerTest {
                                         fieldWithPath("rentalBookResponseList[].rentalUseYn").type(JsonFieldType.STRING).description("대여 가능 여부 [Y: 대여가능] [N: 대여불가]")
                                 )
 
-                ));
+                        ));
+    }
+
+    private BookInfo createDummyBookInfo() {
+        return BookInfo.builder()
+                .id(1L)
+                .imageUrl("test@image.com")
+                .title("JPA마스터")
+                .author("김영한")
+                .categoryId(1)
+                .category(BookCategory.COMPUTER_MOBILE)
+                .content("도서 설명")
+                .recommendCount(24)
+                .review("올해 읽은 도서 중 가장 재미있었어요")
+                .publisher("에이콘출판사")
+                .publishDate(LocalDate.now())
+                .deadLine(DeadLine.ONE_WEEK)
+                .returnLocation("출입문앞 1층")
+                .createdAt(LocalDateTime.now())
+                .newTag(NewTag.NEW)
+                .build();
     }
 }

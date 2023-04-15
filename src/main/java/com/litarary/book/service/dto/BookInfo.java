@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 @Builder
 public class BookInfo {
 
+    private Long id;
     private String title;
     private String imageUrl;
     private String content;
@@ -31,8 +32,11 @@ public class BookInfo {
     private String member;
     private String company;
 
+    private NewTag newTag;
+
     public static BookInfo of(Book book) {
         return BookInfo.builder()
+                .id(book.getId())
                 .title(book.getTitle())
                 .imageUrl(book.getImageUrl())
                 .content(book.getContent())
@@ -46,6 +50,7 @@ public class BookInfo {
                 .categoryId(book.getCategory().getId())
                 .category(book.getCategory().getBookCategory())
                 .createdAt(book.getCreatedAt())
+                .newTag(NewTag.isNewTag(book.getCreatedAt()))
                 .build();
     }
 }

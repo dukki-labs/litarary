@@ -2,6 +2,7 @@ package com.litarary.book.controller.dto;
 
 import com.litarary.account.domain.BookCategory;
 import com.litarary.book.domain.entity.DeadLine;
+import com.litarary.book.service.dto.NewTag;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,6 +16,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BookInfoDto {
+    private Long id;
     private String imageUrl;
     private String title;
 
@@ -29,5 +31,7 @@ public class BookInfoDto {
     private DeadLine deadLine;
     private String returnLocation;
     private LocalDateTime regDt;
+
+    private NewTag newTag;
 
 }

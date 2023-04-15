@@ -19,4 +19,13 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     Optional<Book> findByIdAndRentalUseYnAndCompany(@Param("id") Long id,
                                                     @Param("rentalUseYn") RentalUseYn rentalUseYn,
                                                     @Param("company") Company company);
+
+    @Query("select b, count(br) as borrowCount " +
+            "from Book b " +
+            "inner join BookRental br " +
+            "on b.id = br.book.id " +
+            "where b.company = :company " +
+            "group by b.id " +
+            "order by borrowCount desc")
+    List<Book> findBookBorrowBookList(Company company, Pageable pageable);
 }
