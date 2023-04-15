@@ -4,11 +4,9 @@ import com.litarary.account.domain.BookCategory;
 import com.litarary.book.controller.dto.*;
 import com.litarary.book.controller.mapper.BookMapper;
 import com.litarary.book.service.BookService;
-import com.litarary.book.service.dto.ContainerBookInfo;
-import com.litarary.book.service.dto.RentalBook;
-import com.litarary.book.service.dto.RentalBookResponse;
-import com.litarary.book.service.dto.ReturnBook;
+import com.litarary.book.service.dto.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
@@ -31,7 +29,7 @@ public class BookController {
     public RecentBookDto.Response recentBookList(@RequestParam("memberId") long memberId,
                                                  @RequestParam("size") int size) {
 
-        List<BookInfoDto> bookInfoList = bookMapper.toRecentBook(bookService.recentBookList(memberId, size));
+        List<BookInfoDto> bookInfoList = bookMapper.toBookInfoDto(bookService.recentBookList(memberId, size));
 
         return RecentBookDto.Response
                 .builder()
@@ -76,6 +74,22 @@ public class BookController {
                            @RequestBody BookReturnDto.Request request) {
         ReturnBook.Request returnBook = bookMapper.toReturnBook(request);
         bookService.returnBook(memberId, returnBook);
+    }
+
+    @GetMapping("/books/most-borrowed")
+    @ResponseStatus(HttpStatus.OK)
+    public MostBorrowedBookDto.Response mostBorrowedBookList(@RequestAttribute("memberId") Long memberId,
+                                                             @ModelAttribute MostBorrowedBookDto.Request request) {
+        final int page = request.getPage() - 1;
+        final int size = request.getSize();
+        final PageRequest pageRequest = PageRequest.of(page, size);
+
+        List<BookInfoDto> bookInfoDtos = bookMapper.toBookInfoDto(bookService.mostBorrowedBookList(memberId, pageRequest));
+
+        return MostBorrowedBookDto.Response
+                .builder()
+                .bookInfoDtoList(bookInfoDtos)
+                .build();
     }
 
     @GetMapping("/books/concern")

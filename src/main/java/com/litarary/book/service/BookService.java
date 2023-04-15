@@ -104,6 +104,19 @@ public class BookService {
         return bookMybatisRepository.findByRentalBookList(company.getId(), rentalBook);
     }
 
+
+    @Transactional(readOnly = true)
+    public List<BookInfo> mostBorrowedBookList(Long memberId, Pageable pageable) {
+        Member member = accountRepository.findById(memberId)
+                .orElseThrow(() -> new LitararyErrorException(ErrorCode.MEMBER_NOT_FOUND));
+
+        List<Book> bookBorrowBookList = bookRepository.findBookBorrowBookList(member.getCompany(), pageable);
+
+        return bookBorrowBookList.stream()
+                .map(BookInfo::of)
+                .toList();
+    }
+
     private void createRentalReview(String rentalReview, Book book) {
         if (rentalReview.length() > 0) {
             rentalReviewRepository.save(RentalReview.createRentalReview(rentalReview, book));
@@ -117,4 +130,5 @@ public class BookService {
             throw new LitararyErrorException(ErrorCode.ALREADY_RENTAL_BOOK);
         }
     }
+
 }

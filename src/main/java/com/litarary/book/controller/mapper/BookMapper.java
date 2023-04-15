@@ -50,10 +50,11 @@ public class BookMapper {
                 .build();
     }
 
-    public List<BookInfoDto> toRecentBook(List<BookInfo> recentBookList) {
+    public List<BookInfoDto> toBookInfoDto(List<BookInfo> recentBookList) {
         return recentBookList.stream()
                 .map(book ->
                         BookInfoDto.builder()
+                                .id(book.getId())
                                 .title(book.getTitle())
                                 .categoryId(book.getCategoryId())
                                 .category(book.getCategory())
@@ -67,6 +68,7 @@ public class BookMapper {
                                 .recommendCount(book.getRecommendCount())
                                 .returnLocation(book.getReturnLocation())
                                 .regDt(book.getCreatedAt())
+                                .newTag(book.getNewTag())
                                 .build()
                 ).toList();
     }
