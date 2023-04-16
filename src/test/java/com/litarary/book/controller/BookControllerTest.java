@@ -67,7 +67,7 @@ class BookControllerTest extends RestDocsControllerTest {
                                 fieldWithPath("bookInfoDtoList[].review").type(JsonFieldType.STRING).description("리뷰"),
                                 fieldWithPath("bookInfoDtoList[].publisher").type(JsonFieldType.STRING).description("출판사"),
                                 fieldWithPath("bookInfoDtoList[].publishDate").type(JsonFieldType.STRING).description("출판일"),
-                                fieldWithPath("bookInfoDtoList[].deadLine").type(JsonFieldType.STRING).description("대출 기한"),
+                                fieldWithPath("bookInfoDtoList[].deadLine").type(JsonFieldType.STRING).description("대출 기한 [ONE_WEEK: 1주] \n [TWO_WEEK: 2주] \n [THREE_WEEK: 3주] \n [FOUR_WEEK: 4주]"),
                                 fieldWithPath("bookInfoDtoList[].returnLocation").type(JsonFieldType.STRING).description("반납 위치"),
                                 fieldWithPath("bookInfoDtoList[].newTag").type(JsonFieldType.STRING).description("[신규: NEW] \n [일반도서: NORMAL]"),
                                 fieldWithPath("bookInfoDtoList.[].regDt").type(JsonFieldType.STRING).description("등록 날짜")

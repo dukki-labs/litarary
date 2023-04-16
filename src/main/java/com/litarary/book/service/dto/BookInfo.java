@@ -24,13 +24,13 @@ public class BookInfo {
     private LocalDate publishDate;
     private String returnLocation;
     private int recommendCount;
-    private int viewCount;
+//    private int viewCount;
     private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+//    private LocalDateTime updatedAt;
     private long categoryId;
     private BookCategory category;
-    private String member;
-    private String company;
+//    private String member;
+//    private String company;
 
     private NewTag newTag;
 

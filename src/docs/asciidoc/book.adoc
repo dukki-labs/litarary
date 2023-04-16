@@ -15,8 +15,11 @@ operation::book-controller-test/recent-book-list-test[snippets='http-request,req
 == 📌인기 도서 조회 API
 operation::book-controller-test/most-borrowed-book-list-test[snippets='http-request,request-parameters,response-body,response-fields']
 
-== 📌관심도서 카테고리 목록 조회 API
+== 📌추천도서 카테고리 목록 조회 API
 operation::category-controller-test/interest-category-test[snippets='http-request,response-body,response-fields']
+
+== 📌추천도서 목록 조회 API
+operation::category-controller-test/book-list-in-category-test[snippets='http-request,path-parameters,request-parameters,response-body,response-fields']
 
 = 🧿도서 등록하기 화면
 
