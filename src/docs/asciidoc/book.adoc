@@ -7,38 +7,39 @@
 
 == link:index.html[메인화면으로 이동]
 
-= 메인화면
+= 🧿메인화면
 
-== 신규 도서 조회 API
+== 📌신규 도서 조회 API
 operation::book-controller-test/recent-book-list-test[snippets='http-request,request-parameters,response-body,response-fields']
 
-== 인기 도서 조회 API
+== 📌인기 도서 조회 API
 operation::book-controller-test/most-borrowed-book-list-test[snippets='http-request,request-parameters,response-body,response-fields']
-// == 관심 도서 조회 API
-// operation::book-controller-test/concern-book-list-test[snippets='http-request,request-parameters,response-body,response-fields']
 
-= 도서 등록하기 화면
+== 📌관심도서 카테고리 목록 조회 API
+operation::category-controller-test/interest-category-test[snippets='http-request,response-body,response-fields']
 
-== 외부 도서 검색 API(feat 알라딘)
+= 🧿도서 등록하기 화면
+
+== 📌외부 도서 검색 API(feat 알라딘)
 operation::book-controller-test/search-container-book-list-test[snippets='http-request,request-parameters,response-body,response-fields']
 
-== 도서 등록 API
+== 📌도서 등록 API
 operation::book-controller-test/book-registration-test[snippets='http-request,path-parameters,request-fields']
 
-= 대여 신청하기 화면
+= 🧿대여 신청하기 화면
 
-== 대여 가능 도서 조회 API
+== 📌대여 가능 도서 조회 API
 operation::book-controller-test/rental-book-list-test[snippets='http-request,request-fields,response-body,response-fields']
 
-== 도서 대여 신청 API
+== 📌도서 대여 신청 API
 operation::book-controller-test/book-rental-test[snippets='http-request,path-parameters']
 
-= 도서 반납 화면
+= 🧿도서 반납 화면
 
-== 도서 반납해야될 도서 조회 API
+== 📌도서 반납해야될 도서 조회 API
 도서 반납 화면에 표출될 도서를 조회한다.
 
 operation::book-controller-test/find-book-return-test[snippets='http-request,response-body,response-fields']
 
-== 도서 반납 API
+== 📌도서 반납 API
 operation::book-controller-test/book-return-test[snippets='http-request,request-body,request-fields']

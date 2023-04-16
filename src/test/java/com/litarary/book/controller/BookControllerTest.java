@@ -75,38 +75,6 @@ class BookControllerTest extends RestDocsControllerTest {
                 ));
     }
 
-//    @Test
-//    @WithMockUser
-//    void concernBookListTest() throws Exception {
-//
-//        mockMvc.perform(get("/api/v1/books/concern")
-//                        .contentType(MediaType.APPLICATION_JSON_VALUE)
-//                        .param("inquiryDate", "2023-02-23"))
-//                .andExpect(status().isOk())
-//                .andDo(restDocs.document(
-//                        requestParameters(
-//                                parameterWithName("inquiryDate").description("조회 요청 날짜")
-//                        ),
-//                        responseFields(
-//                                fieldWithPath("concernBookTypeDto.[].bookCategory").type(JsonFieldType.STRING).description("카테고리"),
-//                                fieldWithPath("concernBookTypeDto.[].bookInfoDtoList.[].imageUrl")
-//                                        .type(JsonFieldType.STRING).description("도서 썸네일 URL"),
-//                                fieldWithPath("concernBookTypeDto.[].bookInfoDtoList.[].title")
-//                                        .type(JsonFieldType.STRING).description("제목"),
-//                                fieldWithPath("concernBookTypeDto.[].bookInfoDtoList.[].bookCategory")
-//                                        .type(JsonFieldType.STRING).description("카테고리"),
-//                                fieldWithPath("concernBookTypeDto.[].bookInfoDtoList.[].content")
-//                                        .type(JsonFieldType.STRING).description("본문 내용"),
-//                                fieldWithPath("concernBookTypeDto.[].bookInfoDtoList.[].likeCount")
-//                                        .type(JsonFieldType.NUMBER).description("좋아요 갯수"),
-//                                fieldWithPath("concernBookTypeDto.[].bookInfoDtoList.[].viewCount")
-//                                        .type(JsonFieldType.NUMBER).description("조회수"),
-//                                fieldWithPath("concernBookTypeDto.[].bookInfoDtoList.[].regDt")
-//                                        .type(JsonFieldType.STRING).description("등록 날짜")
-//                        )
-//                ));
-//    }
-
     @Test
     @WithMockUser
     void mostBorrowedBookListTest() throws Exception {
