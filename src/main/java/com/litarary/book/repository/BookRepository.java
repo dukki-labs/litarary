@@ -3,6 +3,8 @@ package com.litarary.book.repository;
 import com.litarary.account.domain.entity.Company;
 import com.litarary.book.domain.RentalUseYn;
 import com.litarary.book.domain.entity.Book;
+import com.litarary.book.domain.entity.Category;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -28,4 +30,12 @@ public interface BookRepository extends JpaRepository<Book, Long> {
             "group by b.id " +
             "order by borrowCount desc")
     List<Book> findBookBorrowBookList(Company company, Pageable pageable);
+
+    @Query("select b from Book b " +
+            "where b.company = :company " +
+            "and b.category = :category " +
+            "order by b.createdAt desc ")
+    Page<Book> findByCategoryInBookList(@Param("company") Company company,
+                                        @Param("category") Category category,
+                                        Pageable pageable);
 }
