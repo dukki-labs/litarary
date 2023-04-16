@@ -1,16 +1,16 @@
 -- category init data
 
 insert into category (book_category) values ( 'HISTORY_CULTURE' );
+insert into category (book_category) values ( 'EDUCATION' );
+insert into category (book_category) values ( 'FAMILY_LIFE' );
 insert into category (book_category) values ( 'HOBBY' );
-insert into category (book_category) values ( 'ECONOMY_OPERATE' );
-insert into category (book_category) values ( 'HIGH_SCHOOL' );
-insert into category (book_category) values ( 'CLASSIC' );
+insert into category (book_category) values ( 'ECONOMIC_MANAGEMENT' );
 insert into category (book_category) values ( 'SCIENCE_TECHNOLOGY' );
-insert into category (book_category) values ( 'KUMGANG_TRAVEL' );
-insert into category (book_category) values ( 'CALENDAR' );
-insert into category (book_category) values ( 'UNIVERSITY_BOOK' );
-insert into category (book_category) values ( 'COMIC_BOOK' );
-insert into category (book_category) values ( 'SOCIAL_SCIENCE' );
+insert into category (book_category) values ( 'COMPUTER_MOBILE' );
+insert into category (book_category) values ( 'LITERATURE' );
+insert into category (book_category) values ( 'ENTERTAINMENT' );
+insert into category (book_category) values ( 'SELF_DEVELOPMENT' );
+insert into category (book_category) values ( 'LANGUAGE' );
 insert into category (book_category) values ( 'OTHER' );
 
 
