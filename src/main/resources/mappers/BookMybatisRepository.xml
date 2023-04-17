@@ -3,7 +3,7 @@
 
 <mapper namespace="com.litarary.book.repository.BookMybatisRepository">
 
-    <select id="findByRentalBookList" resultType="com.litarary.book.service.dto.RentalBookResponse">
+    <select id="findByRentalBookList" resultType="com.litarary.book.service.dto.BookContent">
         SELECT b.id,
                b.author,
                b.content,
@@ -44,6 +44,20 @@
             </otherwise>
         </choose>
          limit #{rentalBook.size}
-        OFFSET #{rentalBook.page}
+        OFFSET #{offset}
+    </select>
+
+    <select id="findByRentalBookCount" resultType="java.lang.Integer">
+        SELECT count(*)
+          FROM book b
+    INNER JOIN category c
+            ON c.id = b.category_id
+         WHERE b.company_id = #{companyId}
+        <if test="rentalBook.bookCategory != null">
+            AND c.book_category = #{rentalBook.bookCategory}
+        </if>
+        <if test="rentalBook.searchKeyword != null">
+            AND b.title LIKE CONCAT('%', #{rentalBook.searchKeyword}, '%')
+        </if>
     </select>
 </mapper>

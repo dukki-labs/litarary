@@ -55,10 +55,16 @@ public class BookController {
     public RentalBookDto.Response rentalBookList(@RequestAttribute("memberId") Long memberId,
                                                    @RequestBody RentalBookDto.Request request) {
         RentalBook rentalBook = bookMapper.toRentalBook(request);
-        List<RentalBookResponse> rentalBookList = bookService.findRentalBookList(memberId, rentalBook);
+        PageBookContent rentalBookList = bookService.findRentalBookList(memberId, rentalBook);
+
         return RentalBookDto.Response
                 .builder()
-                .rentalBookResponseList(rentalBookList)
+                .page(rentalBookList.getPage())
+                .size(rentalBookList.getSize())
+                .totalPage(rentalBookList.getTotalPage())
+                .totalCount(rentalBookList.getTotalCount())
+                .last(rentalBookList.isLast())
+                .rentalBookResponseList(rentalBookList.getBookContentList())
                 .build();
     }
 

@@ -599,10 +599,10 @@ Host: localhost:8080</code></pre>
     "recommendCount" : 24,
     "review" : "올해 읽은 도서 중 가장 재미있었어요",
     "publisher" : "에이콘출판사",
-    "publishDate" : "2023-04-17",
+    "publishDate" : "2023-04-18",
     "deadLine" : "ONE_WEEK",
     "returnLocation" : "출입문앞 1층",
-    "regDt" : "2023-04-17T23:26:57.834571",
+    "regDt" : "2023-04-18T00:24:17.390693",
     "newTag" : "NEW"
   } ]
 }</code></pre>
@@ -763,10 +763,10 @@ Host: localhost:8080</code></pre>
     "recommendCount" : 24,
     "review" : "올해 읽은 도서 중 가장 재미있었어요",
     "publisher" : "에이콘출판사",
-    "publishDate" : "2023-04-17",
+    "publishDate" : "2023-04-18",
     "deadLine" : "ONE_WEEK",
     "returnLocation" : "출입문앞 1층",
-    "regDt" : "2023-04-17T23:26:57.801738",
+    "regDt" : "2023-04-18T00:24:17.362551",
     "newTag" : "NEW"
   } ]
 }</code></pre>
@@ -1018,10 +1018,10 @@ Host: localhost:8080</code></pre>
     "deadLine" : "ONE_WEEK",
     "author" : "김영한",
     "publisher" : "에이콘출판사",
-    "publishDate" : "2023-04-17",
+    "publishDate" : "2023-04-18",
     "returnLocation" : "출입문앞 1층",
     "recommendCount" : 24,
-    "createdAt" : "2023-04-17T23:26:58.449352",
+    "createdAt" : "2023-04-18T00:24:17.958006",
     "categoryId" : 1,
     "category" : "COMPUTER_MOBILE",
     "newTag" : "NEW"
@@ -1327,7 +1327,7 @@ Host: localhost:8080
   "deadLine" : "ONE_WEEK",
   "author" : "저자명",
   "publisher" : "출판사",
-  "publishDate" : "2023-04-17",
+  "publishDate" : "2023-04-18",
   "returnLocation" : "반납장소",
   "memberId" : 1
 }</code></pre>
@@ -1512,20 +1512,25 @@ Host: localhost:8080
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-none hljs">{
+  "page" : 1,
+  "size" : 10,
+  "totalCount" : 20,
+  "totalPage" : 2,
+  "last" : false,
   "rentalBookResponseList" : [ {
     "id" : 1,
     "author" : "저자",
     "content" : "도서 설명",
-    "createdAt" : "2023-04-17T23:26:57.849014",
+    "createdAt" : "2023-04-18T00:24:17.40376",
     "deadLine" : "대여기간",
     "imageUrl" : "http://testImage.com",
-    "publishDate" : "2023-04-17",
+    "publishDate" : "2023-04-18",
     "publisher" : "출판사",
     "recommendCount" : 1,
     "returnLocation" : "대여 반납장소",
     "review" : "전달 내용",
     "title" : "도서 제목",
-    "updatedAt" : "2023-04-17T23:26:57.84902",
+    "updatedAt" : "2023-04-18T00:24:17.403765",
     "categoryId" : 1,
     "bookCategory" : "COMPUTER_MOBILE",
     "companyId" : 1,
@@ -1553,6 +1558,31 @@ Host: localhost:8080
 </tr>
 </thead>
 <tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>page</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">요청 페이지 번호</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>size</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">요청 페이지 사이즈</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>totalPage</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">전체 페이지 수</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>totalCount</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">전체 데이터 수</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>last</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">마지막 페이지 여부</p></td>
+</tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>rentalBookResponseList[].id</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>

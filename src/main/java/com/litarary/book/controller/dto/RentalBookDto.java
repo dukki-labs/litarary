@@ -2,7 +2,7 @@ package com.litarary.book.controller.dto;
 
 import com.litarary.account.domain.BookCategory;
 import com.litarary.book.domain.SearchType;
-import com.litarary.book.service.dto.RentalBookResponse;
+import com.litarary.book.service.dto.BookContent;
 import lombok.*;
 
 import javax.validation.constraints.Min;
@@ -32,6 +32,11 @@ public class RentalBookDto {
     @NoArgsConstructor(access = AccessLevel.PRIVATE)
     @AllArgsConstructor(access = AccessLevel.PRIVATE)
     public static class Response {
-        List<RentalBookResponse> rentalBookResponseList;
+        private int page;
+        private int size;
+        private int totalCount;
+        private int totalPage;
+        private boolean last;
+        List<BookContent> rentalBookResponseList;
     }
 }
