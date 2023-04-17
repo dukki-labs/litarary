@@ -170,6 +170,8 @@ class BookControllerTest extends RestDocsControllerTest {
                                 .page(1)
                                 .size(5)
                                 .totalCount(10)
+                                .totalPage(2)
+                                .last(false)
                                 .bookList(
                                         List.of(ContainerBook.builder()
                                                 .title("자바 ORM 표준 JPA 프로그래밍")
@@ -201,6 +203,8 @@ class BookControllerTest extends RestDocsControllerTest {
                                 fieldWithPath("page").type(JsonFieldType.NUMBER).description("페이지"),
                                 fieldWithPath("size").type(JsonFieldType.NUMBER).description("사이즈(조회 갯수)"),
                                 fieldWithPath("totalCount").type(JsonFieldType.NUMBER).description("전체 조회된 도서 갯수"),
+                                fieldWithPath("totalPage").type(JsonFieldType.NUMBER).description("전체 페이지 갯수"),
+                                fieldWithPath("last").type(JsonFieldType.BOOLEAN).description("마지막 페이징 여부"),
                                 fieldWithPath("bookList.[].title").type(JsonFieldType.STRING).description("도서 제목"),
                                 fieldWithPath("bookList.[].author").type(JsonFieldType.STRING).description("저자"),
                                 fieldWithPath("bookList.[].pubDate").type(JsonFieldType.STRING).description("발행일"),

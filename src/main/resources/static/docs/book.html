@@ -602,7 +602,7 @@ Host: localhost:8080</code></pre>
     "publishDate" : "2023-04-17",
     "deadLine" : "ONE_WEEK",
     "returnLocation" : "출입문앞 1층",
-    "regDt" : "2023-04-17T00:48:26.269251",
+    "regDt" : "2023-04-17T23:26:57.834571",
     "newTag" : "NEW"
   } ]
 }</code></pre>
@@ -766,7 +766,7 @@ Host: localhost:8080</code></pre>
     "publishDate" : "2023-04-17",
     "deadLine" : "ONE_WEEK",
     "returnLocation" : "출입문앞 1층",
-    "regDt" : "2023-04-17T00:48:26.242041",
+    "regDt" : "2023-04-17T23:26:57.801738",
     "newTag" : "NEW"
   } ]
 }</code></pre>
@@ -1021,7 +1021,7 @@ Host: localhost:8080</code></pre>
     "publishDate" : "2023-04-17",
     "returnLocation" : "출입문앞 1층",
     "recommendCount" : 24,
-    "createdAt" : "2023-04-17T00:48:26.834387",
+    "createdAt" : "2023-04-17T23:26:58.449352",
     "categoryId" : 1,
     "category" : "COMPUTER_MOBILE",
     "newTag" : "NEW"
@@ -1205,6 +1205,8 @@ Host: localhost:8080</code></pre>
   "page" : 1,
   "size" : 5,
   "totalCount" : 10,
+  "totalPage" : 2,
+  "last" : false,
   "bookList" : [ {
     "title" : "자바 ORM 표준 JPA 프로그래밍",
     "author" : "김영한 지음",
@@ -1249,6 +1251,16 @@ Host: localhost:8080</code></pre>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>totalCount</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">전체 조회된 도서 갯수</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>totalPage</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">전체 페이지 갯수</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>last</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">마지막 페이징 여부</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>bookList.[].title</code></p></td>
@@ -1504,7 +1516,7 @@ Host: localhost:8080
     "id" : 1,
     "author" : "저자",
     "content" : "도서 설명",
-    "createdAt" : "2023-04-17T00:48:26.281583",
+    "createdAt" : "2023-04-17T23:26:57.849014",
     "deadLine" : "대여기간",
     "imageUrl" : "http://testImage.com",
     "publishDate" : "2023-04-17",
@@ -1513,7 +1525,7 @@ Host: localhost:8080
     "returnLocation" : "대여 반납장소",
     "review" : "전달 내용",
     "title" : "도서 제목",
-    "updatedAt" : "2023-04-17T00:48:26.281589",
+    "updatedAt" : "2023-04-17T23:26:57.84902",
     "categoryId" : 1,
     "bookCategory" : "COMPUTER_MOBILE",
     "companyId" : 1,
@@ -1865,7 +1877,7 @@ Host: localhost:8080
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2023-04-17 00:48:18 +0900
+Last updated 2023-04-17 22:43:21 +0900
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">

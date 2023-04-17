@@ -31,6 +31,8 @@ public class BookMapper {
                 .page(containerBookInfo.getPage())
                 .size(containerBookInfo.getSize())
                 .totalCount(containerBookInfo.getTotalCount())
+                .totalPage(containerBookInfo.getTotalPage())
+                .last(containerBookInfo.isLast())
                 .bookList(containerBookDtos)
                 .build();
     }

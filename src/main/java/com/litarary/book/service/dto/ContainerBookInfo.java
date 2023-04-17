@@ -12,6 +12,8 @@ public class ContainerBookInfo {
     private int page;
     private int size;
     private int totalCount;
+    private int totalPage;
+    private boolean last;
     private String searchKeyword;
     private List<ContainerBook> bookList;
 }
