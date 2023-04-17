@@ -5,15 +5,13 @@ import lombok.Getter;
 
 import java.util.List;
 
-@Builder
 @Getter
-public class ContainerBookInfo {
-
+@Builder
+public class PageBookContent {
     private int page;
     private int size;
     private int totalCount;
     private int totalPage;
     private boolean last;
-    private String searchKeyword;
-    private List<ContainerBook> bookList;
+    private List<BookContent> bookContentList;
 }

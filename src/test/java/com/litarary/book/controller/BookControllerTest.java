@@ -88,7 +88,7 @@ class BookControllerTest extends RestDocsControllerTest {
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .param("page", "1")
                         .param("size", "6")
-                .requestAttr("memberId", 1L))
+                        .requestAttr("memberId", 1L))
                 .andExpect(status().isOk())
                 .andDo(
                         restDocs.document(
@@ -170,6 +170,8 @@ class BookControllerTest extends RestDocsControllerTest {
                                 .page(1)
                                 .size(5)
                                 .totalCount(10)
+                                .totalPage(2)
+                                .last(false)
                                 .bookList(
                                         List.of(ContainerBook.builder()
                                                 .title("자바 ORM 표준 JPA 프로그래밍")
@@ -197,10 +199,11 @@ class BookControllerTest extends RestDocsControllerTest {
                                 parameterWithName("size").description("사이즈(조회 갯수)")
                         ),
                         responseFields(
-
                                 fieldWithPath("page").type(JsonFieldType.NUMBER).description("페이지"),
                                 fieldWithPath("size").type(JsonFieldType.NUMBER).description("사이즈(조회 갯수)"),
                                 fieldWithPath("totalCount").type(JsonFieldType.NUMBER).description("전체 조회된 도서 갯수"),
+                                fieldWithPath("totalPage").type(JsonFieldType.NUMBER).description("전체 페이지 갯수"),
+                                fieldWithPath("last").type(JsonFieldType.BOOLEAN).description("마지막 페이징 여부"),
                                 fieldWithPath("bookList.[].title").type(JsonFieldType.STRING).description("도서 제목"),
                                 fieldWithPath("bookList.[].author").type(JsonFieldType.STRING).description("저자"),
                                 fieldWithPath("bookList.[].pubDate").type(JsonFieldType.STRING).description("발행일"),
@@ -321,28 +324,34 @@ class BookControllerTest extends RestDocsControllerTest {
         String request = objectMapper.writeValueAsString(requestDto);
 
         when(bookService.findRentalBookList(anyLong(), any())).thenReturn(
-                List.of(
-                        RentalBookResponse.builder()
-                                .id(1L)
-                                .title("도서 제목")
-                                .publisher("출판사")
-                                .publishDate(LocalDate.now())
-                                .recommendCount(1)
-                                .categoryId(1L)
-                                .bookCategory(BookCategory.COMPUTER_MOBILE)
-                                .content("도서 설명")
-                                .deadLine("대여기간")
-                                .returnLocation("대여 반납장소")
-                                .review("전달 내용")
-                                .newTag(NewTag.NEW)
-                                .imageUrl("http://testImage.com")
-                                .createdAt(LocalDateTime.now())
-                                .updatedAt(LocalDateTime.now())
-                                .author("저자")
-                                .memberId(1L)
-                                .companyId(1L)
-                                .rentalUseYn("대여 가능 여부")
-                                .build())
+                PageBookContent.builder()
+                        .page(1)
+                        .size(10)
+                        .totalPage(2)
+                        .totalCount(20)
+                        .bookContentList(List.of(
+                                BookContent.builder()
+                                        .id(1L)
+                                        .title("도서 제목")
+                                        .publisher("출판사")
+                                        .publishDate(LocalDate.now())
+                                        .recommendCount(1)
+                                        .categoryId(1L)
+                                        .bookCategory(BookCategory.COMPUTER_MOBILE)
+                                        .content("도서 설명")
+                                        .deadLine("대여기간")
+                                        .returnLocation("대여 반납장소")
+                                        .review("전달 내용")
+                                        .newTag(NewTag.NEW)
+                                        .imageUrl("http://testImage.com")
+                                        .createdAt(LocalDateTime.now())
+                                        .updatedAt(LocalDateTime.now())
+                                        .author("저자")
+                                        .memberId(1L)
+                                        .companyId(1L)
+                                        .rentalUseYn("대여 가능 여부")
+                                        .build()))
+                        .build()
         );
         mockMvc.perform(get(uri)
                         .requestAttr("memberId", 1L)
@@ -371,6 +380,11 @@ class BookControllerTest extends RestDocsControllerTest {
                                         fieldWithPath("size").type(JsonFieldType.NUMBER).description("사이즈(조회 갯수)")
                                 ),
                                 responseFields(
+                                        fieldWithPath("page").type(JsonFieldType.NUMBER).description("요청 페이지 번호"),
+                                        fieldWithPath("size").type(JsonFieldType.NUMBER).description("요청 페이지 사이즈"),
+                                        fieldWithPath("totalPage").type(JsonFieldType.NUMBER).description("전체 페이지 수"),
+                                        fieldWithPath("totalCount").type(JsonFieldType.NUMBER).description("전체 데이터 수"),
+                                        fieldWithPath("last").type(JsonFieldType.BOOLEAN).description("마지막 페이지 여부"),
                                         fieldWithPath("rentalBookResponseList[].id").type(JsonFieldType.NUMBER).description("도서 고유번호"),
                                         fieldWithPath("rentalBookResponseList[].title").type(JsonFieldType.STRING).description("도서 제목"),
                                         fieldWithPath("rentalBookResponseList[].publisher").type(JsonFieldType.STRING).description("출판사"),

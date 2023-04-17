@@ -69,13 +69,25 @@ public class AladdinBookServiceImpl implements BookContainerService {
                 .map(item -> getContainerBook(item))
                 .toList();
 
+        final int totalResult = response.getTotalResults();
+        final int page = response.getStartIndex();
+        final int size = response.getItemsPerPage();
+        final int totalPage = (int) Math.ceil(totalResult / (double) size);
+        final boolean last = isLastPage(page, totalPage);
+
         return ContainerBookInfo.builder()
-                .page(response.getStartIndex())
-                .size(response.getItemsPerPage())
+                .page(page)
+                .size(size)
+                .totalPage(totalPage)
+                .last(last)
                 .totalCount(response.getTotalResults())
                 .searchKeyword(response.getQuery())
                 .bookList(containerBooks)
                 .build();
+    }
+
+    private boolean isLastPage(int page, int totalPage) {
+        return page >= totalPage;
     }
 
     private ContainerBook getContainerBook(AladdinBookDto item) {

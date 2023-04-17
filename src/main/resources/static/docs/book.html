@@ -599,10 +599,10 @@ Host: localhost:8080</code></pre>
     "recommendCount" : 24,
     "review" : "올해 읽은 도서 중 가장 재미있었어요",
     "publisher" : "에이콘출판사",
-    "publishDate" : "2023-04-17",
+    "publishDate" : "2023-04-18",
     "deadLine" : "ONE_WEEK",
     "returnLocation" : "출입문앞 1층",
-    "regDt" : "2023-04-17T00:48:26.269251",
+    "regDt" : "2023-04-18T00:24:17.390693",
     "newTag" : "NEW"
   } ]
 }</code></pre>
@@ -763,10 +763,10 @@ Host: localhost:8080</code></pre>
     "recommendCount" : 24,
     "review" : "올해 읽은 도서 중 가장 재미있었어요",
     "publisher" : "에이콘출판사",
-    "publishDate" : "2023-04-17",
+    "publishDate" : "2023-04-18",
     "deadLine" : "ONE_WEEK",
     "returnLocation" : "출입문앞 1층",
-    "regDt" : "2023-04-17T00:48:26.242041",
+    "regDt" : "2023-04-18T00:24:17.362551",
     "newTag" : "NEW"
   } ]
 }</code></pre>
@@ -1018,10 +1018,10 @@ Host: localhost:8080</code></pre>
     "deadLine" : "ONE_WEEK",
     "author" : "김영한",
     "publisher" : "에이콘출판사",
-    "publishDate" : "2023-04-17",
+    "publishDate" : "2023-04-18",
     "returnLocation" : "출입문앞 1층",
     "recommendCount" : 24,
-    "createdAt" : "2023-04-17T00:48:26.834387",
+    "createdAt" : "2023-04-18T00:24:17.958006",
     "categoryId" : 1,
     "category" : "COMPUTER_MOBILE",
     "newTag" : "NEW"
@@ -1205,6 +1205,8 @@ Host: localhost:8080</code></pre>
   "page" : 1,
   "size" : 5,
   "totalCount" : 10,
+  "totalPage" : 2,
+  "last" : false,
   "bookList" : [ {
     "title" : "자바 ORM 표준 JPA 프로그래밍",
     "author" : "김영한 지음",
@@ -1249,6 +1251,16 @@ Host: localhost:8080</code></pre>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>totalCount</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">전체 조회된 도서 갯수</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>totalPage</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">전체 페이지 갯수</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>last</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">마지막 페이징 여부</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>bookList.[].title</code></p></td>
@@ -1315,7 +1327,7 @@ Host: localhost:8080
   "deadLine" : "ONE_WEEK",
   "author" : "저자명",
   "publisher" : "출판사",
-  "publishDate" : "2023-04-17",
+  "publishDate" : "2023-04-18",
   "returnLocation" : "반납장소",
   "memberId" : 1
 }</code></pre>
@@ -1500,20 +1512,25 @@ Host: localhost:8080
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-none hljs">{
+  "page" : 1,
+  "size" : 10,
+  "totalCount" : 20,
+  "totalPage" : 2,
+  "last" : false,
   "rentalBookResponseList" : [ {
     "id" : 1,
     "author" : "저자",
     "content" : "도서 설명",
-    "createdAt" : "2023-04-17T00:48:26.281583",
+    "createdAt" : "2023-04-18T00:24:17.40376",
     "deadLine" : "대여기간",
     "imageUrl" : "http://testImage.com",
-    "publishDate" : "2023-04-17",
+    "publishDate" : "2023-04-18",
     "publisher" : "출판사",
     "recommendCount" : 1,
     "returnLocation" : "대여 반납장소",
     "review" : "전달 내용",
     "title" : "도서 제목",
-    "updatedAt" : "2023-04-17T00:48:26.281589",
+    "updatedAt" : "2023-04-18T00:24:17.403765",
     "categoryId" : 1,
     "bookCategory" : "COMPUTER_MOBILE",
     "companyId" : 1,
@@ -1541,6 +1558,31 @@ Host: localhost:8080
 </tr>
 </thead>
 <tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>page</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">요청 페이지 번호</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>size</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">요청 페이지 사이즈</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>totalPage</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">전체 페이지 수</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>totalCount</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">전체 데이터 수</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>last</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">마지막 페이지 여부</p></td>
+</tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>rentalBookResponseList[].id</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
@@ -1865,7 +1907,7 @@ Host: localhost:8080
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2023-04-17 00:48:18 +0900
+Last updated 2023-04-17 22:43:21 +0900
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">

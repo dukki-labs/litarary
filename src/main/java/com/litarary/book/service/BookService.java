@@ -12,6 +12,7 @@ import com.litarary.book.domain.entity.Category;
 import com.litarary.book.service.dto.*;
 import com.litarary.common.ErrorCode;
 import com.litarary.common.exception.LitararyErrorException;
+import com.litarary.common.utils.PageUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -96,14 +97,28 @@ public class BookService {
     }
 
     @Transactional(readOnly = true)
-    public List<RentalBookResponse> findRentalBookList(Long memberId, RentalBook rentalBook) {
+    public PageBookContent findRentalBookList(Long memberId, RentalBook rentalBook) {
         final Member member = accountRepository.findById(memberId)
                 .orElseThrow(() -> new LitararyErrorException(ErrorCode.MEMBER_NOT_FOUND));
         final Company company = member.getCompany();
+        final int totalCount = bookMybatisRepository.findByRentalBookCount(company.getId(), rentalBook);
 
-        return bookMybatisRepository.findByRentalBookList(company.getId(), rentalBook);
+        PageRequest pageRequest = PageRequest.of(rentalBook.getPage(), rentalBook.getSize());
+        List<BookContent> rentalBookList = bookMybatisRepository.findByRentalBookList(company.getId(), rentalBook, pageRequest.getOffset());
+
+        final int totalPage = PageUtils.getTotalPage(totalCount, rentalBook.getSize());
+        final int page = rentalBook.getPage() + 1;
+        final boolean last = PageUtils.isLastPage(page, totalPage);
+
+        return PageBookContent.builder()
+                .page(page)
+                .size(rentalBook.getSize())
+                .totalCount(totalCount)
+                .totalPage(totalPage)
+                .last(last)
+                .bookContentList(rentalBookList)
+                .build();
     }
-
 
     @Transactional(readOnly = true)
     public List<BookInfo> mostBorrowedBookList(Long memberId, Pageable pageable) {

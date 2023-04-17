@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class RentalBookResponse {
+public class BookContent {
     private Long id;
     private String author;
     private String content;
