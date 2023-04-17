@@ -199,7 +199,6 @@ class BookControllerTest extends RestDocsControllerTest {
                                 parameterWithName("size").description("사이즈(조회 갯수)")
                         ),
                         responseFields(
-
                                 fieldWithPath("page").type(JsonFieldType.NUMBER).description("페이지"),
                                 fieldWithPath("size").type(JsonFieldType.NUMBER).description("사이즈(조회 갯수)"),
                                 fieldWithPath("totalCount").type(JsonFieldType.NUMBER).description("전체 조회된 도서 갯수"),
