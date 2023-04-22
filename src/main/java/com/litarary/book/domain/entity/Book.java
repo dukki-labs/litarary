@@ -5,6 +5,7 @@ import com.litarary.account.domain.entity.Company;
 import com.litarary.account.domain.entity.Member;
 import com.litarary.book.domain.RentalUseYn;
 import com.litarary.book.service.dto.RegisterBook;
+import com.litarary.recommend.domain.RecommendStatus;
 import lombok.*;
 
 import javax.persistence.*;
@@ -77,5 +78,8 @@ public class Book {
     }
     public void updateRecommendCount(int addCount) {
         this.recommendCount += addCount;
+    }
+    public void updateRecommendCount(RecommendStatus recommendStatus) {
+        this.recommendCount += recommendStatus.getAddCount();
     }
 }

@@ -33,7 +33,10 @@ public enum ErrorCode {
     NOT_ALLOWED_CATEGORIES("사용하지 않는 카테고리입니다."),
     ALREADY_RENTAL_USER("이 도서를 먼저 대여하고 있는 사람이 있어요."),
     ALREADY_RENTAL_BOOK("대여 기간 동안 다른 도서는 대여할 수 없어요."),
-    NOT_RENTAL_BOOK("대여중인 도서가 없어요.");
+    NOT_RENTAL_BOOK("대여중인 도서가 없어요."),
+    BOOK_NOT_FOUND("등록된 도서가 없습니다."),
+    RECOMMEND_BOOK_NOT_FOUND("추천한 도서가 없습니다."),
+    FAIL_UPDATE_RECOMMEND_COUNT("도서 추천하기를 실패했습니다.");
 
     private final String message;
 }

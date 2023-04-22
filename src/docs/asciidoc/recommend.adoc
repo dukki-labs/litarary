@@ -1,0 +1,12 @@
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 2
+:sectlinks:
+
+== link:index.html[메인화면으로 이동]
+
+== 📌도서 추천하기
+
+operation::recommend-controller-test/recommend-test[snippets="http-request,path-parameters,response-body,response-fields"]
