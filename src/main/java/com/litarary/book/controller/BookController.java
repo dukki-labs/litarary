@@ -4,7 +4,10 @@ import com.litarary.account.domain.BookCategory;
 import com.litarary.book.controller.dto.*;
 import com.litarary.book.controller.mapper.BookMapper;
 import com.litarary.book.service.BookService;
-import com.litarary.book.service.dto.*;
+import com.litarary.book.service.dto.ContainerBookInfo;
+import com.litarary.book.service.dto.PageBookContent;
+import com.litarary.book.service.dto.RentalBook;
+import com.litarary.book.service.dto.ReturnBook;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -12,6 +15,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
@@ -53,7 +57,7 @@ public class BookController {
     @GetMapping("/books/rentals")
     @ResponseStatus(HttpStatus.OK)
     public RentalBookDto.Response rentalBookList(@RequestAttribute("memberId") Long memberId,
-                                                   @RequestBody RentalBookDto.Request request) {
+                                                 @Valid @ModelAttribute("request") RentalBookDto.Request request) {
         RentalBook rentalBook = bookMapper.toRentalBook(request);
         PageBookContent rentalBookList = bookService.findRentalBookList(memberId, rentalBook);
 
