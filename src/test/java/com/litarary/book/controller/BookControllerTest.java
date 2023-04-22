@@ -10,12 +10,14 @@ import com.litarary.book.domain.entity.DeadLine;
 import com.litarary.book.service.BookService;
 import com.litarary.book.service.dto.*;
 import com.litarary.common.RestDocsControllerTest;
+import com.litarary.common.util.MultiValueMapperUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.util.MultiValueMap;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -308,20 +310,12 @@ class BookControllerTest extends RestDocsControllerTest {
                         )
                 );
     }
-
     @Test
     @WithMockUser
     void rentalBookListTest() throws Exception {
         final String uri = BASE_URI + "/books/rentals";
-        RentalBookDto.Request requestDto = RentalBookDto.Request
-                .builder()
-                .searchType(SearchType.NEW)
-                .bookCategory(BookCategory.COMPUTER_MOBILE)
-                .searchKeyword("키워드")
-                .page(1)
-                .size(10)
-                .build();
-        String request = objectMapper.writeValueAsString(requestDto);
+        RentalBookDto.Request requestDto = new RentalBookDto.Request(SearchType.NEW, BookCategory.COMPUTER_MOBILE,"키워드", 1, 10);
+        MultiValueMap<String, String> requestMap = MultiValueMapperUtils.convert(objectMapper, requestDto);
 
         when(bookService.findRentalBookList(anyLong(), any())).thenReturn(
                 PageBookContent.builder()
@@ -353,16 +347,17 @@ class BookControllerTest extends RestDocsControllerTest {
                                         .build()))
                         .build()
         );
+
         mockMvc.perform(get(uri)
                         .requestAttr("memberId", 1L)
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
-                        .content(request))
+                        .params(requestMap))
                 .andExpect(status().isOk())
                 .andDo(
                         restDocs.document(
-                                requestFields(
-                                        fieldWithPath("searchType").type(JsonFieldType.STRING).description("검색 타입 [신규: NEW] \n [추천: RECOMMEND]"),
-                                        fieldWithPath("bookCategory").type(JsonFieldType.STRING).description("관심 카테고리 \n\n" +
+                                requestParameters(
+                                        parameterWithName("searchType").description("검색 타입 [신규: NEW] \n [추천: RECOMMEND]"),
+                                        parameterWithName("bookCategory").description("관심 카테고리 \n\n" +
                                                 "`[HISTORY_CULTURE:역사/예술/문화]`\n\n" +
                                                 "`[EDUCATION:교육]`\n\n" +
                                                 "`[FAMILY_LIFE:가정/요리/뷰티]`\n\n" +
@@ -375,9 +370,9 @@ class BookControllerTest extends RestDocsControllerTest {
                                                 "`[SELF_DEVELOPMENT:자기계발]`\n\n" +
                                                 "`[LANGUAGE:언어]`\n\n" +
                                                 "`[OTHER:기타]`"),
-                                        fieldWithPath("searchKeyword").type(JsonFieldType.STRING).description("검색 키워드"),
-                                        fieldWithPath("page").type(JsonFieldType.NUMBER).description("페이지"),
-                                        fieldWithPath("size").type(JsonFieldType.NUMBER).description("사이즈(조회 갯수)")
+                                        parameterWithName("searchKeyword").description("검색 키워드"),
+                                        parameterWithName("page").description("페이지"),
+                                        parameterWithName("size").description("사이즈(조회 갯수)")
                                 ),
                                 responseFields(
                                         fieldWithPath("page").type(JsonFieldType.NUMBER).description("요청 페이지 번호"),
