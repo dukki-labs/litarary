@@ -60,4 +60,45 @@
             AND b.title LIKE CONCAT('%', #{rentalBook.searchKeyword}, '%')
         </if>
     </select>
+
+    <select id="findBySearchBookList" resultType="com.litarary.book.service.dto.BookContent">
+        SELECT b.id,
+               b.author,
+               b.content,
+               b.created_at,
+               b.dead_line,
+               b.image_url,
+               b.publish_date,
+               b.publisher,
+               b.recommend_count,
+               b.return_location,
+               b.review,
+               b.title,
+               b.updated_at,
+               b.category_id,
+               b.company_id,
+               b.member_id,
+               b.rental_use_yn,
+               c.book_category
+          FROM book b
+    INNER JOIN category c
+            ON c.id = b.category_id
+         WHERE b.company_id = #{companyId}
+        <if test="searchWord != null">
+            AND b.title LIKE CONCAT('%', #{searchWord}, '%')
+        </if>
+         LIMIT #{pageRequest.size}
+        OFFSET #{pageRequest.page}
+    </select>
+
+    <select id="findBySearchBookCount" resultType="java.lang.Integer">
+        SELECT count(*)
+          FROM book b
+    INNER JOIN category c
+            ON c.id = b.category_id
+         WHERE b.company_id = #{companyId}
+        <if test="searchWord != null">
+            AND b.title LIKE CONCAT('%', #{searchWord}, '%')
+        </if>
+    </select>
 </mapper>

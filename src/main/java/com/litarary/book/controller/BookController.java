@@ -1,6 +1,5 @@
 package com.litarary.book.controller;
 
-import com.litarary.account.domain.BookCategory;
 import com.litarary.book.controller.dto.*;
 import com.litarary.book.controller.mapper.BookMapper;
 import com.litarary.book.service.BookService;
@@ -13,8 +12,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -90,6 +87,24 @@ public class BookController {
         bookService.returnBook(memberId, returnBook);
     }
 
+    @GetMapping("/books/search")
+    @ResponseStatus(HttpStatus.OK)
+    public SearchBookDto.Response searchBook(@RequestAttribute("memberId") Long memberId,
+                                             @ModelAttribute("request") SearchBookDto.Request request) {
+        SearchBookInfo.Request requestDto = bookMapper.toSearchBookRequest(request, memberId);
+        SearchBookInfo.Response response = bookService.searchBook(requestDto);
+
+        return SearchBookDto.Response
+                .builder()
+                .page(response.getPage())
+                .size(response.getSize())
+                .totalPage(response.getTotalPage())
+                .totalCount(response.getTotalCount())
+                .last(response.isLast())
+                .bookInfoList(response.getBookContentList())
+                .build();
+    }
+
     @GetMapping("/books/most-borrowed")
     @ResponseStatus(HttpStatus.OK)
     public MostBorrowedBookDto.Response mostBorrowedBookList(@RequestAttribute("memberId") Long memberId,
@@ -106,48 +121,10 @@ public class BookController {
                 .build();
     }
 
-    @GetMapping("/books/concern")
-    public ConcernBookDto.Response concernBookList(ConcernBookDto request) {
-        List<ConcernBookTypeDto> concernBookTypeDtos = Arrays.asList(
-                ConcernBookTypeDto.builder()
-                        .bookCategory(BookCategory.SCIENCE_TECHNOLOGY)
-                        .bookInfoDtoList(getBookList(BookCategory.EDUCATION))
-                        .build(),
-                ConcernBookTypeDto.builder()
-                        .bookCategory(BookCategory.COMPUTER_MOBILE)
-                        .bookInfoDtoList(List.of(getBookInfo(2, 18, 6, BookCategory.COMPUTER_MOBILE)))
-                        .build()
-        );
-
-        return ConcernBookDto.Response
-                .builder()
-                .concernBookTypeDto(concernBookTypeDtos)
-                .build();
-    }
-
     @GetMapping("/books/container/search")
     public ContainerBookInfoDto.Response searchContainerBookList(@RequestParam("searchKeyword") String searchKeyword,
                                                                  @PageableDefault Pageable pageable) {
         ContainerBookInfo containerBookInfo = bookService.searchBookListByContainer(searchKeyword, pageable);
         return bookMapper.toContainerBookInfoDto(containerBookInfo);
-    }
-
-    private List<BookInfoDto> getBookList(BookCategory bookCategory) {
-        return Arrays.asList(
-                getBookInfo(12, 2, 3, bookCategory),
-                getBookInfo(3, 1, 2, bookCategory),
-                getBookInfo(2, 18, 5, bookCategory)
-        );
-    }
-
-    private BookInfoDto getBookInfo(int likeCount, int viewCount, int minusNumber, BookCategory bookCategory) {
-        return BookInfoDto.builder()
-                .imageUrl("https://www.taragrp.co.kr/wp-content/uploads/2022/07/%EB%8F%84%EC%84%9C-%EC%A0%9C%EB%B3%B8_01-2.png")
-                .title("몸의 교감")
-                .category(bookCategory)
-                .content("테스형이 말씀하셨다. 우리가 먹는것이 곧 우리의 자신이 된다.")
-                .recommendCount(likeCount)
-                .regDt(LocalDateTime.now().minusHours(minusNumber))
-                .build();
     }
 }
