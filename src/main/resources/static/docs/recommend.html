@@ -446,6 +446,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_도서_추천하기">📌도서 추천하기</a>
 <ul class="sectlevel2">
 <li><a href="#_도서_추천하기_http_request">HTTP request</a></li>
+<li><a href="#_도서_추천하기_request_parameters">Request parameters</a></li>
 <li><a href="#_도서_추천하기_path_parameters">Path parameters</a></li>
 <li><a href="#_도서_추천하기_response_body">Response body</a></li>
 <li><a href="#_도서_추천하기_response_fields">Response fields</a></li>
@@ -475,6 +476,30 @@ Host: localhost:8080
 recommendStatus=NONE</code></pre>
 </div>
 </div>
+</div>
+<div class="sect2">
+<h3 id="_도서_추천하기_request_parameters"><a class="link" href="#_도서_추천하기_request_parameters">Request parameters</a></h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>recommendStatus</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">추천 상태
+ <code>[INCREAMENT: 추천 추가]</code>
+ <code>[DECREAMENT: 추천 차감]</code>
+ <code>[NONE: 추천 건너뛰기]</code></p></td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="sect2">
 <h3 id="_도서_추천하기_path_parameters"><a class="link" href="#_도서_추천하기_path_parameters">Path parameters</a></h3>
@@ -538,7 +563,7 @@ recommendStatus=NONE</code></pre>
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2023-04-23 00:47:41 +0900
+Last updated 2023-04-23 16:01:58 +0900
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">

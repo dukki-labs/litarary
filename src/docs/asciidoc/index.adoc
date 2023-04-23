@@ -48,6 +48,7 @@ operation::error-message-test/request-parameter-valid-test[snippets='response-fi
 
 === Book API
 - link:book.html[메인화면 도서조회(관심도서, 도서검색 등) API]
+- link:recommend.html[추천도서 API]
 
 === Health Check API
 

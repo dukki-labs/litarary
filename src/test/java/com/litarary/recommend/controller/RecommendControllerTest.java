@@ -40,7 +40,10 @@ class RecommendControllerTest extends RestDocsControllerTest {
                                         parameterWithName("bookId").description("도서 고유번호")
                                 ),
                                 requestParameters(
-                                        parameterWithName("recommendStatus").description("추천 상태")
+                                        parameterWithName("recommendStatus").description("추천 상태 \n " +
+                                                "`[INCREAMENT: 추천 추가]` \n " +
+                                                "`[DECREAMENT: 추천 차감]` \n " +
+                                                "`[NONE: 추천 건너뛰기]` ")
                                 ),
                                 responseFields(
                                         fieldWithPath("recommendCount").type(JsonFieldType.NUMBER).description("추천 수")

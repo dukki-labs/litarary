@@ -13,6 +13,7 @@ import com.litarary.book.service.dto.*;
 import com.litarary.common.ErrorCode;
 import com.litarary.common.exception.LitararyErrorException;
 import com.litarary.common.utils.PageUtils;
+import com.litarary.recommend.repository.RecommendBookRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -33,6 +34,7 @@ public class BookService {
     private final AccountRepository accountRepository;
     private final BookRentalRepository bookRentalRepository;
     private final RentalReviewRepository rentalReviewRepository;
+    private final RecommendBookRepository recommendBookRepository;
 
     @Transactional(readOnly = true)
     public ContainerBookInfo searchBookListByContainer(String searchKeyword, Pageable pageable) {
@@ -132,6 +134,19 @@ public class BookService {
                 .toList();
     }
 
+    @Transactional(readOnly = true)
+    public BookDetail findBookDetail(Long bookId, Long memberId) {
+        Book book = bookRepository.findById(bookId)
+                .orElseThrow(() -> new LitararyErrorException(ErrorCode.BOOK_NOT_FOUND));
+        Member member = accountRepository.findById(memberId)
+                .orElseThrow(() -> new LitararyErrorException(ErrorCode.MEMBER_NOT_FOUND));
+
+        return BookDetail.builder()
+                .recommendUseYn(isRecommendable(book, member))
+                .bookContent(BookContent.of(book))
+                .build();
+    }
+
     private void createRentalReview(String rentalReview, Book book) {
         if (rentalReview.length() > 0) {
             rentalReviewRepository.save(RentalReview.createRentalReview(rentalReview, book));
@@ -146,4 +161,8 @@ public class BookService {
         }
     }
 
+    private boolean isRecommendable(Book book, Member member) {
+        boolean isAlreadyRecommend = recommendBookRepository.existsByMemberAndBook(member, book);
+        return !isAlreadyRecommend;
+    }
 }
