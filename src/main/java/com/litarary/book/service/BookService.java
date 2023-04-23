@@ -169,4 +169,28 @@ public class BookService {
         boolean isAlreadyRecommend = recommendBookRepository.existsByMemberAndBook(member, book);
         return !isAlreadyRecommend;
     }
+
+    public SearchBookInfo.Response searchBook(SearchBookInfo.Request request) {
+        Member member = accountRepository.findById(request.getMemberId())
+                .orElseThrow(() -> new LitararyErrorException(ErrorCode.MEMBER_NOT_FOUND));
+        final PageRequest pageRequest = PageRequest.of(request.getPage(), request.getSize());
+        Company company = member.getCompany();
+
+        int totalCount = bookMybatisRepository.findBySearchBookCount(company.getId(), request.getSearchWord());
+        List<BookContent> books = bookMybatisRepository.findBySearchBookList(company.getId(), request.getSearchWord(), pageRequest);
+
+        final int totalPage = PageUtils.getTotalPage(totalCount, request.getSize());
+        final int page = request.getPage() + 1;
+        final boolean last = PageUtils.isLastPage(page, totalPage);
+
+        return SearchBookInfo.Response
+                .builder()
+                .page(page)
+                .size(request.getSize())
+                .totalCount(totalCount)
+                .totalPage(totalPage)
+                .last(last)
+                .bookContentList(books)
+                .build();
+    }
 }

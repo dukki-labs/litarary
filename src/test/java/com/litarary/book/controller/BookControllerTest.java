@@ -4,6 +4,7 @@ import com.litarary.account.domain.BookCategory;
 import com.litarary.book.controller.dto.BookRegistrationDto;
 import com.litarary.book.controller.dto.BookReturnDto;
 import com.litarary.book.controller.dto.RentalBookDto;
+import com.litarary.book.controller.dto.SearchBookDto;
 import com.litarary.book.domain.SearchType;
 import com.litarary.book.domain.entity.Category;
 import com.litarary.book.domain.entity.DeadLine;
@@ -23,6 +24,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doNothing;
@@ -444,6 +446,66 @@ class BookControllerTest extends RestDocsControllerTest {
                                         fieldWithPath("bookContent.memberId").type(JsonFieldType.NUMBER).description("회원 고유번호"),
                                         fieldWithPath("bookContent.companyId").type(JsonFieldType.NUMBER).description("회사 고유번호"),
                                         fieldWithPath("bookContent.rentalUseYn").type(JsonFieldType.STRING).description("대여 가능 여부 \n `[Y: 대여가능]` \n `[N: 대여불가]`")
+                                )
+                        )
+                );
+    }
+
+    @Test
+    void searchBookTest() throws Exception {
+        final String uri = BASE_URI + "/books/search";
+        final SearchBookDto.Request request = new SearchBookDto.Request("test", 1, 7);
+        final MultiValueMap<String, String> params = MultiValueMapperUtils.convert(objectMapper, request);
+
+        when(bookService.searchBook(any())).thenReturn(
+                SearchBookInfo.Response
+                        .builder()
+                        .page(1)
+                        .size(7)
+                        .totalCount(1)
+                        .totalPage(1)
+                        .last(true)
+                        .bookContentList(List.of(createDummyBookContent()))
+                        .build()
+        );
+
+        mockMvc.perform(get(uri)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .requestAttr("memberId", 1L)
+                        .params(params))
+                .andExpect(status().isOk())
+                .andDo(
+                        restDocs.document(
+                                requestParameters(
+                                        parameterWithName("page").description("페이지 번호"),
+                                        parameterWithName("size").description("페이지 사이즈"),
+                                        parameterWithName("keyWord").description("검색어")
+                                ),
+                                responseFields(
+                                        fieldWithPath("page").type(JsonFieldType.NUMBER).description("페이지 번호"),
+                                        fieldWithPath("size").type(JsonFieldType.NUMBER).description("페이지 사이즈"),
+                                        fieldWithPath("totalCount").type(JsonFieldType.NUMBER).description("전체 도서 갯수"),
+                                        fieldWithPath("totalPage").type(JsonFieldType.NUMBER).description("전체 페이지 갯수"),
+                                        fieldWithPath("last").type(JsonFieldType.BOOLEAN).description("마지막 페이지 여부"),
+                                        fieldWithPath("bookInfoList[].id").type(JsonFieldType.NUMBER).description("도서 고유번호"),
+                                        fieldWithPath("bookInfoList[].title").type(JsonFieldType.STRING).description("도서 제목"),
+                                        fieldWithPath("bookInfoList[].publisher").type(JsonFieldType.STRING).description("출판사"),
+                                        fieldWithPath("bookInfoList[].publishDate").type(JsonFieldType.STRING).description("출판일"),
+                                        fieldWithPath("bookInfoList[].recommendCount").type(JsonFieldType.NUMBER).description("추천 갯수"),
+                                        fieldWithPath("bookInfoList[].categoryId").type(JsonFieldType.NUMBER).description("카테고리 고유번호"),
+                                        fieldWithPath("bookInfoList[].bookCategory").type(JsonFieldType.STRING).description("카테고리"),
+                                        fieldWithPath("bookInfoList[].content").type(JsonFieldType.STRING).description("도서 설명"),
+                                        fieldWithPath("bookInfoList[].deadLine").type(JsonFieldType.STRING).description("대여기간"),
+                                        fieldWithPath("bookInfoList[].returnLocation").type(JsonFieldType.STRING).description("대여 반납장소"),
+                                        fieldWithPath("bookInfoList[].review").type(JsonFieldType.STRING).description("전달 내용"),
+                                        fieldWithPath("bookInfoList[].newTag").type(JsonFieldType.STRING).description("`[신규: NEW]` \n `[일반도서: NORMAL]`"),
+                                        fieldWithPath("bookInfoList[].imageUrl").type(JsonFieldType.STRING).description("도서 이미지 URL"),
+                                        fieldWithPath("bookInfoList[].createdAt").type(JsonFieldType.STRING).description("도서 등록일"),
+                                        fieldWithPath("bookInfoList[].updatedAt").type(JsonFieldType.STRING).description("도서 수정일"),
+                                        fieldWithPath("bookInfoList[].author").type(JsonFieldType.STRING).description("저자"),
+                                        fieldWithPath("bookInfoList[].memberId").type(JsonFieldType.NUMBER).description("회원 고유번호"),
+                                        fieldWithPath("bookInfoList[].companyId").type(JsonFieldType.NUMBER).description("회사 고유번호"),
+                                        fieldWithPath("bookInfoList[].rentalUseYn").type(JsonFieldType.STRING).description("대여 가능 여부 \n `[Y: 대여가능]` \n `[N: 대여불가]`")
                                 )
                         )
                 );

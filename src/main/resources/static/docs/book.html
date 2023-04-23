@@ -479,6 +479,18 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 </ul>
 </li>
+<li><a href="#_도서_검색">🧿도서 검색</a>
+<ul class="sectlevel1">
+<li><a href="#_도서_검색_api">📌도서 검색 API</a>
+<ul class="sectlevel2">
+<li><a href="#_도서_검색_api_http_request">HTTP request</a></li>
+<li><a href="#_도서_검색_api_request_parameters">Request parameters</a></li>
+<li><a href="#_도서_검색_api_response_body">Response body</a></li>
+<li><a href="#_도서_검색_api_response_fields">Response fields</a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li><a href="#_도서_등록하기_화면">🧿도서 등록하기 화면</a>
 <ul class="sectlevel1">
 <li><a href="#_외부_도서_검색_apifeat_알라딘">📌외부 도서 검색 API(feat 알라딘)</a>
@@ -618,7 +630,7 @@ Host: localhost:8080</code></pre>
     "publishDate" : "2023-04-23",
     "deadLine" : "ONE_WEEK",
     "returnLocation" : "출입문앞 1층",
-    "regDt" : "2023-04-23T20:20:50.472745",
+    "regDt" : "2023-04-23T22:45:42.812227",
     "newTag" : "NEW"
   } ]
 }</code></pre>
@@ -782,7 +794,7 @@ Host: localhost:8080</code></pre>
     "publishDate" : "2023-04-23",
     "deadLine" : "ONE_WEEK",
     "returnLocation" : "출입문앞 1층",
-    "regDt" : "2023-04-23T20:20:50.430248",
+    "regDt" : "2023-04-23T22:45:42.755656",
     "newTag" : "NEW"
   } ]
 }</code></pre>
@@ -1037,7 +1049,7 @@ Host: localhost:8080</code></pre>
     "publishDate" : "2023-04-23",
     "returnLocation" : "출입문앞 1층",
     "recommendCount" : 24,
-    "createdAt" : "2023-04-23T20:20:51.097593",
+    "createdAt" : "2023-04-23T22:45:43.441882",
     "categoryId" : 1,
     "category" : "COMPUTER_MOBILE",
     "newTag" : "NEW"
@@ -1165,6 +1177,228 @@ Host: localhost:8080</code></pre>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">[신규: NEW]
  [일반도서: NORMAL]</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<h1 id="_도서_검색" class="sect0"><a class="link" href="#_도서_검색">🧿도서 검색</a></h1>
+<div class="sect1">
+<h2 id="_도서_검색_api"><a class="link" href="#_도서_검색_api">📌도서 검색 API</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_도서_검색_api_http_request"><a class="link" href="#_도서_검색_api_http_request">HTTP request</a></h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /api/v1/books/search?keyWord=test&amp;page=1&amp;size=7 HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_도서_검색_api_request_parameters"><a class="link" href="#_도서_검색_api_request_parameters">Request parameters</a></h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>page</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">페이지 번호</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>size</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">페이지 사이즈</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>keyWord</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">검색어</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_도서_검색_api_response_body"><a class="link" href="#_도서_검색_api_response_body">Response body</a></h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-none hljs">{
+  "page" : 1,
+  "size" : 7,
+  "totalPage" : 1,
+  "totalCount" : 1,
+  "last" : true,
+  "bookInfoList" : [ {
+    "id" : 1,
+    "author" : "저자",
+    "content" : "도서 설명",
+    "createdAt" : "2023-04-23T22:45:42.845542",
+    "deadLine" : "대여기간",
+    "imageUrl" : "http://testImage.com",
+    "publishDate" : "2023-04-23",
+    "publisher" : "출판사",
+    "recommendCount" : 1,
+    "returnLocation" : "대여 반납장소",
+    "review" : "전달 내용",
+    "title" : "도서 제목",
+    "updatedAt" : "2023-04-23T22:45:42.845546",
+    "categoryId" : 1,
+    "bookCategory" : "COMPUTER_MOBILE",
+    "companyId" : 1,
+    "memberId" : 1,
+    "rentalUseYn" : "대여 가능 여부",
+    "newTag" : "NEW"
+  } ]
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_도서_검색_api_response_fields"><a class="link" href="#_도서_검색_api_response_fields">Response fields</a></h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>page</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">페이지 번호</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>size</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">페이지 사이즈</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>totalCount</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">전체 도서 갯수</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>totalPage</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">전체 페이지 갯수</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>last</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">마지막 페이지 여부</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>bookInfoList[].id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">도서 고유번호</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>bookInfoList[].title</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">도서 제목</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>bookInfoList[].publisher</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">출판사</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>bookInfoList[].publishDate</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">출판일</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>bookInfoList[].recommendCount</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">추천 갯수</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>bookInfoList[].categoryId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">카테고리 고유번호</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>bookInfoList[].bookCategory</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">카테고리</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>bookInfoList[].content</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">도서 설명</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>bookInfoList[].deadLine</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">대여기간</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>bookInfoList[].returnLocation</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">대여 반납장소</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>bookInfoList[].review</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">전달 내용</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>bookInfoList[].newTag</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[신규: NEW]</code>
+ <code>[일반도서: NORMAL]</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>bookInfoList[].imageUrl</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">도서 이미지 URL</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>bookInfoList[].createdAt</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">도서 등록일</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>bookInfoList[].updatedAt</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">도서 수정일</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>bookInfoList[].author</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">저자</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>bookInfoList[].memberId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">회원 고유번호</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>bookInfoList[].companyId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">회사 고유번호</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>bookInfoList[].rentalUseYn</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">대여 가능 여부
+ <code>[Y: 대여가능]</code>
+ <code>[N: 대여불가]</code></p></td>
 </tr>
 </tbody>
 </table>
@@ -1521,7 +1755,7 @@ Host: localhost:8080</code></pre>
     "id" : 1,
     "author" : "저자",
     "content" : "도서 설명",
-    "createdAt" : "2023-04-23T20:20:50.488105",
+    "createdAt" : "2023-04-23T22:45:42.82804",
     "deadLine" : "대여기간",
     "imageUrl" : "http://testImage.com",
     "publishDate" : "2023-04-23",
@@ -1530,7 +1764,7 @@ Host: localhost:8080</code></pre>
     "returnLocation" : "대여 반납장소",
     "review" : "전달 내용",
     "title" : "도서 제목",
-    "updatedAt" : "2023-04-23T20:20:50.48811",
+    "updatedAt" : "2023-04-23T22:45:42.828045",
     "categoryId" : 1,
     "bookCategory" : "COMPUTER_MOBILE",
     "companyId" : 1,
@@ -1731,7 +1965,7 @@ Host: localhost:8080</code></pre>
     "id" : 1,
     "author" : "저자",
     "content" : "도서 설명",
-    "createdAt" : "2023-04-23T20:20:50.460204",
+    "createdAt" : "2023-04-23T22:45:42.799365",
     "deadLine" : "대여기간",
     "imageUrl" : "http://testImage.com",
     "publishDate" : "2023-04-23",
@@ -1740,7 +1974,7 @@ Host: localhost:8080</code></pre>
     "returnLocation" : "대여 반납장소",
     "review" : "전달 내용",
     "title" : "도서 제목",
-    "updatedAt" : "2023-04-23T20:20:50.46021",
+    "updatedAt" : "2023-04-23T22:45:42.799369",
     "categoryId" : 1,
     "bookCategory" : "COMPUTER_MOBILE",
     "companyId" : 1,
@@ -1935,8 +2169,8 @@ Host: localhost:8080</code></pre>
     "bookId" : 1,
     "nickName" : "test",
     "review" : null,
-    "regReviewDateTime" : "2023-04-23T20:20:52.663613",
-    "updateReviewDateTime" : "2023-04-23T20:20:52.663626"
+    "regReviewDateTime" : "2023-04-23T22:45:44.885037",
+    "updateReviewDateTime" : "2023-04-23T22:45:44.885049"
   } ]
 }</code></pre>
 </div>
@@ -2241,7 +2475,7 @@ Host: localhost:8080
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2023-04-23 20:20:41 +0900
+Last updated 2023-04-23 22:45:34 +0900
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">

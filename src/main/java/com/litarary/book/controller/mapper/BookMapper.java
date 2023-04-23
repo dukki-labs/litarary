@@ -89,4 +89,14 @@ public class BookMapper {
                 .size(request.getSize())
                 .build();
     }
+
+    public SearchBookInfo.Request toSearchBookRequest(SearchBookDto.Request request, long memberId) {
+        final int minus = 1;
+        return SearchBookInfo.Request.builder()
+                .searchWord(request.getKeyWord())
+                .memberId(memberId)
+                .page(request.getPage() - minus)
+                .size(request.getSize())
+                .build();
+    }
 }

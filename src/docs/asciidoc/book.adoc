@@ -21,6 +21,11 @@ operation::category-controller-test/interest-category-test[snippets='http-reques
 == 📌추천도서 목록 조회 API
 operation::category-controller-test/book-list-in-category-test[snippets='http-request,path-parameters,request-parameters,response-body,response-fields']
 
+= 🧿도서 검색
+
+== 📌도서 검색 API
+operation::book-controller-test/search-book-test[snippets='http-request,request-parameters,response-body,response-fields']
+
 = 🧿도서 등록하기 화면
 
 == 📌외부 도서 검색 API(feat 알라딘)
