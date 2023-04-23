@@ -19,6 +19,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 
@@ -79,8 +80,11 @@ public class BookService {
         BookRental bookRental = bookRentalRepository.findByMemberIdAndReturnDateTimeIsNull(memberId)
                 .orElseThrow(() -> new LitararyErrorException(ErrorCode.NOT_RENTAL_BOOK));
 
+        Member member = accountRepository.findById(memberId)
+                .orElseThrow(() -> new LitararyErrorException(ErrorCode.MEMBER_NOT_FOUND));
+
         Book book = bookRental.getBook();
-        createRentalReview(returnBook.getRentalReview(), book);
+        createRentalReview(returnBook.getRentalReview(), book, member);
         book.updateRentalUseYn(RentalUseYn.Y);
         book.updateRecommendCount(returnBook.getRecommend());
         bookRental.updateReturnDateTime();
@@ -147,9 +151,9 @@ public class BookService {
                 .build();
     }
 
-    private void createRentalReview(String rentalReview, Book book) {
-        if (rentalReview.length() > 0) {
-            rentalReviewRepository.save(RentalReview.createRentalReview(rentalReview, book));
+    private void createRentalReview(String rentalReview, Book book, Member member) {
+        if (StringUtils.hasText(rentalReview)) {
+            rentalReviewRepository.save(RentalReview.createRentalReview(rentalReview, book, member));
         }
     }
 
