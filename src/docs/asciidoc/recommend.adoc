@@ -9,4 +9,4 @@
 
 == 📌도서 추천하기
 
-operation::recommend-controller-test/recommend-test[snippets="http-request,path-parameters,response-body,response-fields"]
+operation::recommend-controller-test/recommend-test[snippets="http-request,request-parameters,path-parameters,response-body,response-fields"]

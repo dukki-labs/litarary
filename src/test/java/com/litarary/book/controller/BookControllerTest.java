@@ -310,11 +310,12 @@ class BookControllerTest extends RestDocsControllerTest {
                         )
                 );
     }
+
     @Test
     @WithMockUser
     void rentalBookListTest() throws Exception {
         final String uri = BASE_URI + "/books/rentals";
-        RentalBookDto.Request requestDto = new RentalBookDto.Request(SearchType.NEW, BookCategory.COMPUTER_MOBILE,"키워드", 1, 10);
+        RentalBookDto.Request requestDto = new RentalBookDto.Request(SearchType.NEW, BookCategory.COMPUTER_MOBILE, "키워드", 1, 10);
         MultiValueMap<String, String> requestMap = MultiValueMapperUtils.convert(objectMapper, requestDto);
 
         when(bookService.findRentalBookList(anyLong(), any())).thenReturn(
@@ -391,17 +392,61 @@ class BookControllerTest extends RestDocsControllerTest {
                                         fieldWithPath("rentalBookResponseList[].deadLine").type(JsonFieldType.STRING).description("대여기간"),
                                         fieldWithPath("rentalBookResponseList[].returnLocation").type(JsonFieldType.STRING).description("대여 반납장소"),
                                         fieldWithPath("rentalBookResponseList[].review").type(JsonFieldType.STRING).description("전달 내용"),
-                                        fieldWithPath("rentalBookResponseList[].newTag").type(JsonFieldType.STRING).description("[신규: NEW] \n [일반도서: NORMAL]"),
+                                        fieldWithPath("rentalBookResponseList[].newTag").type(JsonFieldType.STRING).description("`[신규: NEW]` \n `[일반도서: NORMAL]`"),
                                         fieldWithPath("rentalBookResponseList[].imageUrl").type(JsonFieldType.STRING).description("도서 이미지 URL"),
                                         fieldWithPath("rentalBookResponseList[].createdAt").type(JsonFieldType.STRING).description("도서 등록일"),
                                         fieldWithPath("rentalBookResponseList[].updatedAt").type(JsonFieldType.STRING).description("도서 수정일"),
                                         fieldWithPath("rentalBookResponseList[].author").type(JsonFieldType.STRING).description("저자"),
                                         fieldWithPath("rentalBookResponseList[].memberId").type(JsonFieldType.NUMBER).description("회원 고유번호"),
                                         fieldWithPath("rentalBookResponseList[].companyId").type(JsonFieldType.NUMBER).description("회사 고유번호"),
-                                        fieldWithPath("rentalBookResponseList[].rentalUseYn").type(JsonFieldType.STRING).description("대여 가능 여부 [Y: 대여가능] [N: 대여불가]")
+                                        fieldWithPath("rentalBookResponseList[].rentalUseYn").type(JsonFieldType.STRING).description("대여 가능 여부 \n `[Y: 대여가능]` \n `[N: 대여불가]`")
                                 )
 
                         ));
+    }
+
+    @Test
+    void bookDetailTest() throws Exception {
+        String uri = BASE_URI + "/books/{bookId}/detail";
+        BookDetail bookDetail = BookDetail.builder()
+                .bookContent(createDummyBookContent())
+                .recommendUseYn(true)
+                .build();
+        when(bookService.findBookDetail(anyLong(), anyLong())).thenReturn(bookDetail);
+
+        mockMvc.perform(get(uri, 1L)
+                        .requestAttr("memberId", 1L)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isOk())
+                .andDo(
+                        restDocs.document(
+                                pathParameters(
+                                        parameterWithName("bookId").description("도서 고유번호")
+                                ),
+                                responseFields(
+                                        fieldWithPath("recommendUseYn").type(JsonFieldType.BOOLEAN).description("도서 추천 가능 여부 \n `[true: 추천가능]` \n `[false: 추천불가]`"),
+                                        fieldWithPath("bookContent.id").type(JsonFieldType.NUMBER).description("도서 고유번호"),
+                                        fieldWithPath("bookContent.title").type(JsonFieldType.STRING).description("도서 제목"),
+                                        fieldWithPath("bookContent.publisher").type(JsonFieldType.STRING).description("출판사"),
+                                        fieldWithPath("bookContent.publishDate").type(JsonFieldType.STRING).description("출판일"),
+                                        fieldWithPath("bookContent.recommendCount").type(JsonFieldType.NUMBER).description("추천 갯수"),
+                                        fieldWithPath("bookContent.categoryId").type(JsonFieldType.NUMBER).description("카테고리 고유번호"),
+                                        fieldWithPath("bookContent.bookCategory").type(JsonFieldType.STRING).description("카테고리"),
+                                        fieldWithPath("bookContent.content").type(JsonFieldType.STRING).description("도서 설명"),
+                                        fieldWithPath("bookContent.deadLine").type(JsonFieldType.STRING).description("대여기간"),
+                                        fieldWithPath("bookContent.returnLocation").type(JsonFieldType.STRING).description("대여 반납장소"),
+                                        fieldWithPath("bookContent.review").type(JsonFieldType.STRING).description("전달 내용"),
+                                        fieldWithPath("bookContent.newTag").type(JsonFieldType.STRING).description("`[신규: NEW]` \n `[일반도서: NORMAL]`"),
+                                        fieldWithPath("bookContent.imageUrl").type(JsonFieldType.STRING).description("도서 이미지 URL"),
+                                        fieldWithPath("bookContent.createdAt").type(JsonFieldType.STRING).description("도서 등록일"),
+                                        fieldWithPath("bookContent.updatedAt").type(JsonFieldType.STRING).description("도서 수정일"),
+                                        fieldWithPath("bookContent.author").type(JsonFieldType.STRING).description("저자"),
+                                        fieldWithPath("bookContent.memberId").type(JsonFieldType.NUMBER).description("회원 고유번호"),
+                                        fieldWithPath("bookContent.companyId").type(JsonFieldType.NUMBER).description("회사 고유번호"),
+                                        fieldWithPath("bookContent.rentalUseYn").type(JsonFieldType.STRING).description("대여 가능 여부 \n `[Y: 대여가능]` \n `[N: 대여불가]`")
+                                )
+                        )
+                );
     }
 
     private BookInfo createDummyBookInfo() {
@@ -423,4 +468,29 @@ class BookControllerTest extends RestDocsControllerTest {
                 .newTag(NewTag.NEW)
                 .build();
     }
+
+    private BookContent createDummyBookContent() {
+        return BookContent.builder()
+                .id(1L)
+                .title("도서 제목")
+                .publisher("출판사")
+                .publishDate(LocalDate.now())
+                .recommendCount(1)
+                .categoryId(1L)
+                .bookCategory(BookCategory.COMPUTER_MOBILE)
+                .content("도서 설명")
+                .deadLine("대여기간")
+                .returnLocation("대여 반납장소")
+                .review("전달 내용")
+                .newTag(NewTag.NEW)
+                .imageUrl("http://testImage.com")
+                .createdAt(LocalDateTime.now())
+                .updatedAt(LocalDateTime.now())
+                .author("저자")
+                .memberId(1L)
+                .companyId(1L)
+                .rentalUseYn("대여 가능 여부")
+                .build();
+    }
+
 }
