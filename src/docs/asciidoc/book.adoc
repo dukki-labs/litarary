@@ -37,6 +37,9 @@ operation::book-controller-test/rental-book-list-test[snippets='http-request,req
 == 📌도서 상세 조회 API
 operation::book-controller-test/book-detail-test[snippets='http-request,path-parameters,response-body,response-fields']
 
+== 📌도서 리뷰 조회 API
+operation::review-controller-test/review-test[snippets='http-request,request-parameters,response-body,response-fields']
+
 == 📌도서 대여 신청 API
 operation::book-controller-test/book-rental-test[snippets='http-request,path-parameters']
 
