@@ -58,7 +58,7 @@ public class CategoryServiceImpl implements CategoryService {
                 .orElseThrow(() -> new LitararyErrorException(ErrorCode.MEMBER_NOT_FOUND));
         final Company company = member.getCompany();
 
-        Page<Book> bookList = bookRepository.findByCategoryInBookList(company, category, pageable);
+        Page<Book> bookList = bookRepository.findByCategoryInBookList(company, category, memberId, pageable);
         return PageBookInfo.of(page, size, bookList);
     }
 }
