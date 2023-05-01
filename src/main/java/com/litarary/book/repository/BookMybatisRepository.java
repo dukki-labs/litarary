@@ -12,16 +12,20 @@ import java.util.List;
 public interface BookMybatisRepository {
 
     List<BookContent> findByRentalBookList(@Param("companyId") Long companyId,
+                                           @Param("memberId") long memberId,
                                            @Param("rentalBook") RentalBook rentalBook,
                                            @Param("offset") long offset);
 
     int findByRentalBookCount(@Param("companyId") Long companyId,
+                              @Param("memberId") long memberId,
                               @Param("rentalBook") RentalBook rentalBook);
 
     List<BookContent> findBySearchBookList(@Param("companyId") Long companyId,
+                                    @Param("memberId") long memberId,
                                     @Param("searchWord") String searchWord,
                                     @Param("pageRequest") PageRequest pageRequest);
 
-    int findBySearchBookCount(@Param("companyId") Long companyId,
+    int findBySearchBookCount(@Param("companyId") long companyId,
+                              @Param("memberId") long memberId,
                               @Param("searchWord") String searchWord);
 }

@@ -15,8 +15,8 @@ import java.util.Optional;
 
 public interface BookRepository extends JpaRepository<Book, Long> {
 
-    @Query("select b from Book b where b.company = :company order by b.createdAt desc")
-    List<Book> findByRecentBookList(@Param("company") Company company, Pageable pageable);
+    @Query("select b from Book b where b.company = :company and b.member.id is not :memberId order by b.createdAt desc")
+    List<Book> findByRecentBookList(@Param("company") Company company, @Param("memberId") long memberId, Pageable pageable);
 
     Optional<Book> findByIdAndRentalUseYnAndCompany(@Param("id") Long id,
                                                     @Param("rentalUseYn") RentalUseYn rentalUseYn,
@@ -27,15 +27,19 @@ public interface BookRepository extends JpaRepository<Book, Long> {
             "inner join BookRental br " +
             "on b.id = br.book.id " +
             "where b.company = :company " +
-            "group by b.id " +
+            "and b.member.id is not :memberId " +
+            "group by b.id "+
             "order by borrowCount desc")
-    List<Book> findBookBorrowBookList(Company company, Pageable pageable);
+    List<Book> findBookBorrowBookList(@Param("company") Company company,
+                                      @Param("memberId") long memberId, Pageable pageable);
 
     @Query("select b from Book b " +
             "where b.company = :company " +
             "and b.category = :category " +
+            "and b.member.id is not :memberId " +
             "order by b.createdAt desc ")
     Page<Book> findByCategoryInBookList(@Param("company") Company company,
                                         @Param("category") Category category,
+                                        @Param("memberId") long memberId,
                                         Pageable pageable);
 }

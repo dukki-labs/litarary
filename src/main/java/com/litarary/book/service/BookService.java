@@ -57,7 +57,7 @@ public class BookService {
         Member member = accountRepository.findById(memberId)
                 .orElseThrow(() -> new LitararyErrorException(ErrorCode.MEMBER_NOT_FOUND));
 
-        List<Book> bookList = bookRepository.findByRecentBookList(member.getCompany(), PageRequest.of(0, size));
+        List<Book> bookList = bookRepository.findByRecentBookList(member.getCompany(), memberId, PageRequest.of(0, size));
         return bookList.stream()
                 .map(BookInfo::of)
                 .toList();
@@ -107,10 +107,10 @@ public class BookService {
         final Member member = accountRepository.findById(memberId)
                 .orElseThrow(() -> new LitararyErrorException(ErrorCode.MEMBER_NOT_FOUND));
         final Company company = member.getCompany();
-        final int totalCount = bookMybatisRepository.findByRentalBookCount(company.getId(), rentalBook);
+        final int totalCount = bookMybatisRepository.findByRentalBookCount(company.getId(), memberId, rentalBook);
 
         PageRequest pageRequest = PageRequest.of(rentalBook.getPage(), rentalBook.getSize());
-        List<BookContent> rentalBookList = bookMybatisRepository.findByRentalBookList(company.getId(), rentalBook, pageRequest.getOffset());
+        List<BookContent> rentalBookList = bookMybatisRepository.findByRentalBookList(company.getId(), memberId, rentalBook, pageRequest.getOffset());
 
         final int totalPage = PageUtils.getTotalPage(totalCount, rentalBook.getSize());
         final int page = rentalBook.getPage() + 1;
@@ -131,7 +131,7 @@ public class BookService {
         Member member = accountRepository.findById(memberId)
                 .orElseThrow(() -> new LitararyErrorException(ErrorCode.MEMBER_NOT_FOUND));
 
-        List<Book> bookBorrowBookList = bookRepository.findBookBorrowBookList(member.getCompany(), pageable);
+        List<Book> bookBorrowBookList = bookRepository.findBookBorrowBookList(member.getCompany(), memberId, pageable);
 
         return bookBorrowBookList.stream()
                 .map(BookInfo::of)
@@ -173,11 +173,12 @@ public class BookService {
     public SearchBookInfo.Response searchBook(SearchBookInfo.Request request) {
         Member member = accountRepository.findById(request.getMemberId())
                 .orElseThrow(() -> new LitararyErrorException(ErrorCode.MEMBER_NOT_FOUND));
+        final long memberId = member.getId();
         final PageRequest pageRequest = PageRequest.of(request.getPage(), request.getSize());
         Company company = member.getCompany();
 
-        int totalCount = bookMybatisRepository.findBySearchBookCount(company.getId(), request.getSearchWord());
-        List<BookContent> books = bookMybatisRepository.findBySearchBookList(company.getId(), request.getSearchWord(), pageRequest);
+        int totalCount = bookMybatisRepository.findBySearchBookCount(company.getId(), memberId, request.getSearchWord());
+        List<BookContent> books = bookMybatisRepository.findBySearchBookList(company.getId(), memberId, request.getSearchWord(), pageRequest);
 
         final int totalPage = PageUtils.getTotalPage(totalCount, request.getSize());
         final int page = request.getPage() + 1;
