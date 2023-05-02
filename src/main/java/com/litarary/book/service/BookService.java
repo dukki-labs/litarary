@@ -3,12 +3,13 @@ package com.litarary.book.service;
 import com.litarary.account.domain.entity.Company;
 import com.litarary.account.domain.entity.Member;
 import com.litarary.account.repository.AccountRepository;
+import com.litarary.book.domain.RentalState;
 import com.litarary.book.domain.RentalUseYn;
 import com.litarary.book.domain.entity.Book;
 import com.litarary.book.domain.entity.BookRental;
+import com.litarary.book.domain.entity.Category;
 import com.litarary.book.domain.entity.RentalReview;
 import com.litarary.book.repository.*;
-import com.litarary.book.domain.entity.Category;
 import com.litarary.book.service.dto.*;
 import com.litarary.common.ErrorCode;
 import com.litarary.common.exception.LitararyErrorException;
@@ -63,7 +64,7 @@ public class BookService {
                 .toList();
     }
 
-    public void rentalBook(Long memberId, Long bookId) {
+    public void rentalRequestBook(Long memberId, Long bookId) {
         Member member = accountRepository.findById(memberId)
                 .orElseThrow(() -> new LitararyErrorException(ErrorCode.MEMBER_NOT_FOUND));
         validateBookRental(member);
@@ -77,7 +78,7 @@ public class BookService {
     }
 
     public void returnBook(Long memberId, ReturnBook.Request returnBook) {
-        BookRental bookRental = bookRentalRepository.findByMemberIdAndReturnDateTimeIsNull(memberId)
+        BookRental bookRental = bookRentalRepository.findByMemberIdAndRentalState(memberId, RentalState.RENTAL)
                 .orElseThrow(() -> new LitararyErrorException(ErrorCode.NOT_RENTAL_BOOK));
 
         Member member = accountRepository.findById(memberId)
@@ -87,12 +88,12 @@ public class BookService {
         createRentalReview(returnBook.getRentalReview(), book, member);
         book.updateRentalUseYn(RentalUseYn.Y);
         book.updateRecommendCount(returnBook.getRecommend());
-        bookRental.updateReturnDateTime();
+        bookRental.updateRentalInfo();
     }
 
     @Transactional(readOnly = true)
     public ReturnBook.Response findBookReturn(Long memberId) {
-        final BookRental bookRental = bookRentalRepository.findByMemberIdAndReturnDateTimeIsNull(memberId)
+        final BookRental bookRental = bookRentalRepository.findByMemberIdAndRentalState(memberId, RentalState.RENTAL)
                 .orElse(null);
         if (bookRental == null) {
             return new ReturnBook.Response();
@@ -158,9 +159,9 @@ public class BookService {
     }
 
     private void validateBookRental(Member member) {
-        BookRental bookRental = bookRentalRepository.findByMemberIdAndReturnDateTimeIsNull(member.getId())
-                .orElse(null);
-        if (bookRental != null) {
+        final boolean isAlreadyRental = bookRentalRepository.existsByMemberIdAndRentalState(member.getId(), RentalState.RENTAL);
+
+        if (isAlreadyRental) {
             throw new LitararyErrorException(ErrorCode.ALREADY_RENTAL_BOOK);
         }
     }

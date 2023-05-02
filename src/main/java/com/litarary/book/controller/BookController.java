@@ -43,9 +43,9 @@ public class BookController {
 
     @PostMapping("/books/{bookId}/rental")
     @ResponseStatus(HttpStatus.OK)
-    public void bookRental(@RequestAttribute("memberId") Long memberId,
-                           @PathVariable Long bookId) {
-        bookService.rentalBook(memberId, bookId);
+    public void requestBookRental(@RequestAttribute("memberId") Long memberId,
+                                  @PathVariable Long bookId) {
+        bookService.rentalRequestBook(memberId, bookId);
     }
 
     @GetMapping("/books/{bookId}/detail")
