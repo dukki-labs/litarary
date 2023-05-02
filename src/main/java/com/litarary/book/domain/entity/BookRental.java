@@ -1,6 +1,7 @@
 package com.litarary.book.domain.entity;
 
 import com.litarary.account.domain.entity.Member;
+import com.litarary.book.domain.RentalState;
 import lombok.*;
 
 import javax.persistence.*;
@@ -17,6 +18,9 @@ public class BookRental {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Enumerated(value = EnumType.STRING)
+    private RentalState rentalState;
+
     @Column(nullable = false)
     private LocalDateTime rentalDateTime;
     private LocalDateTime returnDateTime;
@@ -31,13 +35,15 @@ public class BookRental {
 
     public static BookRental createDefaultRental(Member member, Book book) {
         return BookRental.builder()
+                .rentalState(RentalState.RENTAL)
                 .rentalDateTime(LocalDateTime.now())
                 .member(member)
                 .book(book)
                 .build();
     }
 
-    public void updateReturnDateTime() {
+    public void updateRentalInfo() {
         this.returnDateTime = LocalDateTime.now();
+        this.rentalState = RentalState.RETURN;
     }
 }

@@ -223,7 +223,7 @@ class BookControllerTest extends RestDocsControllerTest {
     @Test
     @WithMockUser
     void bookRentalTest() throws Exception {
-        doNothing().when(bookService).rentalBook(anyLong(), anyLong());
+        doNothing().when(bookService).rentalRequestBook(anyLong(), anyLong());
         final String uri = BASE_URI + "/books/{bookId}/rental";
         final long memberId = 1L;
 
