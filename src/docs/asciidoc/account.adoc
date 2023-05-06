@@ -31,3 +31,8 @@ operation::account-controller-test/check-auth-code-test[snippets='http-request,r
 
 == 📌비밀번호 변경
 operation::account-controller-test/update-password-test[snippets='http-request,request-fields']
+
+== 📌닉네임 검증
+닉네임 중복체크 및 4자리 이상인지 검증한다.
+
+operation::account-controller-test/valid-nickname-test[snippets='http-request,request-parameters']

@@ -17,7 +17,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import javax.validation.constraints.Min;
+import javax.validation.constraints.Size;
 
 @RestController
 @RequiredArgsConstructor
@@ -39,7 +39,7 @@ public class AccountController {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/valid-nickname")
-    public void validNickname(@Valid @RequestParam(name = "nickName") @Min(4) String nickName) {
+    public void validNickname(@Valid @RequestParam(name = "nickName") @Size(min = 4) String nickName) {
         accountService.validNickname(nickName);
     }
 

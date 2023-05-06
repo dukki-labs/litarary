@@ -29,6 +29,8 @@ import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doNothing;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
+import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.requestParameters;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -302,6 +304,25 @@ class AccountControllerTest extends RestDocsControllerTest {
                                 responseFields(
                                         fieldWithPath("memberId").type(JsonFieldType.NUMBER).description("회원 고유번호"),
                                         fieldWithPath("email").type(JsonFieldType.STRING).description("이메일")
+                                )
+                        )
+                );
+    }
+
+    @Test
+    void validNicknameTest() throws Exception {
+        final String uri = REQUEST_PREFIX + "/valid-nickname";
+
+        doNothing().when(accountService).validNickname(anyString());
+
+        mockMvc.perform(get(uri)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .queryParam("nickName", "test"))
+                .andExpect(status().isOk())
+                .andDo(
+                        restDocs.document(
+                                requestParameters(
+                                        parameterWithName("nickName").description("중복확인할 닉네임")
                                 )
                         )
                 );
