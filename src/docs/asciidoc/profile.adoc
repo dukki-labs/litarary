@@ -1,0 +1,13 @@
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 2
+:sectlinks:
+
+== link:index.html[메인화면으로 이동]
+
+= 🧿회원정보
+
+== 📌회원정보 조회
+operation::profile-controller-test/find-user-profile-test[snippets='http-request,http-response,response-fields']
