@@ -11,3 +11,6 @@
 
 == 📌회원정보 조회
 operation::profile-controller-test/find-user-profile-test[snippets='http-request,http-response,response-fields']
+
+== 📌회원정보 수정
+operation::profile-controller-test/update-profile-test[snippets='http-request,request-fields,request-body']
