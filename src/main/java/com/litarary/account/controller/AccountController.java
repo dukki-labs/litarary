@@ -13,12 +13,15 @@ import com.litarary.account.service.dto.SignUpMemberInfo;
 import com.litarary.account.service.mail.MailSenderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Min;
 
 @RestController
 @RequiredArgsConstructor
+@Validated
 @RequestMapping(value = "/api/v1/account")
 public class AccountController {
 
@@ -32,6 +35,12 @@ public class AccountController {
     public void signUp(@Valid @RequestBody MemberDto.Request memberRequest) {
         SignUpMemberInfo memberInfo = memberMapper.mapToSignUpMember(memberRequest);
         accountService.signUpMember(memberInfo);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/valid-nickname")
+    public void validNickname(@Valid @RequestParam(name = "nickName") @Min(4) String nickName) {
+        accountService.validNickname(nickName);
     }
 
     @ResponseStatus(HttpStatus.OK)

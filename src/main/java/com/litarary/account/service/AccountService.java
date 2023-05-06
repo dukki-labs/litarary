@@ -146,6 +146,14 @@ public class AccountService {
                 .build();
     }
 
+    @Transactional(readOnly = true)
+    public void validNickname(String nickName) {
+        boolean isDuplicatedNickname = accountRepository.existsByNickName(nickName);
+        if (isDuplicatedNickname) {
+            throw new LitararyErrorException(ErrorCode.DUPLICATED_NICKNAME);
+        }
+    }
+
     private Member getMemberById(long memberId) {
         return accountRepository.findById(memberId)
                 .orElseThrow(() -> new LitararyErrorException(ErrorCode.MEMBER_NOT_FOUND));

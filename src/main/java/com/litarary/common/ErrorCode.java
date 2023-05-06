@@ -15,6 +15,7 @@ public enum ErrorCode {
     MISS_MATCH_PASSWORD("비밀번호가 일치하지 않습니다."),
     GMAIL_SENDER_ERROR("SMTP 이메일 전송에 실패했습니다."),
     MISS_MATCH_AUTH_CODE("인증문자가 일치하지 않습니다."),
+    DUPLICATED_NICKNAME("이미 사용중인 닉네임입니다."),
 
     //JWT Error
     EXPIRED_TOKEN("만료된 토큰입니다."),
