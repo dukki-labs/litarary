@@ -443,16 +443,16 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
 <li><a href="#_메인화면으로_이동">메인화면으로 이동</a></li>
-<li><a href="#_account_api">Account API</a>
+<li><a href="#_account_api">🧿Account API</a>
 <ul class="sectlevel1">
-<li><a href="#_회원_가입_요청">회원 가입 요청</a>
+<li><a href="#_회원_가입_요청">📌회원 가입 요청</a>
 <ul class="sectlevel2">
 <li><a href="#_회원_가입_요청_http_request">HTTP request</a></li>
 <li><a href="#_회원_가입_요청_request_fields">Request fields</a></li>
 <li><a href="#_회원_가입_요청_http_response">HTTP response</a></li>
 </ul>
 </li>
-<li><a href="#_로그인_요청">로그인 요청</a>
+<li><a href="#_로그인_요청">📌로그인 요청</a>
 <ul class="sectlevel2">
 <li><a href="#_로그인_요청_http_request">HTTP request</a></li>
 <li><a href="#_로그인_요청_request_fields">Request fields</a></li>
@@ -460,7 +460,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_로그인_요청_response_fields">Response fields</a></li>
 </ul>
 </li>
-<li><a href="#_인증문자_전송">인증문자 전송</a>
+<li><a href="#_인증문자_전송">📌인증문자 전송</a>
 <ul class="sectlevel2">
 <li><a href="#_인증문자_전송_http_request">HTTP request</a></li>
 <li><a href="#_인증문자_전송_request_fields">Request fields</a></li>
@@ -468,7 +468,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_인증문자_전송_response_fields">Response fields</a></li>
 </ul>
 </li>
-<li><a href="#_비밀번호_변경_시_인증문자_요청">비밀번호 변경 시 인증문자 요청</a>
+<li><a href="#_비밀번호_변경_시_인증문자_요청">📌비밀번호 변경 시 인증문자 요청</a>
 <ul class="sectlevel2">
 <li><a href="#_비밀번호_변경_시_인증문자_요청_http_request">HTTP request</a></li>
 <li><a href="#_비밀번호_변경_시_인증문자_요청_request_fields">Request fields</a></li>
@@ -476,16 +476,22 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_비밀번호_변경_시_인증문자_요청_response_fields">Response fields</a></li>
 </ul>
 </li>
-<li><a href="#_인증번호_검증">인증번호 검증</a>
+<li><a href="#_인증번호_검증">📌인증번호 검증</a>
 <ul class="sectlevel2">
 <li><a href="#_인증번호_검증_http_request">HTTP request</a></li>
 <li><a href="#_인증번호_검증_request_fields">Request fields</a></li>
 </ul>
 </li>
-<li><a href="#_비밀번호_변경">비밀번호 변경</a>
+<li><a href="#_비밀번호_변경">📌비밀번호 변경</a>
 <ul class="sectlevel2">
 <li><a href="#_비밀번호_변경_http_request">HTTP request</a></li>
 <li><a href="#_비밀번호_변경_request_fields">Request fields</a></li>
+</ul>
+</li>
+<li><a href="#_닉네임_검증">📌닉네임 검증</a>
+<ul class="sectlevel2">
+<li><a href="#_닉네임_검증_http_request">HTTP request</a></li>
+<li><a href="#_닉네임_검증_request_parameters">Request parameters</a></li>
 </ul>
 </li>
 </ul>
@@ -500,14 +506,14 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 
 </div>
 </div>
-<h1 id="_account_api" class="sect0"><a class="link" href="#_account_api">Account API</a></h1>
+<h1 id="_account_api" class="sect0"><a class="link" href="#_account_api">🧿Account API</a></h1>
 <div class="openblock partintro">
 <div class="content">
 로그인, 회원가입 등 계정관련 API를 제공한다.
 </div>
 </div>
 <div class="sect1">
-<h2 id="_회원_가입_요청"><a class="link" href="#_회원_가입_요청">회원 가입 요청</a></h2>
+<h2 id="_회원_가입_요청"><a class="link" href="#_회원_가입_요청">📌회원 가입 요청</a></h2>
 <div class="sectionbody">
 <div class="sect2">
 <h3 id="_회원_가입_요청_http_request"><a class="link" href="#_회원_가입_요청_http_request">HTTP request</a></h3>
@@ -622,7 +628,7 @@ Vary: Access-Control-Request-Headers</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_로그인_요청"><a class="link" href="#_로그인_요청">로그인 요청</a></h2>
+<h2 id="_로그인_요청"><a class="link" href="#_로그인_요청">📌로그인 요청</a></h2>
 <div class="sectionbody">
 <div class="sect2">
 <h3 id="_로그인_요청_http_request"><a class="link" href="#_로그인_요청_http_request">HTTP request</a></h3>
@@ -687,7 +693,7 @@ Content-Length: 523
   "accessToken" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
   "refreshToken" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
   "grantType" : "Bearer",
-  "expiredAccessTokenAt" : "2023-04-02T15:32:26.947532"
+  "expiredAccessTokenAt" : "2023-05-06T17:18:04.714933"
 }</code></pre>
 </div>
 </div>
@@ -749,7 +755,7 @@ Content-Length: 523
 </div>
 </div>
 <div class="sect1">
-<h2 id="_인증문자_전송"><a class="link" href="#_인증문자_전송">인증문자 전송</a></h2>
+<h2 id="_인증문자_전송"><a class="link" href="#_인증문자_전송">📌인증문자 전송</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>회원가입 시 이메일 인증문자 전송 시 사용한다.</p>
@@ -836,7 +842,7 @@ Host: localhost:8080
 </div>
 </div>
 <div class="sect1">
-<h2 id="_비밀번호_변경_시_인증문자_요청"><a class="link" href="#_비밀번호_변경_시_인증문자_요청">비밀번호 변경 시 인증문자 요청</a></h2>
+<h2 id="_비밀번호_변경_시_인증문자_요청"><a class="link" href="#_비밀번호_변경_시_인증문자_요청">📌비밀번호 변경 시 인증문자 요청</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>패스워드를 분실하여 이메일 인증 시 사용한다.</p>
@@ -929,7 +935,7 @@ Host: localhost:8080
 </div>
 </div>
 <div class="sect1">
-<h2 id="_인증번호_검증"><a class="link" href="#_인증번호_검증">인증번호 검증</a></h2>
+<h2 id="_인증번호_검증"><a class="link" href="#_인증번호_검증">📌인증번호 검증</a></h2>
 <div class="sectionbody">
 <div class="sect2">
 <h3 id="_인증번호_검증_http_request"><a class="link" href="#_인증번호_검증_http_request">HTTP request</a></h3>
@@ -979,7 +985,7 @@ Host: localhost:8080
 </div>
 </div>
 <div class="sect1">
-<h2 id="_비밀번호_변경"><a class="link" href="#_비밀번호_변경">비밀번호 변경</a></h2>
+<h2 id="_비밀번호_변경"><a class="link" href="#_비밀번호_변경">📌비밀번호 변경</a></h2>
 <div class="sectionbody">
 <div class="sect2">
 <h3 id="_비밀번호_변경_http_request"><a class="link" href="#_비밀번호_변경_http_request">HTTP request</a></h3>
@@ -1034,11 +1040,50 @@ Host: localhost:8080
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="_닉네임_검증"><a class="link" href="#_닉네임_검증">📌닉네임 검증</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>닉네임 중복체크 및 4자리 이상인지 검증한다.</p>
+</div>
+<div class="sect2">
+<h3 id="_닉네임_검증_http_request"><a class="link" href="#_닉네임_검증_http_request">HTTP request</a></h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /api/v1/account/valid-nickname?nickName=test HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_닉네임_검증_request_parameters"><a class="link" href="#_닉네임_검증_request_parameters">Request parameters</a></h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>nickName</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">중복확인할 닉네임</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2023-03-27 07:03:00 +0900
+Last updated 2023-05-06 17:17:55 +0900
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">

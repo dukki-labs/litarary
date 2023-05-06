@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import javax.validation.ConstraintViolationException;
+
 @Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -41,6 +43,24 @@ public class GlobalExceptionHandler {
                                 .stream()
                                 .map(error -> new ErrorField(error.getField(), error.getDefaultMessage()))
                                 .toList())
+                .build();
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(value = ConstraintViolationException.class)
+    public ErrorResponse validConstraintViolationExceptionHandle(ConstraintViolationException ex) {
+        log.warn(">>>>> ConstraintViolationException error = {}", ex.getMessage());
+
+        return ErrorResponse.builder()
+                .status(HttpStatus.BAD_REQUEST.value())
+                .errorCode(ErrorCode.UN_VALID_BINDING.name())
+                .errorMessage(ErrorCode.UN_VALID_BINDING.getMessage())
+                .errorFields(
+                        ex.getConstraintViolations()
+                                .stream()
+                                .map(error -> new ErrorField(error.getPropertyPath().toString(), error.getMessage()))
+                                .toList()
+                )
                 .build();
     }
 
