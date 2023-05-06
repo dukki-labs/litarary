@@ -53,3 +53,7 @@ operation::error-message-test/request-parameter-valid-test[snippets='response-fi
 === Health Check API
 
 - link:health.html[서버 상태 체크 API]
+
+=== Profile API
+
+- link:profile.html[회원 정보 API]
