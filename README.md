@@ -1,15 +1,15 @@
 [![BackEnd-CI](https://github.com/dukki-labs/litarary/actions/workflows/%08BackEnd-CI.yml/badge.svg)](https://github.com/dukki-labs/litarary/actions/workflows/%08BackEnd-CI.yml)
-[![BackEnd-CD](https://github.com/dukki-labs/litarary/actions/workflows/BackEnd-CD.yml/badge.svg)](https://github.com/dukki-labs/litarary/actions/workflows/BackEnd-CD.yml)
+[![StackShare](http://img.shields.io/badge/tech-stack-0690fa.svg?style=flat)](https://stackshare.io/phantom08266/litarary)
 
 # litarary
+
+
+## Stack Decisions 
+<a data-theme="light" data-layers="1,2,3,4" data-stack-embed="true" href="https://embed.stackshare.io/stacks/embed/7ecbd41b672fea755a33ed48f3044d"></a><script async src="https://cdn1.stackshare.io/javascripts/client-code.js" charset="utf-8"></script>
 
 ## API Link
 - https://slow-benny-phantom08266.koyeb.app/docs/index.html
 
-## BackEnd CI 구성
+## BackEnd CI/CD 구성
 
-![](https://user-images.githubusercontent.com/39672033/214862586-4dda9186-01b5-4192-a556-f2b092cebdba.png)
-
-## BackEnd CD 구성
-
-![](https://user-images.githubusercontent.com/39672033/214862830-ad93e15a-0c75-42e5-8ce1-854c9b7838f4.png)
+![](https://user-images.githubusercontent.com/39672033/236680722-3132160c-5f47-4fa8-87e4-156e080882b1.png)
