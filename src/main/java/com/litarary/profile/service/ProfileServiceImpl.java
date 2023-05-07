@@ -36,6 +36,7 @@ public class ProfileServiceImpl implements ProfileService {
     private final List<RegisterDateCalculate> registerDateCalculates;
 
     @Override
+    @Transactional(readOnly = true)
     public MemberProfileDto findUserProfile(Long memberId) {
         Member member = accountRepository.findById(memberId)
                 .orElseThrow(() -> new LitararyErrorException(ErrorCode.MEMBER_NOT_FOUND));
@@ -69,6 +70,7 @@ public class ProfileServiceImpl implements ProfileService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public PageBookInfo registerBooks(Long memberId, PageRequest pageRequest, RegisterDate registerDate) {
         Member member = accountRepository.findById(memberId)
                 .orElseThrow(() -> new LitararyErrorException(ErrorCode.MEMBER_NOT_FOUND));
@@ -84,5 +86,13 @@ public class ProfileServiceImpl implements ProfileService {
         final int pageSize = pageRequest.getPageSize();
 
         return PageBookInfo.of(pageNumber, pageSize, registerBooks);
+    }
+
+    @Override
+    public void deleteRegisterBook(Long memberId, Long bookId) {
+        accountRepository.findById(memberId)
+                .orElseThrow(() -> new LitararyErrorException(ErrorCode.MEMBER_NOT_FOUND));
+
+        bookRepository.deleteRegisterBook(bookId);
     }
 }
