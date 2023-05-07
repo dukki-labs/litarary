@@ -21,11 +21,9 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
-import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
-import static org.springframework.restdocs.request.RequestDocumentation.requestParameters;
+import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 class ProfileControllerTest extends RestDocsControllerTest {
@@ -160,6 +158,24 @@ class ProfileControllerTest extends RestDocsControllerTest {
                                         fieldWithPath("contents[].categoryId").type(JsonFieldType.NUMBER).description("도서 카테고리 고유번호"),
                                         fieldWithPath("contents[].category").type(JsonFieldType.STRING).description("도서 카테고리"),
                                         fieldWithPath("contents[].newTag").type(JsonFieldType.STRING).description("`[신규: NEW]` \n `[일반도서: NORMAL]`")
+                                )
+                        )
+                );
+    }
+
+    @Test
+    void deleteRegisterBookTest() throws Exception {
+        final String uri = BASE_URI + "/profile/register/books/{bookId}";
+
+        doNothing().when(profileService).deleteRegisterBook(anyLong(), anyLong());
+
+        mockMvc.perform(delete(uri, 1L)
+                .requestAttr("memberId", 1L))
+                .andExpect(status().isOk())
+                .andDo(
+                        restDocs.document(
+                                pathParameters(
+                                        parameterWithName("bookId").description("도서 고유번호")
                                 )
                         )
                 );

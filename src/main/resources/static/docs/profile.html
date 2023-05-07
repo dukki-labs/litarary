@@ -467,6 +467,12 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_등록_도서_조회_response_fields">Response fields</a></li>
 </ul>
 </li>
+<li><a href="#_등록_도서_삭제">📌등록 도서 삭제</a>
+<ul class="sectlevel2">
+<li><a href="#_등록_도서_삭제_http_request">HTTP request</a></li>
+<li><a href="#_등록_도서_삭제_path_parameters">Path parameters</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -646,7 +652,7 @@ Host: localhost:8080
 <h3 id="_등록_도서_조회_http_request"><a class="link" href="#_등록_도서_조회_http_request">HTTP request</a></h3>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /api/v1/profile/register/books?page=1&amp;size=10 HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /api/v1/profile/register/books?page=1&amp;size=10&amp;registerDate=NONE HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Host: localhost:8080</code></pre>
 </div>
@@ -674,6 +680,14 @@ Host: localhost:8080</code></pre>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>size</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">페이지 사이즈</p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>registerDate</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">등록 검색 조건
+<code>[NONE: 전체]</code></p>
+<p class="tableblock"><code>[ONE_MONTH: 1개월]</code></p>
+<p class="tableblock"><code>[THREE_MONTH: 3개월]</code></p>
+<p class="tableblock"><code>[SIX_MONTH: 6개월]</code></p></td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -686,7 +700,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 649
+Content-Length: 650
 
 {
   "page" : 1,
@@ -707,7 +721,7 @@ Content-Length: 649
     "returnLocation" : "출입문앞 1층",
     "recommendCount" : 24,
     "rentalUseYn" : "Y",
-    "createdAt" : "2023-05-07T14:59:50.37786",
+    "createdAt" : "2023-05-07T16:24:05.629174",
     "categoryId" : 1,
     "category" : "COMPUTER_MOBILE",
     "newTag" : "NEW"
@@ -849,11 +863,47 @@ Content-Length: 649
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="_등록_도서_삭제"><a class="link" href="#_등록_도서_삭제">📌등록 도서 삭제</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_등록_도서_삭제_http_request"><a class="link" href="#_등록_도서_삭제_http_request">HTTP request</a></h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">DELETE /api/v1/profile/register/books/1 HTTP/1.1
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_등록_도서_삭제_path_parameters"><a class="link" href="#_등록_도서_삭제_path_parameters">Path parameters</a></h3>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. /api/v1/profile/register/books/{bookId}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>bookId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">도서 고유번호</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2023-05-07 14:59:37 +0900
+Last updated 2023-05-07 16:23:54 +0900
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">

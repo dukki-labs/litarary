@@ -12,4 +12,6 @@ public interface ProfileService {
     void updateProfile(Long memberId, UpdateProfile updateProfile);
 
     PageBookInfo registerBooks(Long memberId, PageRequest pageRequest, RegisterDate registerDate);
+
+    void deleteRegisterBook(Long memberId, Long bookId);
 }
