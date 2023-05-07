@@ -20,3 +20,6 @@ operation::profile-controller-test/register-books-test[snippets='http-request,re
 
 == 📌등록 도서 삭제
 operation::profile-controller-test/delete-register-book-test[snippets='http-request,path-parameters']
+
+== 📌대여 및 반납내역 조회
+operation::profile-controller-test/rental-history-books-test[snippets='http-request,request-parameters,http-response,response-fields']

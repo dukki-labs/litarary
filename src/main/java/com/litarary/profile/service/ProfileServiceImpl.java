@@ -3,7 +3,9 @@ package com.litarary.profile.service;
 import com.litarary.account.domain.entity.Member;
 import com.litarary.account.repository.AccountRepository;
 import com.litarary.book.domain.entity.Book;
+import com.litarary.book.domain.entity.BookRental;
 import com.litarary.book.domain.entity.Category;
+import com.litarary.book.repository.BookRentalRepository;
 import com.litarary.book.repository.BookRepository;
 import com.litarary.book.repository.CategoryRepository;
 import com.litarary.category.service.dto.PageBookInfo;
@@ -11,6 +13,7 @@ import com.litarary.common.ErrorCode;
 import com.litarary.common.exception.LitararyErrorException;
 import com.litarary.profile.domain.RegisterDate;
 import com.litarary.profile.domain.RegisterDateCalculate;
+import com.litarary.profile.domain.RentalBookPageInfo;
 import com.litarary.profile.service.dto.CategoryInfo;
 import com.litarary.profile.service.dto.MemberProfileDto;
 import com.litarary.profile.service.dto.UpdateProfile;
@@ -33,6 +36,7 @@ public class ProfileServiceImpl implements ProfileService {
     private final PasswordEncoder passwordEncoder;
     private final CategoryRepository categoryRepository;
     private final BookRepository bookRepository;
+    private final BookRentalRepository bookRentalRepository;
     private final List<RegisterDateCalculate> registerDateCalculates;
 
     @Override
@@ -94,5 +98,19 @@ public class ProfileServiceImpl implements ProfileService {
                 .orElseThrow(() -> new LitararyErrorException(ErrorCode.MEMBER_NOT_FOUND));
 
         bookRepository.deleteRegisterBook(bookId);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public RentalBookPageInfo rentalBooksHistory(Long memberId, PageRequest pageRequest, RegisterDate registerDate) {
+
+        LocalDateTime startSearchDateTime = registerDateCalculates.stream()
+                .filter(item -> item.matchType(registerDate))
+                .map(item -> item.calculateStartDateTime())
+                .findFirst()
+                .orElse(null);
+        Page<BookRental> rentalBooks = bookRentalRepository.findByMemberIdAndRentalDateTimeAfter(memberId, startSearchDateTime, pageRequest);
+
+        return RentalBookPageInfo.of(pageRequest, rentalBooks);
     }
 }

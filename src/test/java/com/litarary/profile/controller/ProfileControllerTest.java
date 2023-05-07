@@ -3,6 +3,7 @@ package com.litarary.profile.controller;
 import com.litarary.account.domain.BookCategory;
 import com.litarary.common.RestDocsControllerTest;
 import com.litarary.common.dummy.DummyPageBookInfo;
+import com.litarary.common.dummy.DummyRentalBookPageInfo;
 import com.litarary.profile.controller.dto.UpdateProfileDto;
 import com.litarary.profile.domain.RegisterDate;
 import com.litarary.profile.service.ProfileService;
@@ -170,12 +171,78 @@ class ProfileControllerTest extends RestDocsControllerTest {
         doNothing().when(profileService).deleteRegisterBook(anyLong(), anyLong());
 
         mockMvc.perform(delete(uri, 1L)
-                .requestAttr("memberId", 1L))
+                        .requestAttr("memberId", 1L))
                 .andExpect(status().isOk())
                 .andDo(
                         restDocs.document(
                                 pathParameters(
                                         parameterWithName("bookId").description("도서 고유번호")
+                                )
+                        )
+                );
+    }
+
+    @Test
+    void rentalHistoryBooksTest() throws Exception {
+        final String uri = BASE_URI + "/profile/rental/history/books";
+
+        when(profileService.rentalBooksHistory(anyLong(), any(PageRequest.class), any(RegisterDate.class)))
+                .thenReturn(DummyRentalBookPageInfo.of());
+
+        mockMvc.perform(get(uri)
+                        .requestAttr("memberId", 1L)
+                        .queryParam("page", "1")
+                        .queryParam("size", "10")
+                        .queryParam("registerDate", RegisterDate.NONE.name()))
+                .andExpect(status().isOk())
+                .andDo(
+                        restDocs.document(
+                                requestParameters(
+                                        parameterWithName("page").description("페이지 번호"),
+                                        parameterWithName("size").description("페이지 사이즈"),
+                                        parameterWithName("registerDate").description("등록 검색 조건 \n" +
+                                                "`[NONE: 전체]`\n\n" +
+                                                "`[ONE_MONTH: 1개월]`\n\n" +
+                                                "`[THREE_MONTH: 3개월]`\n\n" +
+                                                "`[SIX_MONTH: 6개월]`\n\n")
+                                ),
+                                responseFields(
+                                        fieldWithPath("page").type(JsonFieldType.NUMBER).description("페이지 번호"),
+                                        fieldWithPath("size").type(JsonFieldType.NUMBER).description("페이지 사이즈"),
+                                        fieldWithPath("totalPage").type(JsonFieldType.NUMBER).description("페이지 갯수"),
+                                        fieldWithPath("totalElements").type(JsonFieldType.NUMBER).description("페이지 항목 갯수"),
+                                        fieldWithPath("last").type(JsonFieldType.BOOLEAN).description("마지막 페이지 유무"),
+                                        fieldWithPath("contents[].id").type(JsonFieldType.NUMBER).description("도서 고유번호"),
+                                        fieldWithPath("contents[].title").type(JsonFieldType.STRING).description("도서 제목"),
+                                        fieldWithPath("contents[].imageUrl").type(JsonFieldType.STRING).description("도서 썸네일 URL"),
+                                        fieldWithPath("contents[].content").type(JsonFieldType.STRING).description("도서 설명"),
+                                        fieldWithPath("contents[].review").type(JsonFieldType.STRING).description("도서 소개"),
+                                        fieldWithPath("contents[].deadLine").type(JsonFieldType.STRING).description("반납 기한 \n" +
+                                                " `[ONE_WEEK: 1주일]` \n" +
+                                                " `[TWO_WEEK: 2주일]` \n" +
+                                                " `[THREE_WEEK: 3주일]`\n" +
+                                                " `[FOUR_WEEK: 4주일]` "),
+                                        fieldWithPath("contents[].author").type(JsonFieldType.STRING).description("저자"),
+                                        fieldWithPath("contents[].publisher").type(JsonFieldType.STRING).description("출판사"),
+                                        fieldWithPath("contents[].publishDate").type(JsonFieldType.STRING).description("출판일"),
+                                        fieldWithPath("contents[].returnLocation").type(JsonFieldType.STRING).description("반납 장소"),
+                                        fieldWithPath("contents[].rentalUseYn").type(JsonFieldType.STRING).description("대여 가능 여부 \n" +
+                                                "`[Y: 대여 가능]` \n" +
+                                                "`[N: 대여 불가능]`"),
+                                        fieldWithPath("contents[].createdAt").type(JsonFieldType.STRING).description("도서 등록일자"),
+                                        fieldWithPath("contents[].categoryId").type(JsonFieldType.NUMBER).description("도서 카테고리 고유번호"),
+                                        fieldWithPath("contents[].category").type(JsonFieldType.STRING).description("도서 카테고리"),
+                                        fieldWithPath("contents[].newTag").type(JsonFieldType.STRING).description("`[신규: NEW]` \n `[일반도서: NORMAL]`"),
+                                        fieldWithPath("contents[].rentalExpired").type(JsonFieldType.BOOLEAN).description("대여 만료유무 " +
+                                                "`[true: 대여 만료]` \n " +
+                                                "`[false: 대여 만료 아님]`"),
+                                        fieldWithPath("contents[].rentalState").type(JsonFieldType.STRING).description("대여 상태 \n" +
+                                                "`[RENTAL: 대여]`" +
+                                                "`[RETURN: 반납]`" +
+                                                "`[REQUEST: 요청]`"),
+                                        fieldWithPath("contents[].rentalDateTime").type(JsonFieldType.STRING).description("대여일자"),
+                                        fieldWithPath("contents[].returnDateTime").type(JsonFieldType.STRING).description("반납일자"),
+                                        fieldWithPath("contents[].remainDay").type(JsonFieldType.NUMBER).description("잔여일수")
                                 )
                         )
                 );
