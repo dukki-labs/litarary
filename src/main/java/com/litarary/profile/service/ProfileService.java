@@ -2,6 +2,7 @@ package com.litarary.profile.service;
 
 import com.litarary.category.service.dto.PageBookInfo;
 import com.litarary.profile.domain.RegisterDate;
+import com.litarary.profile.domain.RentalBookPageInfo;
 import com.litarary.profile.service.dto.MemberProfileDto;
 import com.litarary.profile.service.dto.UpdateProfile;
 import org.springframework.data.domain.PageRequest;
@@ -14,4 +15,6 @@ public interface ProfileService {
     PageBookInfo registerBooks(Long memberId, PageRequest pageRequest, RegisterDate registerDate);
 
     void deleteRegisterBook(Long memberId, Long bookId);
+
+    RentalBookPageInfo rentalBooksHistory(Long memberId, PageRequest pageRequest, RegisterDate registerDate);
 }

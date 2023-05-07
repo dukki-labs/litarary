@@ -9,4 +9,8 @@ public enum RentalState {
     REQUEST("요청");
 
     private final String hint;
+
+    public boolean isRental() {
+        return this == RENTAL;
+    }
 }

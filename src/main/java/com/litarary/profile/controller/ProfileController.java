@@ -4,6 +4,7 @@ import com.litarary.category.service.dto.PageBookInfo;
 import com.litarary.profile.controller.dto.RegisterBookDto;
 import com.litarary.profile.controller.dto.UpdateProfileDto;
 import com.litarary.profile.controller.mapper.ProfileMapper;
+import com.litarary.profile.domain.RentalBookPageInfo;
 import com.litarary.profile.service.ProfileService;
 import com.litarary.profile.service.dto.MemberProfileDto;
 import com.litarary.profile.service.dto.UpdateProfile;
@@ -54,5 +55,15 @@ public class ProfileController {
     public void deleteRegisterBook(@RequestAttribute("memberId") Long memberId,
                                    @PathVariable Long bookId) {
         profileService.deleteRegisterBook(memberId, bookId);
+    }
+
+    @GetMapping("/rental/history/books")
+    @ResponseStatus(HttpStatus.OK)
+    public RentalBookPageInfo rentalHistoryBooks(@RequestAttribute("memberId") Long memberId,
+                                                 @Valid @ModelAttribute RegisterBookDto.Request request) {
+        final int page = request.getPage();
+        final int size = request.getSize();
+
+        return profileService.rentalBooksHistory(memberId, PageRequest.of(page - 1, size), request.getRegisterDate());
     }
 }
