@@ -2,21 +2,16 @@ package com.litarary.category.controller;
 
 import com.litarary.account.domain.BookCategory;
 import com.litarary.book.domain.entity.Category;
-import com.litarary.book.domain.entity.DeadLine;
-import com.litarary.book.service.dto.BookInfo;
-import com.litarary.book.service.dto.NewTag;
 import com.litarary.category.service.CategoryService;
 import com.litarary.category.service.dto.MemberCategoryInfo;
-import com.litarary.category.service.dto.PageBookInfo;
 import com.litarary.common.RestDocsControllerTest;
+import com.litarary.common.dummy.DummyPageBookInfo;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.security.test.context.support.WithMockUser;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -79,32 +74,7 @@ class CategoryControllerTest extends RestDocsControllerTest {
         final long categoryId = 1L;
 
         when(categoryService.findCategoryInBooks(any())).thenReturn(
-                PageBookInfo.builder()
-                        .page(1)
-                        .size(3)
-                        .contents(List.of(
-                                BookInfo.builder()
-                                        .id(1L)
-                                        .imageUrl("test@image.com")
-                                        .title("JPA마스터")
-                                        .author("김영한")
-                                        .categoryId(1)
-                                        .category(BookCategory.COMPUTER_MOBILE)
-                                        .content("도서 설명")
-                                        .recommendCount(24)
-                                        .review("올해 읽은 도서 중 가장 재미있었어요")
-                                        .publisher("에이콘출판사")
-                                        .publishDate(LocalDate.now())
-                                        .deadLine(DeadLine.ONE_WEEK)
-                                        .returnLocation("출입문앞 1층")
-                                        .createdAt(LocalDateTime.now())
-                                        .newTag(NewTag.NEW)
-                                        .build()
-                        ))
-                        .totalElements(1)
-                        .totalPage(1)
-                        .last(true)
-                        .build()
+                DummyPageBookInfo.of()
         );
 
         mockMvc.perform(get(uri, categoryId)
@@ -135,6 +105,9 @@ class CategoryControllerTest extends RestDocsControllerTest {
                                         fieldWithPath("contents[].review").type(JsonFieldType.STRING).description("리뷰"),
                                         fieldWithPath("contents[].deadLine").type(JsonFieldType.STRING).description("대출 기한 [ONE_WEEK: 1주] \n [TWO_WEEK: 2주] \n [THREE_WEEK: 3주] \n [FOUR_WEEK: 4주]"),
                                         fieldWithPath("contents[].author").type(JsonFieldType.STRING).description("저자"),
+                                        fieldWithPath("contents[].rentalUseYn").type(JsonFieldType.STRING).description("대여 가능 여부 \n" +
+                                                "`[Y: 대여 가능]` \n" +
+                                                "`[N: 대여 불가능]`"),
                                         fieldWithPath("contents[].publisher").type(JsonFieldType.STRING).description("출판사"),
                                         fieldWithPath("contents[].publishDate").type(JsonFieldType.STRING).description("출판일"),
                                         fieldWithPath("contents[].returnLocation").type(JsonFieldType.STRING).description("반납 장소"),

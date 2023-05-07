@@ -1,6 +1,7 @@
 package com.litarary.book.service.dto;
 
 import com.litarary.account.domain.BookCategory;
+import com.litarary.book.domain.RentalUseYn;
 import com.litarary.book.domain.entity.Book;
 import com.litarary.book.domain.entity.DeadLine;
 import lombok.Builder;
@@ -24,6 +25,7 @@ public class BookInfo {
     private LocalDate publishDate;
     private String returnLocation;
     private int recommendCount;
+    private RentalUseYn rentalUseYn;
     private LocalDateTime createdAt;
     private long categoryId;
     private BookCategory category;
@@ -41,6 +43,7 @@ public class BookInfo {
                 .author(book.getAuthor())
                 .publisher(book.getPublisher())
                 .publishDate(book.getPublishDate())
+                .rentalUseYn(book.getRentalUseYn())
                 .returnLocation(book.getReturnLocation())
                 .recommendCount(book.getRecommendCount())
                 .categoryId(book.getCategory().getId())

@@ -5,11 +5,13 @@ import com.litarary.book.domain.RentalUseYn;
 import com.litarary.book.domain.entity.Book;
 import com.litarary.book.domain.entity.Category;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,4 +44,12 @@ public interface BookRepository extends JpaRepository<Book, Long> {
                                         @Param("category") Category category,
                                         @Param("memberId") long memberId,
                                         Pageable pageable);
+
+    @Query("select b from Book b " +
+            "where b.member.id= :memberId " +
+            "and b.useYn = 'Y' " +
+            "and b.createdAt >= :startSearchDateTime " +
+            "order by b.createdAt desc ")
+    Page<Book> findByMemberRegisterBooks(@Param("memberId") Long memberId,
+                                         @Param("startSearchDateTime") LocalDateTime startSearchDateTime, PageRequest pageRequest);
 }
