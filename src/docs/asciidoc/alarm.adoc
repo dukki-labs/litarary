@@ -1,0 +1,14 @@
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 2
+:sectlinks:
+
+== link:index.html[메인화면으로 이동]
+
+= 🧿Alarm API
+알람화면에서 제공하는 도서신청 목록 및 수락하기 기능을 제공한다.
+
+== 알림 목록
+operation::alarm-controller-test/alarm-list-test[snippets='http-request,response-body,response-fields']
