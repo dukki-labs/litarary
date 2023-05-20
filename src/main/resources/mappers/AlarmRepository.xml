@@ -7,6 +7,7 @@
         <result property="rentalState" column="rental_state"/>
         <result property="memberId" column="member_id"/>
         <result property="nickName" column="nick_name"/>
+        <result property="bookId" column="book_id"/>
         <result property="bookUrl" column="image_url"/>
         <result property="title" column="title"/>
     </resultMap>
@@ -16,6 +17,7 @@
                br.rental_state,
                m.id as member_id,
                m.nick_name,
+               b.id as book_id,
                b.image_url,
                b.title
         FROM book b

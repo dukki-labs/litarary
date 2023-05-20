@@ -42,6 +42,10 @@ public class BookRental {
                 .build();
     }
 
+    public void updateRentalState(RentalState rentalState) {
+        this.rentalState = rentalState;
+    }
+
     public void updateRentalInfo() {
         this.returnDateTime = LocalDateTime.now();
         this.rentalState = RentalState.RETURN;
