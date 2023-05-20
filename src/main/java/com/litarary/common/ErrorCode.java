@@ -37,7 +37,8 @@ public enum ErrorCode {
     NOT_RENTAL_BOOK("대여중인 도서가 없어요."),
     BOOK_NOT_FOUND("등록된 도서가 없습니다."),
     RECOMMEND_BOOK_NOT_FOUND("추천한 도서가 없습니다."),
-    FAIL_UPDATE_RECOMMEND_COUNT("도서 추천하기를 실패했습니다.");
+    FAIL_UPDATE_RECOMMEND_COUNT("도서 추천하기를 실패했습니다."),
+    NOT_RENTAL_REQUEST("도서 대여 신청을 하지 않았습니다.");
 
     private final String message;
 }

@@ -12,3 +12,6 @@
 
 == 알림 목록
 operation::alarm-controller-test/alarm-list-test[snippets='http-request,response-body,response-fields']
+
+== 도서 대여신청 수락 및 거절
+operation::alarm-controller-test/accept-book-rental-test[snippets='http-request,request-fields']

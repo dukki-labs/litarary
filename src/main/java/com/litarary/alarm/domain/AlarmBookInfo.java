@@ -15,6 +15,7 @@ public class AlarmBookInfo {
     private RentalState rentalState;
     private long memberId;
     private String nickName;
+    private long bookId;
     private String bookUrl;
     private String title;
 }
