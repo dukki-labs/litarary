@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.litarary.alarm.repository.AlarmRepository">
+    <resultMap id="AlarmBookInfoMap" type="com.litarary.alarm.domain.AlarmBookInfo">
+        <id property="bookRentalId" column="book_rental_id"/>
+        <result property="rentalState" column="rental_state"/>
+        <result property="memberId" column="member_id"/>
+        <result property="nickName" column="nick_name"/>
+        <result property="bookUrl" column="image_url"/>
+        <result property="title" column="title"/>
+    </resultMap>
+
+    <select id="rentalBookHistoryList" parameterType="long" resultMap="AlarmBookInfoMap">
+        SELECT br.id as book_rental_id,
+               br.rental_state,
+               m.id as member_id,
+               m.nick_name,
+               b.image_url,
+               b.title
+        FROM book b
+                 inner join book_rental br
+                            on br.book_id = b.id
+                 inner join member m
+                            on m.id = br.member_id
+        WHERE b.member_id = #{memberId};
+    </select>
+</mapper>

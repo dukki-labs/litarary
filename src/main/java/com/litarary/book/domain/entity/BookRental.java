@@ -35,7 +35,7 @@ public class BookRental {
 
     public static BookRental createDefaultRental(Member member, Book book) {
         return BookRental.builder()
-                .rentalState(RentalState.RENTAL)
+                .rentalState(RentalState.REQUEST)
                 .rentalDateTime(LocalDateTime.now())
                 .member(member)
                 .book(book)
